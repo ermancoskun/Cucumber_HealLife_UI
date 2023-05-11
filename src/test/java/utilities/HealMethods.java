@@ -113,12 +113,12 @@ public class HealMethods {
 
     }
 
-    public static void makeFilterTest(String filterName,int filtreKacinciSirada){
+    public static void makeFilterTest(String filterName,int filtreKacinciSirada, int toplamFiltreSayisi){
         WebElement filter=Driver.getDriver().findElement(By.xpath("(//th[text()='"+filterName+"'])[1]"));
         Assert.assertTrue(filter.isDisplayed());
         filter.click();
         List<String> filtreList=new ArrayList<>();
-        for (int i = filtreKacinciSirada; i <=800 ; i=i+8) {
+        for (int i = filtreKacinciSirada; i <=toplamFiltreSayisi*100 ; i=i+toplamFiltreSayisi) {
             filtreList.add(Driver.getDriver().findElement(By.xpath("(//td)["+i+"]")).getText());
         }
         List<String> expectedList = new ArrayList<>(filtreList);

@@ -247,6 +247,31 @@ public class PatientPage extends Base {
 
 
 
+    }
+    public void myAppointmentsAddAppointment(){
+        userLogin();
+        myAppiontmentsButton.click();
+        addAppointmentsButton.click();
+        addAppointmentDatetext.click();
+        addAppointmentDateoptionsMay27.click();
+        addAppointmentSpecialistButton.click();
+        addAppointmentSpecialistValue.click();
+        addAppointmentsDoctorbutton.click();
+        addAppointmentdoctorAysenuriye.click();
+        addAppointmentsShiftButton.click();
+        addAppointmentsshiftEvening.click();
+        addAppointmentsslotButton.click();
+        addAppointmentsSlot04PM.click();
+        addAppointmentsmessageText.sendKeys("HASTAA");
+        addAppointmentsslot04.click();
+        addAppointmentsSaveButton.click();
+
+
+    }
+
+
+
+
 
     }
     public void myAppointmentsAddAppointment(){

@@ -4,6 +4,8 @@ package pages;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import utilities.ConfigReader;
+import utilities.Driver;
 
 import java.util.List;
 
@@ -237,9 +239,38 @@ public class PatientPage extends Base {
     }
 
     public void userLogin(){
+        Driver.getDriver().get(ConfigReader.getProperty("url"));
+        entryLoginbutton.click();
+        entryEmailText.sendKeys(ConfigReader.getProperty("usernameAysenuriye"));
+        EntryPasswordText.sendKeys(ConfigReader.getProperty("userPassword"));
+        Entry_SubmitButton.click();
+
+
 
 
     }
+    public void myAppointmentsAddAppointment(){
+        userLogin();
+        myAppiontmentsButton.click();
+        addAppointmentsButton.click();
+        addAppointmentDatetext.click();
+        addAppointmentDateoptionsMay27.click();
+        addAppointmentSpecialistButton.click();
+        addAppointmentSpecialistValue.click();
+        addAppointmentsDoctorbutton.click();
+        addAppointmentdoctorAysenuriye.click();
+        addAppointmentsShiftButton.click();
+        addAppointmentsshiftEvening.click();
+        addAppointmentsslotButton.click();
+        addAppointmentsSlot04PM.click();
+        addAppointmentsmessageText.sendKeys("HASTAA");
+        addAppointmentsslot04.click();
+        addAppointmentsSaveButton.click();
+
+
+    }
+
+
 }
 
 

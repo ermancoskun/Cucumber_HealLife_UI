@@ -1,15 +1,23 @@
 package utilities;
 
+import com.github.javafaker.Faker;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
+import pages.AdminPage;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class HealMethods {
+    static AdminPage adminPage=new AdminPage();
+    static Faker faker=new Faker();
+   static Actions actions=new Actions(Driver.getDriver());
 
 
     public static void loginAsAdmin(String username, String password){
@@ -139,5 +147,62 @@ public class HealMethods {
         }
         ReusableMethods.bekle(3);
         Assert.assertTrue("Download of "+aranacakKelime+format+" not successful",fileFound);
+    }
+
+    public static void clickBlueButton(String butonIsmi){
+        Driver.getDriver().findElement(By.xpath("//h4[text()='"+butonIsmi+"']")).click();
+    }
+
+    public static void createNewPatient(){
+        Driver.getDriver().findElement(By.xpath("//span[text()='New Patient']")).click();
+        adminPage.nameBox.sendKeys(faker.name().fullName());
+        adminPage.guardianNameBox.sendKeys(faker.name().fullName());
+        Select select=new Select(adminPage.genderDropDown);
+        select.selectByIndex(faker.random().nextInt(1,2));
+        adminPage.birthDateBox.sendKeys(faker.date().birthday().toString());
+        actions.sendKeys(Keys.TAB).perform();
+        actions.sendKeys(faker.number().digits(23)).perform();
+        actions.sendKeys(Keys.TAB).perform();
+        actions.sendKeys(faker.number().digits(8)).perform();
+        actions.sendKeys(Keys.TAB).perform();
+        actions.sendKeys(faker.number().digits(5)).perform();
+
+        select=new Select(adminPage.bloodGroupDropDown);
+        select.selectByIndex(faker.number().numberBetween(1,7));
+
+        select=new Select(adminPage.maritalStatusDropDown);
+        select.selectByIndex(faker.number().numberBetween(1,5));
+
+        actions.sendKeys(Keys.TAB).sendKeys(Keys.TAB).perform();
+        actions.sendKeys(faker.phoneNumber().phoneNumber().replaceAll("\\D","")).perform();
+
+        actions.sendKeys(Keys.TAB).perform();
+        actions.sendKeys(faker.internet().emailAddress()).perform();
+
+        actions.sendKeys(Keys.TAB).perform();
+        actions.sendKeys(faker.address().fullAddress()).perform();
+
+        actions.sendKeys(Keys.TAB).perform();
+        actions.sendKeys(faker.medical().diseaseName()).perform();
+
+        actions.sendKeys(Keys.TAB).perform();
+        actions.sendKeys(faker.medical().symptoms()).perform();
+
+        actions.sendKeys(Keys.TAB).perform();
+        actions.sendKeys(faker.idNumber().valid()).perform();
+
+        actions.sendKeys(Keys.TAB).perform();
+        actions.sendKeys("11.05.23").perform();
+
+        actions.sendKeys(Keys.TAB).perform();
+        actions.sendKeys(faker.idNumber().validSvSeSsn()).perform();
+
+        actions.sendKeys(Keys.TAB).perform();
+        actions.sendKeys(faker.phoneNumber().cellPhone()).perform();
+
+        Driver.getDriver().findElement(By.id("formaddpabtn")).click();
+
+        ReusableMethods.bekle(6);
+
     }
 }

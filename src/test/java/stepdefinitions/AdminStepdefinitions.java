@@ -48,9 +48,9 @@ public class AdminStepdefinitions {
         adminPage.opdButton.click();
     }
 
-    @And("Sees the {string} and their <{int}>")
+    @And("Sees the {string} and their {string}")
     public void seesTheAndTheir(String filtreAdi, int sirasi) {
-        HealMethods.makeFilterTest(filtreAdi,sirasi,8);
+        HealMethods.makeFilterTest(filtreAdi,sirasi,7);
     }
 
     @And("test to searcbox")
@@ -74,6 +74,15 @@ public class AdminStepdefinitions {
         HealMethods.makeAll100Test();
     }
 
+<<<<<<< HEAD
+
+    @And("Click {int}. iconButton under the Total Recheckup for display first patient profile")
+    public void clickIconButtonUnderTheTotalRecheckupForDisplayFirstPatientProfile(int sira) {
+        HealMethods.clickIconWith3Line(sira);
+    }
+
+
+=======
     ///////////////////////////////////////////////////////////////////////////////////////////////////DGup
     @And("Login to admin page as {string} {string}")
     public void loginToAdminPageAs(String username, String password) {
@@ -128,5 +137,6 @@ public class AdminStepdefinitions {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////DGdown
+>>>>>>> main
 
 }

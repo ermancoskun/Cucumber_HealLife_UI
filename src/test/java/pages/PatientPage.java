@@ -76,7 +76,6 @@ public class PatientPage extends Base {
     @FindBy(xpath = "//span[@class='logo-mini']")
     public WebElement DashboardOnHeallifeText;
 
-  //patientPageDashBoardSidebar Title
 
     @FindBy(xpath = "//span[text()=' Dashboard']")
     public WebElement dashboardButton;
@@ -204,37 +203,10 @@ public class PatientPage extends Base {
 
     @FindBy(xpath = "//*[text()='Records: 11 to 12 of 12']")
     public WebElement myAppointmentsSecondspageDetails;
-
-
-    public static void checkHeaderExistence(WebElement element) {
-        String[] headerNames = {"Patient Id", "Gender", "Marital Status", "Phone", "Email", "Address", "Age", "Guardian Name", "Username", "Password"};
-
-        for (String headerName : headerNames) {
-            List<WebElement> headerElements = element.findElements(By.xpath("//li[b='" + headerName + "']"));
-            if (headerElements.size() > 0) {
-                System.out.println(headerName + " exists");
-            } else {
-                System.out.println(headerName + " does not exist");
-            }
-        }
-    }
-
-    public boolean checkTableHeadersExist(WebElement table) {
-        List<WebElement> headers = table.findElements(By.tagName("th"));
-        String[] expectedHeaders = {"Appointment No", "Appointment Date", "Priority", "Specialist", "Doctor", "Status", "Message", "Action"};
-
-        if (headers.size() != expectedHeaders.length) {
-            return false;
-        }
-
-        for (int i = 0; i < expectedHeaders.length; i++) {
-            if (!headers.get(i).getText().equals(expectedHeaders[i])) {
-                return false;
-            }
-        }
-
-        return true;
-    }
-
-
 }
+
+
+
+
+
+

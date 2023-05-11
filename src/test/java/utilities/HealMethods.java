@@ -23,13 +23,13 @@ public class HealMethods {
         WebElement loginButton = Driver.getDriver().findElement(By.xpath("//button[@type='submit']"));
         loginButton.click();
     }
-    public static void loginAsUser(String username, String password) {
+    public static <String> void loginAsUser(String username, String password) {
         Driver.getDriver().get("https://qa.heallifehospital.com/site/userlogin");
         WebElement usernameLocate = Driver.getDriver().findElement(By.id("email"));
-        usernameLocate.sendKeys(username);
+        //usernameLocate.sendKeys(username);
 
         WebElement passwordLocate = Driver.getDriver().findElement(By.id("password"));
-        passwordLocate.sendKeys(password);
+       // passwordLocate.sendKeys(password);
 
         WebElement loginButton = Driver.getDriver().findElement(By.xpath("//button[@type='submit']"));
         loginButton.click();

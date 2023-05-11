@@ -78,7 +78,6 @@ public class PatientPage extends Base {
     @FindBy(xpath = "//span[@class='logo-mini']")
     public WebElement DashboardOnHeallifeText;
 
-    //patientPageDashBoardSidebar Title
 
     @FindBy(xpath = "//span[text()=' Dashboard']")
     public WebElement dashboardButton;
@@ -208,6 +207,7 @@ public class PatientPage extends Base {
     public WebElement myAppointmentsSecondspageDetails;
 
 
+
     public static void checkHeaderExistence(WebElement element) {
         String[] headerNames = {"Patient Id", "Gender", "Marital Status", "Phone", "Email", "Address", "Age", "Guardian Name", "Username", "Password"};
 
@@ -271,7 +271,11 @@ public class PatientPage extends Base {
     }
 
 
+
 }
+
+
+
 
 
 

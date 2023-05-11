@@ -74,7 +74,7 @@ public class AdminStepdefinitions {
         HealMethods.makeAll100Test();
     }
 
-<<<<<<< HEAD
+
 
     @And("Click {int}. iconButton under the Total Recheckup for display first patient profile")
     public void clickIconButtonUnderTheTotalRecheckupForDisplayFirstPatientProfile(int sira) {
@@ -82,7 +82,7 @@ public class AdminStepdefinitions {
     }
 
 
-=======
+
     ///////////////////////////////////////////////////////////////////////////////////////////////////DGup
     @And("Login to admin page as {string} {string}")
     public void loginToAdminPageAs(String username, String password) {
@@ -137,6 +137,6 @@ public class AdminStepdefinitions {
     }
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////DGdown
->>>>>>> main
+
 
 }

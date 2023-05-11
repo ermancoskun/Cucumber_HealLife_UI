@@ -236,5 +236,11 @@ public class PatientPage extends Base {
         return true;
     }
 
+    public void userLogin(){
 
+
+    }
 }
+
+
+

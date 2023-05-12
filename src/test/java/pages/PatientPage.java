@@ -9,6 +9,7 @@ import utilities.Driver;
 
 import java.util.List;
 
+
 public class PatientPage extends Base {
     // Userlogin >
     @FindBy(xpath = "//a[text()='Login']")
@@ -82,10 +83,14 @@ public class PatientPage extends Base {
     @FindBy(xpath = "//span[text()=' Dashboard']")
     public WebElement dashboardButton;
 
+
+
+
     @FindBy(xpath = "//span[text()='My Appointments']")
     public WebElement myAppiontmentsButton;
     @FindBy(xpath = "//span[text()=' OPD']")
     public WebElement opdButton;
+
     @FindBy(xpath = "//span[text()=' IPD']")
     public WebElement ipdButton;
     @FindBy(xpath = "//span[text()=' Pharmacy']")
@@ -248,6 +253,15 @@ public class PatientPage extends Base {
 
 
     }
+
+
+
+
+
+
+
+
+
     public void myAppointmentsAddAppointment(){
         userLogin();
         myAppiontmentsButton.click();
@@ -273,7 +287,11 @@ public class PatientPage extends Base {
 
 
 
+
     }
+
+
+
 
 
 

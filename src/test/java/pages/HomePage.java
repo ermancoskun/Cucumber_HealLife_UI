@@ -17,5 +17,18 @@ public class HomePage extends Base{
     @FindBy(xpath = "//a[text()='Complain']")
     public WebElement complainButton;
 
+
+
+
+
     //////////////////////////////////////////////////////////////////
+
+
+    @FindBy (xpath = "(//a[text()='Gallery'])[1]")
+
+    public WebElement GalleryButton;
+
+
+    @FindBy (xpath = "//h2[text()='Gallery']")
+    public WebElement GalleryxLabel;
 }

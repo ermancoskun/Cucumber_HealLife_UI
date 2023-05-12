@@ -35,7 +35,7 @@ public class AdminPage extends Base{
     public WebElement guardianNameBox;
 
     //Admin > Billing > OPD > Add Patient > New Patient
-    @FindBy(id = "addformgender")
+    @FindBy(xpath = "//select[@name='gender']")
     public WebElement genderDropDown;
 
     //Admin > Billing > OPD > Add Patient > New Patient
@@ -43,13 +43,16 @@ public class AdminPage extends Base{
     public WebElement birthDateBox;
 
     //Admin > Billing > OPD > Add Patient > New Patient
-    @FindBy(xpath = "(//select[@name='blood_group'])[2]")
+    @FindBy(xpath = "//select[@name='blood_group']")
     public WebElement bloodGroupDropDown;
 
     //Admin > Billing > OPD > Add Patient > New Patient
-    @FindBy(xpath = "(//select[@name='marital_status'])[2]")
+    @FindBy(xpath = "//select[@name='marital_status']")
     public WebElement maritalStatusDropDown;
 
+    //Admin > Billing
+    @FindBy (xpath = "//p[.='Pathology']")
+    public WebElement pathologyButton;
     //********************Duygu*************************************//
 
     // adminLoginPage

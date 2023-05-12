@@ -15,10 +15,10 @@ Feature: US_038 As an admin I would like to have a page in the dashboard sidebar
 
 
   Scenario Outline: TC_03 OPD Billing List should be displayed on the page that opens when the OPD board
-                          in the Single Module Billing window is clicked.
+  in the Single Module Billing window is clicked.
 
     And Click on the OPD button
-    And Sees the "<FilterName>" and their "<Order>"
+    Then Sees the "<FilterName>" and their "<Order>"
 
     Examples:
       | FilterName      | Order |
@@ -35,26 +35,64 @@ Feature: US_038 As an admin I would like to have a page in the dashboard sidebar
   Scenario: TC_04 In order to search easily in the OPD Billing List, there must be a SearchTextBox.
 
     And Click on the OPD button
-    And  test to searcbox
+    Then  test to searcbox
 
 
   Scenario: TC_05 A new patient should be able to be added in the OPD Billing List.
 
     And Click on the OPD button
     And Click on the Add Patient button
-    And Create a New Patient with random datas
+    Then Create a New Patient with random datas
 
 
   Scenario: TC_06 The number of patients to be displayed in the OPD Billing List (100 or all) can be selected
 
     And Click on the OPD button
-    And Choose All and 100 options for patient display
+    Then Choose All and 100 options for patient display
 
 
   Scenario: TC_07   The relevant patient (detail profile) information should be displayed under the
-                    Total Recheckup heading in the OPD Billing List.
+  Total Recheckup heading in the OPD Billing List.
 
     And Click on the OPD button
-    And Click 1. iconButton under the Total Recheckup for display first patient profile
-      @US038
+    Then Click 1. iconButton under the Total Recheckup for display first patient profile
 
+
+  Scenario: TC_08 When the names under Name in the OPD Billing List are clicked,
+  the information of the relevant patient (detail profile) should be displayed.
+
+    And Click on the OPD button
+    Then Click 1. first name for display patient profile
+
+
+  Scenario Outline: TC_09 When Pathology board in the Single Module Billing window is clicked,(all)Amounts)
+  should be displayed.
+          And Click on the Pathology button
+          Then Sees the name of "<Billing List>" that their "<int:Ordered>" number
+
+    Examples:
+      | Billing List           | Ordered |
+      | "Bill No"              | 1       |
+      | "Case ID / Patient ID" | 2       |
+      | "Reporting Date"       | 3       |
+      | "Reporting Date"       | 4       |
+      | "Reference Doctor"     | 5       |
+      | "Amount ($)"           | 6       |
+      | "Paid Amount ($)"      | 7       |
+
+
+    Scenario: TC_10 In order to search easily in the Pathology Billing List, there must be a SearchTextBox.
+
+          And Click on the Pathology button
+          Then test to searcbox
+
+    Scenario: TC_11 A new patient should be able to be added to the Pathology Billing List.
+
+          And Click on the Pathology button
+          And Click on the Add Patient button
+          Then Create a New Patient with random datas
+     @US038
+    Scenario: TC_12 The number of patients to be displayed in the Pathology Billing List (100 or all) can be selected.
+
+          And Click on the Pathology button
+          Then Choose All and 100 options for patient display

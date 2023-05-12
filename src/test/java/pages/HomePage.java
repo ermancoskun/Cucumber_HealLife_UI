@@ -8,7 +8,8 @@ import utilities.Driver;
 
 import java.util.List;
 
-public class HomePage extends Base {
+public class
+HomePage extends Base {
 
 
     public HomePage() {
@@ -53,5 +54,25 @@ public class HomePage extends Base {
     // homepage > Appointment Button
     @FindBy (xpath = "//*[@id=\"navbar-collapse-3\"]/ul/li[2]/a")
     public WebElement appointmentButton;
+
+
+    //============================================ Nesibe [US_005] Feauture Boards =====================================================
+
+    @FindBy(xpath = "//*[text()='Featured Services']")
+    public WebElement feautureServicesBoard ;
+
+    @FindBy(xpath = "//*[text()='Nurse-to-Resident Ratio']")
+    public WebElement nurseResidentBoard ;
+
+    @FindBy(xpath = "//*[text()='Emergency Help']")
+    public WebElement emergencyHelpBoard ;
+
+    @FindBy(xpath = "//*[text()='Onsite Medical Staff']")
+    public WebElement onsiteMedicalStaffBoard;
+
+    @FindBy(xpath = "//*[text()='Communication All Parties']")
+    public WebElement comunicationAllPartBoard ;
+
+    //============================================ Nesibe [US_005] Feauture Boards End ================================================
 
 }

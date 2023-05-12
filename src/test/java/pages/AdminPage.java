@@ -1,8 +1,14 @@
 package pages;
 
+
+import org.checkerframework.checker.calledmethods.qual.EnsuresCalledMethodsIf;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
 import utilities.ConfigReader;
+
+import java.util.List;
+
 public class AdminPage extends Base{
 
 
@@ -35,7 +41,7 @@ public class AdminPage extends Base{
     public WebElement guardianNameBox;
 
     //Admin > Billing > OPD > Add Patient > New Patient
-    @FindBy(id = "addformgender")
+    @FindBy(xpath = "//select[@name='gender']")
     public WebElement genderDropDown;
 
     //Admin > Billing > OPD > Add Patient > New Patient
@@ -43,12 +49,33 @@ public class AdminPage extends Base{
     public WebElement birthDateBox;
 
     //Admin > Billing > OPD > Add Patient > New Patient
-    @FindBy(xpath = "(//select[@name='blood_group'])[2]")
+    @FindBy(xpath = "//select[@name='blood_group']")
     public WebElement bloodGroupDropDown;
 
     //Admin > Billing > OPD > Add Patient > New Patient
-    @FindBy(xpath = "(//select[@name='marital_status'])[2]")
+    @FindBy(xpath = "//select[@name='marital_status']")
     public WebElement maritalStatusDropDown;
+
+    //Admin > Billing
+    @FindBy (xpath = "//p[.='Pathology']")
+    public WebElement pathologyButton;
+
+
+    //Admin > IPD >
+    @FindBy(id = "addp")
+    public WebElement addPatientButtonIPD;
+
+    //Admin > IPD > Discharged Patient Button
+    @FindBy(xpath = "//a[@class=\"btn btn-primary btn-sm\"]")
+    public WebElement dischargedPatientButton;
+
+    //Admin > IPD > Discharged Patient Button > Discharged Confirmation Text
+    @FindBy (xpath = "//h3[@class=\"box-title titlefix\"]")
+    public WebElement ipdDischargedConfirmationText;
+
+    @FindBy (xpath = "//*[@id=\"DataTables_Table_0\"]//th")
+    public List<WebElement> ipdDischargeTableHeaders;
+
 
     //********************Duygu*************************************//
 
@@ -92,6 +119,7 @@ public class AdminPage extends Base{
 
     //********************Duygu*************************************//
     //////////////////////////////////////////////////////////////////
+
 
 
 

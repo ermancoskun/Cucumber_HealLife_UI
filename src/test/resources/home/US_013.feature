@@ -1,8 +1,10 @@
+@azat
+
 Feature:US_013  As a user, I would like a gallery page with pictures of the hospital to get a closer look and get to know the hospital better.
 
 Background: common steps
 
-    Given  Launch browser
+    Given Launch browser.
     Then Go to "homepageUrl"
     Then Gallery button clicks
 

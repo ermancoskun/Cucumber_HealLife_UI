@@ -76,6 +76,19 @@ public class AdminStepdefinitions {//
     public void chooseAllAndOptionsForPatientDisplay(int arg0) {
         HealMethods.makeAll100Test();
     }
+    @Then("Verified redirected to Bill Details page")
+    public void verifiedRedirectedToBillDetailsPage() {
+        String actualWindowTitle=Driver.getDriver().findElement(By.xpath("(//h4[@class='modal-title'])[3]")).getText();
+        Assert.assertEquals("Unsuccessful redirection","Bill Details",actualWindowTitle);
+    }
+    @And("Click the Pathology button on Billing page")
+    public void clickThePathologyButtonOnBillingPage() {
+        adminPage.pathologyButton.click();
+    }
+    @And("Click {int}. iconButton under the last column for display first patient profile")
+    public void clickIconButtonUnderTheLastColumnForDisplayFirstPatientProfile(int sira) {
+        HealMethods.clickIconWith3Line(sira);
+    }
 
     @Given("Click on the Add Patient button in IPD page")
     public void clickOnTheAddPatientButtonInIPDPage() {
@@ -89,6 +102,7 @@ public class AdminStepdefinitions {//
         
     }
 
+
     @And("user should be able to on the Discarged Patient page")
     public void userShouldBeAbleToOnTheDiscargedPatientPage() {
         Assert.assertTrue(adminPage.ipdDischargedConfirmationText.isDisplayed());
@@ -98,23 +112,14 @@ public class AdminStepdefinitions {//
     public void itShouldBeDisplayedInTheIPDDischargedPatientList(List<String> ipdTableHeads) {
         for (int i = 0; i < ipdTableHeads.size(); i++) {
             Assert.assertEquals(ipdTableHeads.get(i), adminPage.ipdDischargeTableHeaders.get(i).getText());
-
         }
-
     }
 
-    @And("Click {int}. iconButton under the Total Recheckup for display first patient profile")
-    public void clickIconButtonUnderTheTotalRecheckupForDisplayFirstPatientProfile(int sira) {
-        HealMethods.clickIconWith3Line(sira);
-    }
     @And("Click {int}. first name for display patient profile")
     public void clickFirstNameForDisplayPatientProfile(int sira) {
         HealMethods.clickANameFromList(1);
     }
-    @And("Click on the Pathology button")
-    public void clickOnThePathologyButton() {
-        adminPage.pathologyButton.click();
-    }
+
 
     @Then("Sees the {string} that {string}")
     public void seesTheThat(String filtreAdi, int sira) {

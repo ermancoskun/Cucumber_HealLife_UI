@@ -248,6 +248,7 @@ public class HealMethods {
         //bir sayfada mavi buton uzerinde bile 3cizgi elementi var ise ilk ona tiklayacaktir.Dikkat etmeliyiz
     WebElement iconButton=Driver.getDriver().findElement(By.xpath("(//i[@class='fa fa-reorder'])["+sira+"]"));
     JSUtilities.clickWithJS(Driver.getDriver(),iconButton);
+    ReusableMethods.bekle(3);
     }
     public static void clickANameFromList(int sira){
         Driver.getDriver().findElement(By.xpath("(//td)["+sira+"]"));

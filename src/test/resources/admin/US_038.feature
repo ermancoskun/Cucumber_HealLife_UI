@@ -55,12 +55,7 @@ Feature: US_038 As an admin I would like to have a page in the dashboard sidebar
   Total Recheckup heading in the OPD Billing List.
 
     And Click on the OPD button
-<<<<<<< HEAD
-    Then Click 1. iconButton under the Total Recheckup for display first patient profile
-=======
-    And Click 1. iconButton under the Total Recheckup for display first patient profile
-
->>>>>>> main
+    Then Click 1. iconButton under the last column for display first patient profile
 
 
   Scenario: TC_08 When the names under Name in the OPD Billing List are clicked,
@@ -72,7 +67,7 @@ Feature: US_038 As an admin I would like to have a page in the dashboard sidebar
 
   Scenario Outline: TC_09 When Pathology board in the Single Module Billing window is clicked,(all)Amounts)
   should be displayed.
-          And Click on the Pathology button
+          And Click the Pathology button on Billing page
           Then Sees the name of "<Billing List>" that their "<int:Ordered>" number
 
     Examples:
@@ -88,16 +83,23 @@ Feature: US_038 As an admin I would like to have a page in the dashboard sidebar
 
     Scenario: TC_10 In order to search easily in the Pathology Billing List, there must be a SearchTextBox.
 
-          And Click on the Pathology button
+          And Click the Pathology button on Billing page
           Then test to searcbox
 
     Scenario: TC_11 A new patient should be able to be added to the Pathology Billing List.
 
-          And Click on the Pathology button
+          And Click the Pathology button on Billing page
           And Click on the Add Patient button
           Then Create a New Patient with random datas
-     @US038
+
     Scenario: TC_12 The number of patients to be displayed in the Pathology Billing List (100 or all) can be selected.
 
-          And Click on the Pathology button
+          And Click the Pathology button on Billing page
           Then Choose All and 100 options for patient display
+
+    Scenario: TC_13   Under the title Balance Amount ($) in the Pathology Billing List,
+                      the relevant patient's (detail invoice) information should be displayed.
+
+          And Click the Pathology button on Billing page
+          And Click 1. iconButton under the last column for display first patient profile
+          Then Verified redirected to Bill Details page

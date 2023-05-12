@@ -22,7 +22,7 @@ public class HomePage extends Base {
     @FindBy(xpath = "//div[@class='team-member']//p")
     public List<WebElement> ourDoctorsUnvan;
 
-    public int ourDoctorsResimCount() {
+    public int ourDoctorsPicturesCount() {
         return ourDoctorsResim.size();
     }
 

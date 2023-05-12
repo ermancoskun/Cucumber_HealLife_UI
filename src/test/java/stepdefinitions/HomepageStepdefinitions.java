@@ -28,7 +28,7 @@ public class HomepageStepdefinitions {
     public void ThePhotoConfirmsThatTheirNameAndTitleAppearAsProfessor(List<String> isim) {
 
         int expectedSize = 6;
-        int actualSize = homepage.ourDoctorsResimCount();
+        int actualSize = homepage.ourDoctorsPicturesCount();
         Assert.assertEquals(expectedSize, actualSize);
 
         for (int i = 0; i < isim.size(); i++) {
@@ -36,8 +36,5 @@ public class HomepageStepdefinitions {
             Assert.assertEquals("Professor", homepage.ourDoctorsUnvan.get(i).getText());
         }
     }
-    @And("user should be able to on the IPD page")
-    public void userShouldBeAbleToOnTheIPDPage() {
-        Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains("admin/patient/ipdsearch"));
-    }
+
 }

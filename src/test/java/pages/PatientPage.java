@@ -299,9 +299,6 @@ public class PatientPage extends Base {
 
     }
 
-
-
-
         public void testStatusChangeMessage() {
             // Assume that the language has been changed successfully
             String message = "Status Change Successfully";

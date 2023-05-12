@@ -62,10 +62,9 @@ public class AdminStepdefinitions {//
         HealMethods.makeSearchBoxTest();
     }
 
-
     @And("Click on the Add Patient button")
     public void clickOnTheAddPatientButton() {
-        adminPage.addPatientButton.click();
+        HealMethods.clickBlueOrAnyButton(" Add Patient");
     }
 
     @And("Create a New Patient with random datas")
@@ -77,7 +76,6 @@ public class AdminStepdefinitions {//
     public void chooseAllAndOptionsForPatientDisplay(int arg0) {
         HealMethods.makeAll100Test();
     }
-
 
     @Given("Click on the Add Patient button in IPD page")
     public void clickOnTheAddPatientButtonInIPDPage() {
@@ -105,10 +103,24 @@ public class AdminStepdefinitions {//
 
     }
 
-
     @And("Click {int}. iconButton under the Total Recheckup for display first patient profile")
     public void clickIconButtonUnderTheTotalRecheckupForDisplayFirstPatientProfile(int sira) {
         HealMethods.clickIconWith3Line(sira);
+    }
+    @And("Click {int}. first name for display patient profile")
+    public void clickFirstNameForDisplayPatientProfile(int sira) {
+        HealMethods.clickANameFromList(1);
+    }
+    @And("Click on the Pathology button")
+    public void clickOnThePathologyButton() {
+        adminPage.pathologyButton.click();
+    }
+
+    @Then("Sees the {string} that {string}")
+    public void seesTheThat(String filtreAdi, int sira) {
+        System.out.println("filtreAdi = " + filtreAdi);
+        System.out.println("sira = " + sira);
+        HealMethods.makeFilterTest(filtreAdi,sira,7);
     }
 
 
@@ -165,6 +177,9 @@ public class AdminStepdefinitions {//
     public void verifyThatTheNavbarHasTheTextHealLifeHospitalResearchCenter() {
         Assert.assertTrue("The text *Heal Life Hospital & Research Center* is not visible in Navbar",adminpage.healLifeHospitalResearchCenterText.isDisplayed());
     }
+
+
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////DGdown
 

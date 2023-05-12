@@ -49,11 +49,13 @@ public class HomepageStepdefinitions {
     /////////////////////////////////////////////////////////////////////////////////////
     @Given("Launch browser")
     public void launchBrowser() {
-        Driver.getDriver();}
+       Driver.getDriver();
+    }
 
     @Then("Go to {string}")
     public void goTo(String url) {
-        Driver.getDriver().get(ConfigReader.getProperty(url));}
+        Driver.getDriver().get(ConfigReader.getProperty(url));
+    }
 
     @And("Go to the home page footer section.")
     public void goToTheHomePageFooterSection() {actions.sendKeys(Keys.END).perform();}
@@ -67,7 +69,8 @@ public class HomepageStepdefinitions {
 
     @And("Close browser")
     public void closeBrowser() {
-        Driver.closeDriver();}
+       // Driver.closeDriver();
+    }
 
     @And("Click on the complainIcon")
     public void clickOnTheComplainIcon() {

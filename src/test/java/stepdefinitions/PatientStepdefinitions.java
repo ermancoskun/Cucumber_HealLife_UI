@@ -427,9 +427,9 @@ public class PatientStepdefinitions {
     public void launchBrowser() {
         Driver.getDriver();}
 
-    @Then("Go to {string}")
+/*    @Then("Go to {string}")
     public void goTo(String url) {
-        Driver.getDriver().get(ConfigReader.getProperty(url));}
+        Driver.getDriver().get(ConfigReader.getProperty(url));}*/
 
     @Then("Login as a patient with username password")
     public void loginPatient(String userName, String Password) {
@@ -460,10 +460,10 @@ public class PatientStepdefinitions {
         Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains("patient"));
     }
 
-    @And("Close the page")
+   /* @And("Close the page")
     public void closePage() {
         Driver.closeDriver();
-    }
+    }*/
 
 
     @Then("Verify the “ Overview, Visits, Lab Investigation, Treatment History, Timeline” items visible and accesable.")

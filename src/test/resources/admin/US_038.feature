@@ -50,11 +50,11 @@ Feature: US_038 As an admin I would like to have a page in the dashboard sidebar
     And Click on the OPD button
     And Choose All and 100 options for patient display
 
-
+  @US038
   Scenario: TC_07   The relevant patient (detail profile) information should be displayed under the
                     Total Recheckup heading in the OPD Billing List.
 
     And Click on the OPD button
     And Click 1. iconButton under the Total Recheckup for display first patient profile
-      @US038
+
 

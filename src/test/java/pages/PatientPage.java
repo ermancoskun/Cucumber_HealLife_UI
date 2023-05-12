@@ -8,7 +8,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import utilities.ConfigReader;
 import utilities.Driver;
+import utilities.ReusableMethods;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 
@@ -308,8 +311,117 @@ public class PatientPage extends Base {
             String pageSource = driver.getPageSource();
             Assert.assertTrue(pageSource.contains(message));
         }
+    //Pharmacy page=============================================//=======================
+
+    @FindBy(xpath = "//h3[@class='box-title titlefix']")
+    public WebElement pharmacyBillText;
+
+
+    @FindBy(xpath = "//span[text()=' Pharmacy']")
+    public WebElement pharmacySideBox;
+
+    @FindBy(xpath = "//input[@type='search']")
+    public WebElement searchBox;
+
+    @FindBy(xpath = "//td[text()='PHARMAB43']")
+    public WebElement pharmacyText;
+
+    @FindBy(xpath = "(//i[@class='fa fa-money'])[1]")
+    public WebElement wievAllBox;
+
+    @FindBy(xpath = "(//th[text()='Date'])[1]")
+    public WebElement dateText;
+
+    @FindBy(xpath = "(//button[@class='close'])[3]")
+    public WebElement pharmacyCloseButton;
+
+    @FindBy(xpath = "(//i[@class='fa fa-reorder'])[1]")
+    public WebElement pharmacyShowButton;
+
+    @FindBy(xpath = "//td[text()='ayse.busra.pehlivan (338)']")
+    public WebElement pharmacyNameText;
+
+    @FindBy(xpath = "(//button[@class='btn btn-primary btn-xs'])[6]")
+    public WebElement pharmacyPayButton;
+
+    @FindBy(xpath = "//input[@type='text']")
+    public WebElement pharmacyPaymenAmount;
+
+    @FindBy(xpath = "//button[@id='pay_button']")
+    public WebElement pharmacyAddButton;
+
+    @FindBy(xpath = "//span[text()='Pay with Card']")
+    public WebElement pharmacyPayWithCard;
+
+    @FindBy(xpath = "(//input[@class='control'])[1]")
+    public WebElement pharmacyEmailBox;
+
+    @FindBy(xpath = "//input[@id='card_number']")
+    public WebElement pharmacyCardNumberBox;
+
+    @FindBy(xpath = "//div[@class='bodyView']//button[@id='submitButton']")
+    public WebElement pharmacyPayBox;
+
+    @FindBy(xpath = "//i[@class='fa fa-check']")
+    public WebElement pharmacySuccesfulText;
+
+
+    @FindBy(xpath = "(//button[@class='close'])[2]")
+    public WebElement pharmacyClose;
+
+
+
+    public static boolean baslikListelemeMethod(String data) {
+        List<WebElement> actualList = Driver.getDriver().findElements(By.xpath("//th[@aria-controls='DataTables_Table_0']"));
+        List<String> baslikListesiActual = new ArrayList<>();
+        for (WebElement each : actualList
+        ) {
+            baslikListesiActual.add(each.getText());
+        }
+        System.out.println(baslikListesiActual);
+        String[] liste = data.split(", ");
+        int count = 0;
+
+        for (int i = 0; i < liste.length; i++) {
+            for (int j = 0; j < baslikListesiActual.size(); j++) {
+                if (baslikListesiActual.get(j).contains(liste[i])) {
+                    count++;
+                }
+            }
+        }
+        if (count == liste.length) {
+            return true;
+        }
+
+        return false;
+    }
+
+    public static boolean intListSortTest ( int sutunNo){
+        WebElement baslik = Driver.getDriver().findElement(By.xpath("(//th[@aria-controls='DataTables_Table_0'])[" + sutunNo + "]"));
+        baslik.click();
+        ReusableMethods.bekle(3);
+        List<WebElement> ActualList = Driver.getDriver().findElements(By.xpath("//*[@id=\"DataTables_Table_0\"]/tbody/tr/td[" + sutunNo + "]"));
+
+        List<String> ActualStringList = new ArrayList<>();
+        for (WebElement each : ActualList
+        ) {
+            ActualStringList.add(each.getText().replaceAll("[^\\d]", ""));
+        }
+        System.out.println(ActualStringList);
+
+
+        List<String> ExpectedList = new ArrayList<>(ActualStringList);
+        Collections.sort(ExpectedList);
+        if (ActualStringList.equals(ExpectedList)) {
+            return true;
+        }
+        return false;
 
     }
+}
+
+
+
 
 
 

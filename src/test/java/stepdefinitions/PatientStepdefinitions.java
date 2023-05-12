@@ -7,7 +7,9 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import pages.AdminPage;
 import pages.PatientPage;
 import utilities.ConfigReader;
@@ -245,6 +247,179 @@ public class PatientStepdefinitions {
         patientPage.myAppointmentsCVCText.sendKeys("571");
         patientPage.myAppoinmentsSecondPaybutton.click();
     }
+
+
+
+    @Given("Navigate to {string}")
+    public void navigate_to(String string) {
+    }
+
+    @Given("Login to user page as {string} {string}")
+    public void login_to_user_page_as(String username, String password) {
+        Driver.getDriver().get("https://qa.heallifehospital.com/site/userlogin");
+        WebElement usernameLocate = Driver.getDriver().findElement(By.id("email"));
+        usernameLocate.sendKeys(username);
+
+        WebElement passwordLocate = Driver.getDriver().findElement(By.id("password"));
+        passwordLocate.sendKeys(password);
+        WebElement loginButton = Driver.getDriver().findElement(By.xpath("//button[@type='submit']"));
+        loginButton.click();
+
+    }
+
+    @Given("Click on the {string} linkk")
+    public void click_on_the_linkk(String string) {
+        patientPage.pharmacySideBox.click();
+
+    }
+
+    @Given("Verified redirected to pharmacybill page")
+    public void verified_redirected_to_pharmacybill_page() {
+        patientPage.pharmacyBillText.isDisplayed();
+
+    }
+
+    @And("Verify that {string} in the Pharmacy Bill List are displayed")
+    public void verifyThatInThePharmacyBillListAreDisplayed(String data) {
+        PatientPage.baslikListelemeMethod(data);
+    }
+
+    @Then("Click the {string}")
+    public void clickThe(String arg0) {
+        patientPage.searchBox.click();
+
+    }
+
+    @Then("Enter the excisting {string}")
+    public void enterTheExcisting(String arg0) {
+        patientPage.searchBox.sendKeys("PHARMAB43");
+    }
+
+    @And("It is verified that filtering is done by entering the bill number in the Search Box.")
+    public void ıtIsVerifiedThatFilteringIsDoneByEnteringTheBillNumberInTheSearchBox() {
+        Assert.assertTrue(patientPage.pharmacyText.isDisplayed());
+    }
+
+    @Then("It is verified that the headings are sorted by clicking on them.")
+    public void ıtIsVerifiedThatTheHeadingsAreSortedByClickingOnThem() {
+        Assert.assertTrue(PatientPage.intListSortTest(1));
+    }
+
+    @Then("Click the View payments.")
+    public void clickTheViewPayments() {
+        patientPage.wievAllBox.click();
+
+    }
+    @Then("The visibility of the amount text is verified")
+    public void theVisibilityOfTheAmountTextIsVerified() {
+        Assert.assertTrue(patientPage.dateText.isDisplayed());
+    }
+    @Then("close the screen")
+    public void closeTheScreen() {
+        patientPage.pharmacyCloseButton.click();
+
+    }
+
+    @Then("Click the show button.")
+    public void clickTheShowButton() {
+        patientPage.pharmacyShowButton.click();
+
+    }
+
+
+    @Then("Name text \\(ayse.busra.pehlıvan) should visible")
+    public void nameTextAyseBusraPehlıvanShouldVisible() {
+        ReusableMethods.bekle(2);
+        Assert.assertTrue(patientPage.pharmacyNameText.isDisplayed());
+
+    }
+
+    @Then("Click the pay button.")
+    public void clickThePayButton() {
+        patientPage.pharmacyPayButton.click();
+    }
+
+
+
+
+    //}
+
+    @Then("the amount paid is entered.")
+    public void theAmountPaidIsEntered() {
+        patientPage.pharmacyPaymenAmount.click();
+        patientPage.pharmacyPaymenAmount.clear();
+        patientPage.pharmacyPaymenAmount.sendKeys("30");
+        patientPage.pharmacyAddButton.click();
+    }
+    @And("Click the add button.")
+    public void clickTheAddButton() {
+        patientPage.pharmacyAddButton.click();
+    }
+
+
+    @And("Click the pay with card.")
+    public void clickThePayWithCard() {
+        patientPage.pharmacyPayWithCard.click();
+        ReusableMethods.bekle(6);
+
+
+
+    }
+
+    @Given("e-mail, card number, date and cvc code are entered")
+    public void eMailCardNumberDateAndCvcCodeAreEntered() {
+        // patientPage.pharmacyEmailBox.click();
+        // WebElement element=Driver.getDriver().findElement(By.xpath(("//input[@class='control'])[1])")));
+        //JSUtilities.clickWithJS(Driver.getDriver(),element);
+        Actions actions = new Actions(Driver.getDriver());
+        ReusableMethods.bekle(3);
+
+        actions.sendKeys("asd@gmail.com").build().perform();
+        //actions.sendKeys(faker.internet().emailAddress()).perform();
+        actions.sendKeys(Keys.TAB).perform();
+        ReusableMethods.bekle(2);
+        actions.sendKeys("4242 4242").build().perform();
+        ReusableMethods.bekle(2);
+        actions.sendKeys("4242 4242").build().perform();
+        ReusableMethods.bekle(3);
+        ReusableMethods.bekle(3);
+        actions.sendKeys(Keys.TAB).perform();
+        actions.sendKeys("04").perform();
+        ReusableMethods.bekle(3);
+        actions.sendKeys("28").perform();
+        ReusableMethods.bekle(2);
+        actions.sendKeys(Keys.TAB).build().perform();
+        ReusableMethods.bekle(2);
+        actions.sendKeys("123").build().perform();
+        actions.sendKeys(Keys.TAB).perform();
+        ReusableMethods.bekle(2);
+        actions.sendKeys("456").build().perform();
+        ReusableMethods.bekle(2);
+        actions.sendKeys(Keys.TAB).build().perform();
+        ReusableMethods.bekle(2);
+        actions.sendKeys(Keys.ENTER).perform();
+
+        // patientPage.pharmacyPayBox.click();
+        ReusableMethods.bekle(2);
+
+    }
+
+    @Then("The visibility of the success text is verified")
+    public void theVisibilityOfTheSuccessTextIsVerified() {
+
+        Assert.assertTrue(patientPage.pharmacySuccesfulText.isDisplayed());
+    }
+
+    @Then("wait {int} seconds")
+    public void waitSeconds(int arg0) {
+        ReusableMethods.bekle(3);
+    }
+
+    @Then("close the screenn")
+    public void closeTheScreenn() {
+        patientPage.pharmacyClose.click();
+    }
 }
+
 
 

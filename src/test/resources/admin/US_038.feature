@@ -68,7 +68,7 @@ Feature: US_038 As an admin I would like to have a page in the dashboard sidebar
   Scenario Outline: TC_09 When Pathology board in the Single Module Billing window is clicked,(all)Amounts)
   should be displayed.
           And Click the Pathology button on Billing page
-          Then Sees the name of "<Billing List>" that their "<int:Ordered>" number
+          Then Sees the name of "<Billing List>" that their "<Ordered>" number
 
     Examples:
       | Billing List           | Ordered |

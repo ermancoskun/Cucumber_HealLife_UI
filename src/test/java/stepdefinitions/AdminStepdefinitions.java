@@ -98,8 +98,6 @@ public class AdminStepdefinitions {//
     @Given("Click on the Discarged Patient button")
     public void clickOnTheDiscargedPatientButton() {
         adminPage.dischargedPatientButton.click();
-
-        
     }
 
 
@@ -121,12 +119,18 @@ public class AdminStepdefinitions {//
     }
 
 
-    @Then("Sees the {string} that {string}")
+ /*   @Then("Sees the {string} that {string}")
     public void seesTheThat(String filtreAdi, int sira) {
         System.out.println("filtreAdi = " + filtreAdi);
         System.out.println("sira = " + sira);
         HealMethods.makeFilterTest(filtreAdi,sira,7);
+    }*/
+
+    @Then("Sees the name of {string} that their {string} number")
+    public void seesTheNameOfThatTheirNumber(String filtreAdi, String sira) {
+        HealMethods.makeFilterTest(filtreAdi,Integer.parseInt(sira),8);
     }
+
 
 
 

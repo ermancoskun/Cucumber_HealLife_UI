@@ -1,5 +1,7 @@
 package stepdefinitions;
 
+
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -48,7 +50,15 @@ public class PatientStepdefinitions {
         System.out.println(expected);
       //  Assert.assertTrue(expected.equalsIgnoreCase("Randevularım"));
 
-}
+    }
+
+   @And("user should be able to on the IPD page")
+    public void userShouldBeAbleToOnTheIPDPage() {
+        Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains("admin/patient/ipdsearch"));
+    }
+
+
+
 
 
     @When("Click on the notifications button")

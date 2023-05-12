@@ -11,7 +11,9 @@ import utilities.Driver;
 
 import java.util.List;
 
+
 import static utilities.Driver.driver;
+
 
 public class PatientPage extends Base {
     // Userlogin >
@@ -93,10 +95,13 @@ public class PatientPage extends Base {
     @FindBy(xpath = "//span[text()=' Dashboard']")
     public WebElement dashboardButton;
 
+
     @FindBy(xpath = "//i[@class='fas fa-hospital-alt']")
+
     public WebElement myAppiontmentsButton;
     @FindBy(xpath = "//span[text()=' OPD']")
     public WebElement opdButton;
+
     @FindBy(xpath = "//span[text()=' IPD']")
     public WebElement ipdButton;
     @FindBy(xpath = "//span[text()=' Pharmacy']")
@@ -264,6 +269,15 @@ public class PatientPage extends Base {
 
 
     }
+
+
+
+
+
+
+
+
+
     public void myAppointmentsAddAppointment(){
         userLogin();
         myAppiontmentsButton.click();
@@ -292,17 +306,13 @@ public class PatientPage extends Base {
             // Assume that the language has been changed successfully
             String message = "Status Change Successfully";
 
+
             // Get the message element from the page
             String pageSource = driver.getPageSource();
             Assert.assertTrue(pageSource.contains(message));
         }
+
     }
-
-
-
-
-
-
 
 
 

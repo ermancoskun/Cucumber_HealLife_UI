@@ -418,6 +418,112 @@ public class PatientPage extends Base {
         return false;
 
     }
+
+    //============================================ Nesibe [US_023] OPD MENU ============================================
+
+    @FindBy(xpath = "//*[@id=sibe-box]/ul/li[3]/a")
+    public WebElement opdMenu ;
+
+    @FindBy(xpath = "//*[text()=' Overview']")
+    public WebElement overview ;
+
+    @FindBy(xpath = "//*[text()=' Visits']")
+    public WebElement visits ;
+
+    @FindBy(xpath = "//*[text()=' Lab Investigation']")
+    public WebElement labInvestigation ;
+
+    @FindBy(xpath = "//*[text()=' Treatment History']")
+    public WebElement treatmentHistory ;
+
+    @FindBy(xpath = "//*[text()=' Timeline']")
+    public WebElement timeline ;
+
+    @FindBy(xpath = "//*[text()='Gender']")
+    public WebElement gender ;
+
+    @FindBy(xpath = "//*[text()='Age']")
+    public WebElement age ;
+
+    @FindBy(xpath = "//*[text()='Guardian Name']")
+    public WebElement guardianName ;
+
+    @FindBy(xpath = "//*[text()='Phone']")
+    public WebElement phone ;
+
+    @FindBy(xpath = "//*[text()='Visit Details']")
+    public WebElement sumVisitDetails ;
+
+    @FindBy(xpath = "(//*[text()='Lab Investigation'])[1]")
+    public WebElement sumlabInvestigation ;
+
+    @FindBy(xpath = "(//input[@type='search'])[2]")
+    public WebElement searchLabInvestigation ;
+
+    @FindBy(xpath = "(//*[text()='Treatment History'])[1]")
+    public WebElement sumTreatmentHistory ;
+
+    @FindBy(xpath = "(//*[text()='Timeline'])[1]")
+    public WebElement sumTimeline ;
+
+    @FindBy(xpath = "(//*[text()='Consultant Doctor'])[1]")
+    public WebElement consultantDoctor ;
+
+    @FindBy(xpath = "(//*[@class='sorting'])[1]")
+    public WebElement opdNo ;
+
+    @FindBy(xpath = "(//*[@class='sorting'])[2]")
+    public WebElement caseId ;
+
+    @FindBy(xpath = "(//*[@class='sorting'])[3]")
+    public WebElement appointmentDate ;
+
+    @FindBy(xpath = "(//*[@class='sorting'])[4]")
+    public WebElement consultant ;
+
+    @FindBy(xpath = "(//*[@class='sorting'])[5]")
+    public WebElement referance ;
+
+    @FindBy(xpath = "(//input[@type='search'])[1]")
+    public WebElement searchVisit ;
+
+    @FindBy(xpath = "//*[text()='Test Name']")
+    public WebElement testName ;
+
+    @FindBy(xpath = "(//*[text()='Case ID / Patient ID'])[3]")
+    public WebElement caseId2 ;
+
+    @FindBy(xpath = "//*[text()='Lab']")
+    public WebElement lab ;
+
+    @FindBy(xpath = "//*[text()='Sample Collected']")
+    public WebElement sampleCollected ;
+
+    @FindBy(xpath = "//*[text()='Expected Date']")
+    public WebElement expectedData ;
+
+    @FindBy(xpath = "(//*[text()='Approved By'])")
+    public WebElement approvedBy ;
+
+    @FindBy(xpath = "(//*[text()='Appointment Date'])[3]")
+    public WebElement appointmentDate2 ;
+
+    @FindBy(xpath = "(//*[text()='Symptoms'])")
+    public WebElement symptoms ;
+
+    @FindBy(xpath = "(//input[@type='search'])[3]")
+    public WebElement searchTreatment ;
+
+    @FindBy(xpath = "(//*[text()='Action'])[1]")
+    public WebElement actionVisit ;
+
+    @FindBy(xpath = "((//*[text()='Action'])[2]")
+    public WebElement actionLabInvestigation ;
+
+    @FindBy(xpath = "(//*[text()='Action'])[3]")
+    public WebElement actionTreatmentHistory ;
+
+    //============================================ Nesibe [US_023] OPD MENU SONU =======================================
 }
 
 

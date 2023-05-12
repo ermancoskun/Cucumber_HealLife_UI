@@ -1,18 +1,18 @@
 package stepdefinitions;
 
-
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import org.junit.Assert;
-import org.openqa.selenium.By;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
+
 import pages.HomePage;
+import utilities.ConfigReader;
 import utilities.Driver;
 import utilities.ReusableMethods;
-import utilities.ConfigReader;
+
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.interactions.Actions;
+
 
 
 import java.util.List;
@@ -20,7 +20,10 @@ import java.util.List;
 
 public class HomepageStepdefinitions {
 
+
     HomePage homepage = new HomePage();
+
+
 
     @Given("go to home page")
     public void goToHomePage() {
@@ -40,14 +43,11 @@ public class HomepageStepdefinitions {
         }
     }
 
-
-
-
     Actions actions = new Actions(Driver.getDriver());
 
 
     /////////////////////////////////////////////////////////////////////////////////////
-    @Given("Launch browser.")
+    @Given("Launch browser")
     public void launchBrowser() {
         Driver.getDriver();}
 
@@ -117,6 +117,108 @@ public class HomepageStepdefinitions {
         String expectedUrl = ConfigReader.getProperty("appointmentPageUrl");
         Assert.assertEquals("The Url of the Appointment page is correct",expectedUrl,actualUrl);
     }
+
+    //============================================ Nesibe [US_005] Feauture Boards =====================================
+
+    @Given("User goes to home page")
+    public void user_goes_to_home_page() {
+        Driver.getDriver().get(ConfigReader.getProperty("heallifeUrl"));
+        ReusableMethods.bekle(5);
+    }
+
+    @Then("Verify {string}  is displayed.")
+    public void verify_is_displayed(String expectedBoard) {
+        expectedBoard = "Featured Services";
+    }
+
+    @Then("Verify the Featured Services  is visible.")
+    public void verifyIsTheFeaturedServicesVisible() {
+        String expectedBoard = "Featured Services";
+
+        String actualBoard = homepage.feautureServicesBoard.getText();
+        Assert.assertTrue(actualBoard.contains(expectedBoard));
+        ReusableMethods.bekle(5);
+    }
+
+
+    @Then("Verify the Medical Treatment board  is displayed")
+    public void verifyTheMedicalTreatmentBoardIsDisplayed() {
+        String expectedText = "Medical Treatment";
+        String actualText = homepage.nurseResidentBoard.getText();
+        Assert.assertTrue(actualText.contains(expectedText));
+        ReusableMethods.bekle(5);
+    }
+
+    @Then("Verify the Emergency Help board  is displayed")
+    public void verifyTheEmergencyHelpBoardIsDisplayed() {
+        String expectedText = "Emergency Help";
+        String actualText = homepage.emergencyHelpBoard.getText();
+        Assert.assertTrue(actualText.contains(expectedText));
+        ReusableMethods.bekle(5);
+    }
+
+    @Then("Verify the Qualified Doctors  board  is displayed")
+    public void verifyTheQualifiedDoctorsBoardIsDisplayed() {
+        String expectedText = "Qualified Doctors";
+        String actualText = homepage.emergencyHelpBoard.getText();
+        Assert.assertTrue(actualText.contains(expectedText));
+        ReusableMethods.bekle(5);
+    }
+
+    @Then("Verify the Medical professionals board  is displayed")
+    public void verifyTheMedicalProfessionalsBoardIsDisplayed() {
+        String expectedText = "Medical professionals";
+        String actualText = homepage.onsiteMedicalStaffBoard.getText();
+        Assert.assertTrue(actualText.contains(expectedText));
+        ReusableMethods.bekle(5);
+    }
+
+    @And("Close the page")
+    public void closeThePage() {
+        Driver.closeDriver();
+    }
+
+
+    // ============= Nesibe [US_005] SON =========
+
+    @Then("Sayfayi kaydir")
+    public void sayfayiKaydir() {
+        actions.sendKeys(Keys.PAGE_DOWN).perform();
+    }
+
+    @And("1 saniye bekle")
+    public void saniyeBekle() {
+        ReusableMethods.bekle(1);
+    }
+
+    @Then("Verify the Medical Treatment board  is visible")
+    public void verifyTheMedicalTreatmentBoardIsVisible() {
+        String expectedText = "Medical Treatment";
+        String actualText = homepage.nurseResidentBoard.getText();
+        Assert.assertTrue("Medical Treatment board is not visible", actualText.contains(expectedText));
+    }
+
+    @Then("Verify the Emergency Help board  is visible")
+    public void verifyTheEmergencyHelpBoardIsVisible() {
+        Assert.assertTrue("Emergency Help board is not visible",homepage.emergencyHelpBoard.isDisplayed());
+    }
+
+    @Then("Verify the Qualified Doctors  board  is visible")
+    public void verifyTheQualifiedDoctorsBoardIsVisible() {
+        String expectedText = "Qualified Doctors";
+        String actualText = homepage.onsiteMedicalStaffBoard.getText();
+        Assert.assertTrue("Qualified Doctors board is not visible", actualText.contains(expectedText));
+    }
+
+    @Then("Verify the Medical professionals information board is visible")
+    public void verifyTheMedicalProfessionalsInformationBoardIsVisible() {
+        String expectedText = "Medical professionals";
+        String actualText = homepage.comunicationAllPartBoard.getText();
+        Assert.assertTrue("Medical professionals board is not visible", actualText.contains(expectedText));
+    }
+
+    //============================================ Nesibe [US_005] Feauture Boards End ================================================
+
 }
 
 

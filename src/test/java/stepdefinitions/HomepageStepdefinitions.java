@@ -40,9 +40,6 @@ public class HomepageStepdefinitions {
         }
     }
 
-
-
-
     Actions actions = new Actions(Driver.getDriver());
 
 

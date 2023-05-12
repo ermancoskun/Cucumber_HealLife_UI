@@ -12,6 +12,7 @@ import pages.AdminPage;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class HealMethods {
@@ -131,17 +132,34 @@ public class HealMethods {
 
     }
 
-    public static void makeFilterTest(String filterName,int filtreKacinciSirada, int toplamFiltreSayisi){
+    public static void makeFilterTest(String filterName,int filtreKacinciSirada, int toplamSutunSayisi){
+        System.out.println("filterName = " + filterName);
+        System.out.println("filtreKacinciSirada = " + filtreKacinciSirada);
+        System.out.println("toplamFiltreSayisi = " + toplamSutunSayisi);
+        ReusableMethods.bekle(3);
         WebElement filter=Driver.getDriver().findElement(By.xpath("(//th[text()='"+filterName+"'])[1]"));
         ReusableMethods.bekle(2);
         Assert.assertTrue(filter.isDisplayed());
         filter.click();
+        ReusableMethods.bekle(4);
         List<String> filtreList=new ArrayList<>();
-        for (int i = filtreKacinciSirada; i <=toplamFiltreSayisi*100 ; i=i+toplamFiltreSayisi) {
-            filtreList.add(Driver.getDriver().findElement(By.xpath("(//td)["+i+"]")).getText());
+        for (int i = filtreKacinciSirada; i <=toplamSutunSayisi*100 ; i=(i+toplamSutunSayisi+1)) {
+            WebElement hucreElement=Driver.getDriver().findElement(By.xpath("(//td)["+i+"]"));
+            filtreList.add(hucreElement.getText());
         }
         List<String> expectedList = new ArrayList<>(filtreList);
-        Collections.sort(expectedList);
+        Collections.sort(expectedList, new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                int n1 = extractNumber(o1);
+                int n2 = extractNumber(o2);
+                return n1 - n2;
+            }
+            private int extractNumber(String s) {
+                String number = s.replaceAll("\\D", "");
+                return number.isEmpty() ? 0 : Integer.parseInt(number);
+            }
+        });
         Assert.assertEquals(filterName+" filter not functional",expectedList,filtreList);
     }
     public static void indirmeyiTestEt(String aranacakKelime,String format){

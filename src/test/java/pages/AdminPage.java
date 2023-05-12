@@ -69,8 +69,9 @@ public class AdminPage extends Base{
     @FindBy (xpath = "//h3[@class=\"box-title titlefix\"]")
     public WebElement ipdDischargedConfirmationText;
 
+    //Admin > IPD &  Discharge Patient  > Table headers
     @FindBy (xpath = "//*[@id=\"DataTables_Table_0\"]//th")
-    public List<WebElement> ipdDischargeTableHeaders;
+    public List<WebElement> ipdPatientAndDischargePatientTableHeaders;
 
     //********************Duygu*************************************//
 

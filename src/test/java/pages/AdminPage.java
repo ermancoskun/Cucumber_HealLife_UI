@@ -50,4 +50,5 @@ public class AdminPage extends Base{
     @FindBy(xpath = "(//select[@name='marital_status'])[2]")
     public WebElement maritalStatusDropDown;
 
+
 }

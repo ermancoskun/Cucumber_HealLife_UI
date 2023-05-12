@@ -1,6 +1,8 @@
 package pages;
 
 
+import org.junit.Assert;
+import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -8,6 +10,9 @@ import utilities.ConfigReader;
 import utilities.Driver;
 
 import java.util.List;
+
+
+import static utilities.Driver.driver;
 
 
 public class PatientPage extends Base {
@@ -28,6 +33,9 @@ public class PatientPage extends Base {
     @FindBy(xpath = "//a[@role='button']")
     public WebElement homeThreeDots;
 
+    @FindBy(xpath = "//body[@class='skin-blue fixed sidebar-mini vsc-initialized']")
+    public WebElement thredotstrue;
+
     //HomePatientpageFlag
     @FindBy(xpath = "(//button[@type='button'])")
     public WebElement homeFlag;
@@ -42,8 +50,12 @@ public class PatientPage extends Base {
 
     @FindBy(xpath = "//i[@class='fa fa-bell-o']")
     public WebElement notifications;
+    @FindBy(xpath = "//h3[@class=\"box-title titlefix\"]")
+    public WebElement notificationsboard;
     @FindBy(xpath = "//button[@autocomplete='off']")
     public WebElement notificationsDeletebutton;
+    @FindBy(xpath = "//*[text()=\"No Record Found\"]")
+    public WebElement notificationsInformation;
 
     //PatientHome page Profile_İmage
     @FindBy(xpath = "//img[@class='topuser-image']")
@@ -76,7 +88,7 @@ public class PatientPage extends Base {
 
     //Paitientpage_Dashborad_ON_Heallife_Textfield
 
-    @FindBy(xpath = "//span[@class='logo-mini']")
+    @FindBy(xpath = "(//img[@alt='Heal Life Hospital & Research Center'])[2]")
     public WebElement DashboardOnHeallifeText;
 
 
@@ -84,9 +96,8 @@ public class PatientPage extends Base {
     public WebElement dashboardButton;
 
 
+    @FindBy(xpath = "//i[@class='fas fa-hospital-alt']")
 
-
-    @FindBy(xpath = "//span[text()='My Appointments']")
     public WebElement myAppiontmentsButton;
     @FindBy(xpath = "//span[text()=' OPD']")
     public WebElement opdButton;
@@ -210,10 +221,15 @@ public class PatientPage extends Base {
 
     @FindBy(xpath = "//*[text()='Records: 11 to 12 of 12']")
     public WebElement myAppointmentsSecondspageDetails;
+    @FindBy(xpath = "//ul[@class='list-group list-group-unbordered']\n")
+    public WebElement myInformations;
+
+
 
 
 
     public static void checkHeaderExistence(WebElement element) {
+
         String[] headerNames = {"Patient Id", "Gender", "Marital Status", "Phone", "Email", "Address", "Age", "Guardian Name", "Username", "Password"};
 
         for (String headerName : headerNames) {
@@ -226,24 +242,24 @@ public class PatientPage extends Base {
         }
     }
 
-    public boolean checkTableHeadersExist(WebElement table) {
-        List<WebElement> headers = table.findElements(By.tagName("th"));
-        String[] expectedHeaders = {"Appointment No", "Appointment Date", "Priority", "Specialist", "Doctor", "Status", "Message", "Action"};
+        public  static  boolean checkTableHeadersExist(WebElement table) {
+            List<WebElement> headers = table.findElements(By.tagName("th"));
+            String[] expectedHeaders = {"Appointment No", "Appointment Date", "Priority", "Specialist", "Doctor", "Status", "Message", "Action"};
 
-        if (headers.size() != expectedHeaders.length) {
-            return false;
-        }
-
-        for (int i = 0; i < expectedHeaders.length; i++) {
-            if (!headers.get(i).getText().equals(expectedHeaders[i])) {
+            if (headers.size() != expectedHeaders.length) {
                 return false;
             }
-        }
+
+            for (int i = 0; i < expectedHeaders.length; i++) {
+                if (!headers.get(i).getText().equals(expectedHeaders[i])) {
+                    return false;
+                }
+            }
 
         return true;
     }
 
-    public void userLogin(){
+    public  void userLogin(){
         Driver.getDriver().get(ConfigReader.getProperty("url"));
         entryLoginbutton.click();
         entryEmailText.sendKeys(ConfigReader.getProperty("usernameAysenuriye"));
@@ -284,7 +300,28 @@ public class PatientPage extends Base {
     }
 
 
-}
+
+
+        public void testStatusChangeMessage() {
+            // Assume that the language has been changed successfully
+            String message = "Status Change Successfully";
+
+
+            // Get the message element from the page
+            String pageSource = driver.getPageSource();
+            Assert.assertTrue(pageSource.contains(message));
+        }
+
+    }
+
+
+
+
+
+
+
+
+
 
 
 

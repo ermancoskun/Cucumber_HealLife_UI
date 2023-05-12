@@ -11,10 +11,10 @@ Feature: US_005 As a user, I would like to have the "Featured Services" section 
     Given User goes to home page
     Then  Verify the Medical Treatment board  is displayed
 
-  Scenario: TC-02 Verify that the Medical Treatment, Emergency Help, Qualified Doctors, Medical professionals information boards are displayed
+    Scenario: TC-02 Verify that the Medical Treatment, Emergency Help, Qualified Doctors, Medical professionals information boards are displayed
     Then  Verify the Emergency Help board  is displayed
-  Scenario: TC-02 Verify that the Medical Treatment, Emergency Help, Qualified Doctors, Medical professionals information boards are displayed
+    Scenario: TC-02 Verify that the Medical Treatment, Emergency Help, Qualified Doctors, Medical professionals information boards are displayed
     Then  Verify the Qualified Doctors  board  is displayed
-  Scenario: TC-02 Verify that the Medical Treatment, Emergency Help, Qualified Doctors, Medical professionals information boards are displayed
+    Scenario: TC-02 Verify that the Medical Treatment, Emergency Help, Qualified Doctors, Medical professionals information boards are displayed
     Then  Verify the Medical professionals board  is displayed
     And   Close the page

@@ -5,7 +5,33 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import utilities.Driver;
 
-public class HomePage extends Base{
+
+import java.util.List;
+
+public class HomePage extends Base {
+
+
+    public HomePage() {
+
+    }
+
+    @FindBy(xpath = "//div[@class='team-member']//img")
+    public List<WebElement> ourDoctorsResim;
+
+    @FindBy(xpath = "//div[@class='team-member']//h4")
+    public List<WebElement> ourDoctorsIsim;
+
+    @FindBy(xpath = "//div[@class='team-member']//p")
+    public List<WebElement> ourDoctorsUnvan;
+
+    public int ourDoctorsPicturesCount() {
+        return ourDoctorsResim.size();
+    }
+
+
+
+
+
 
     //********************Duygu*************************************//
 
@@ -18,4 +44,14 @@ public class HomePage extends Base{
     public WebElement complainButton;
 
     //////////////////////////////////////////////////////////////////
+
+
+    // homepage > Mainbanner
+    @FindBy (tagName = "html")
+    public WebElement MainBanner;
+
+    // homepage > Appointment Button
+    @FindBy (xpath = "//*[@id=\"navbar-collapse-3\"]/ul/li[2]/a")
+    public WebElement appointmentButton;
+
 }

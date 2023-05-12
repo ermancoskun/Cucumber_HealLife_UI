@@ -1,8 +1,14 @@
 package pages;
 
+
+import org.checkerframework.checker.calledmethods.qual.EnsuresCalledMethodsIf;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+
 import utilities.ConfigReader;
+
+import java.util.List;
+
 public class AdminPage extends Base{
 
 
@@ -53,6 +59,24 @@ public class AdminPage extends Base{
     //Admin > Billing
     @FindBy (xpath = "//p[.='Pathology']")
     public WebElement pathologyButton;
+
+
+    //Admin > IPD >
+    @FindBy(id = "addp")
+    public WebElement addPatientButtonIPD;
+
+    //Admin > IPD > Discharged Patient Button
+    @FindBy(xpath = "//a[@class=\"btn btn-primary btn-sm\"]")
+    public WebElement dischargedPatientButton;
+
+    //Admin > IPD > Discharged Patient Button > Discharged Confirmation Text
+    @FindBy (xpath = "//h3[@class=\"box-title titlefix\"]")
+    public WebElement ipdDischargedConfirmationText;
+
+    @FindBy (xpath = "//*[@id=\"DataTables_Table_0\"]//th")
+    public List<WebElement> ipdDischargeTableHeaders;
+
+
     //********************Duygu*************************************//
 
     // adminLoginPage
@@ -95,6 +119,7 @@ public class AdminPage extends Base{
 
     //********************Duygu*************************************//
     //////////////////////////////////////////////////////////////////
+
 
 
 

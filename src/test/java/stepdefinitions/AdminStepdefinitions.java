@@ -14,7 +14,11 @@ import utilities.Driver;
 import utilities.HealMethods;
 import utilities.ReusableMethods;
 
-public class AdminStepdefinitions {
+
+import java.util.List;
+
+public class AdminStepdefinitions {//
+
     AdminPage adminPage=new AdminPage();
     Faker faker=new Faker();
     AdminPage adminpage=new AdminPage();
@@ -71,6 +75,32 @@ public class AdminStepdefinitions {
     @And("Choose All and {int} options for patient display")
     public void chooseAllAndOptionsForPatientDisplay(int arg0) {
         HealMethods.makeAll100Test();
+    }
+
+    @Given("Click on the Add Patient button in IPD page")
+    public void clickOnTheAddPatientButtonInIPDPage() {
+        adminPage.addPatientButtonIPD.click();
+    }
+
+    @Given("Click on the Discarged Patient button")
+    public void clickOnTheDiscargedPatientButton() {
+        adminPage.dischargedPatientButton.click();
+
+        
+    }
+
+    @And("user should be able to on the Discarged Patient page")
+    public void userShouldBeAbleToOnTheDiscargedPatientPage() {
+        Assert.assertTrue(adminPage.ipdDischargedConfirmationText.isDisplayed());
+    }
+
+    @Given("It should be displayed in the IPD Discharged Patient List")
+    public void itShouldBeDisplayedInTheIPDDischargedPatientList(List<String> ipdTableHeads) {
+        for (int i = 0; i < ipdTableHeads.size(); i++) {
+            Assert.assertEquals(ipdTableHeads.get(i), adminPage.ipdDischargeTableHeaders.get(i).getText());
+
+        }
+
     }
 
     @And("Click {int}. iconButton under the Total Recheckup for display first patient profile")

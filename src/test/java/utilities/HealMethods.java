@@ -1,15 +1,23 @@
 package utilities;
 
+import com.github.javafaker.Faker;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
+import pages.AdminPage;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
 public class HealMethods {
+    static AdminPage adminPage=new AdminPage();
+    static Faker faker=new Faker();
+   static Actions actions=new Actions(Driver.getDriver());
 
 
     public static void loginAsAdmin(String username, String password){
@@ -35,7 +43,9 @@ public class HealMethods {
         loginButton.click();
     }
 
-    public static void clickASidebarLink(String linkName){
+    public static void clickASidebarLink(String linkName){ //Sidebar (sol taraf) daki linklere isimlerini girdiginizde tiklar,
+                                                        // developer'in kimisine bosluk koyup kimisine koymadigi goz onune alarak
+                                                        //parametre olarak link in ismini girmelisiniz
         WebElement linkname=Driver.getDriver().findElement(By.xpath("//*[text()='"+linkName+"']"));
         linkname.click();
     }
@@ -86,11 +96,15 @@ public class HealMethods {
 
     public static void makeIconTest(){
         String bolumBasligi=Driver.getDriver().findElement(By.xpath("//h3[@class='box-title titlefix']")).getText();
-        bolumBasligi=bolumBasligi.split(" ")[0]; //bolum baslıginin ilk kelimesini aldım
+        bolumBasligi=bolumBasligi.split(" ")[0]; //bolum baslıginin ilk kelimesini aldım,her sayfada degisbiliyor
 
         WebElement copyIcon=Driver.getDriver().findElement(By.xpath("//i[@class='fa fa-files-o']"));
         Assert.assertTrue(copyIcon.isDisplayed());
         copyIcon.click();
+        WebElement copyText=Driver.getDriver().findElement(By.xpath("//h2[text()='Copy to clipboard']"));
+        String copyTextStr=JSUtilities.getTextWithJS(Driver.getDriver(),copyText);
+        Assert.assertEquals("Copy to clipboard",copyTextStr); //ekrana cikan yaziyi JS ile yakalayip assert icine atip test ediyoz
+
 
         WebElement excelIcon=Driver.getDriver().findElement(By.xpath("//i[@class='fa fa-file-excel-o']"));
         Assert.assertTrue(excelIcon.isDisplayed());
@@ -109,12 +123,17 @@ public class HealMethods {
 
         WebElement printIcon=Driver.getDriver().findElement(By.xpath("//i[@class='fa fa-print']"));
         Assert.assertTrue(printIcon.isDisplayed());
+        printIcon.click();
+        int acilanPencereSayisi=JSUtilities.getNumberOfOpenWindows(Driver.getDriver()); //JS ile acilan pencere sayisini yakalıyoruz
+        //System.out.println("acilanPencereSayisi = " + acilanPencereSayisi);
+        Assert.assertTrue(acilanPencereSayisi>1); //print icin baska sayfaya gidecegi icin 1 den buyukse test pass olmalı
 
 
     }
 
     public static void makeFilterTest(String filterName,int filtreKacinciSirada, int toplamFiltreSayisi){
         WebElement filter=Driver.getDriver().findElement(By.xpath("(//th[text()='"+filterName+"'])[1]"));
+        ReusableMethods.bekle(2);
         Assert.assertTrue(filter.isDisplayed());
         filter.click();
         List<String> filtreList=new ArrayList<>();
@@ -127,17 +146,83 @@ public class HealMethods {
     }
     public static void indirmeyiTestEt(String aranacakKelime,String format){
         //bu metot downloads klasöründeki dosyaları sıralar ve dosya ismi "aranacakKelime.format" içeriyor mu diye test eder
+        //metoda iki parametre gonderilir ilki isim ikinci format olarak arar: or. patient.pdf
         String downloadsPath = System.getProperty("user.home") + "/Downloads";
         File downloadsFolder = new File(downloadsPath);
         File[] files = downloadsFolder.listFiles();
         boolean fileFound = false;
         for (File file : files) {
-            if (file.getName().contains(aranacakKelime)||file.getName().contains(format)) {
+            if (file.getName().contains(aranacakKelime) || file.getName().contains(format)) {
                 fileFound = true;
                 break;
             }
         }
         ReusableMethods.bekle(3);
         Assert.assertTrue("Download of "+aranacakKelime+format+" not successful",fileFound);
+    }
+
+    public static void clickBlueButton(String butonIsmi){
+        Driver.getDriver().findElement(By.xpath("//h4[text()='"+butonIsmi+"']")).click();
+    }
+
+    public static void createNewPatient(){ // +New Patient butonuna basar, bilgileri random girer save yapar, kayıt yaptığını doğrular
+        Driver.getDriver().findElement(By.xpath("//span[text()='New Patient']")).click();
+        adminPage.nameBox.sendKeys(faker.name().fullName());
+        adminPage.guardianNameBox.sendKeys(faker.name().fullName());
+        Select select=new Select(adminPage.genderDropDown);
+        select.selectByIndex(faker.random().nextInt(1,2));
+        adminPage.birthDateBox.sendKeys(faker.date().birthday().toString());
+        actions.sendKeys(Keys.TAB).perform();
+        actions.sendKeys(faker.number().digits(23)).perform();
+        actions.sendKeys(Keys.TAB).perform();
+        actions.sendKeys(faker.number().digits(8)).perform();
+        actions.sendKeys(Keys.TAB).perform();
+        actions.sendKeys(faker.number().digits(5)).perform();
+
+        select=new Select(adminPage.bloodGroupDropDown);
+        select.selectByIndex(faker.number().numberBetween(1,7));
+
+        select=new Select(adminPage.maritalStatusDropDown);
+        select.selectByIndex(faker.number().numberBetween(1,5));
+
+        actions.sendKeys(Keys.TAB).sendKeys(Keys.TAB).perform();
+        actions.sendKeys(faker.phoneNumber().phoneNumber().replaceAll("\\D","")).perform();
+
+        actions.sendKeys(Keys.TAB).perform();
+        actions.sendKeys(faker.internet().emailAddress()).perform();
+
+        actions.sendKeys(Keys.TAB).perform();
+        actions.sendKeys(faker.address().fullAddress()).perform();
+
+        actions.sendKeys(Keys.TAB).perform();
+        actions.sendKeys(faker.medical().diseaseName()).perform();
+
+        actions.sendKeys(Keys.TAB).perform();
+        actions.sendKeys(faker.medical().symptoms()).perform();
+
+        actions.sendKeys(Keys.TAB).perform();
+        actions.sendKeys(faker.idNumber().valid()).perform();
+
+        actions.sendKeys(Keys.TAB).perform();
+        actions.sendKeys("11.05.23").perform();
+
+        actions.sendKeys(Keys.TAB).perform();
+        actions.sendKeys(faker.idNumber().validSvSeSsn()).perform();
+
+        actions.sendKeys(Keys.TAB).perform();
+        actions.sendKeys(faker.phoneNumber().cellPhone()).perform();
+
+        Driver.getDriver().findElement(By.id("formaddpabtn")).click();
+        WebElement basariliGrisYaziElement=Driver.getDriver().findElement(By.xpath("//div[@class='toast-message']"));
+        String actualYazi=JSUtilities.getTextWithJS(Driver.getDriver(),basariliGrisYaziElement);
+        Assert.assertEquals("Record Saved Successfully",actualYazi);
+
+        ReusableMethods.bekle(4);
+
+    }
+    public static void clickIconWith3Line(int sira){ //listenin en saginda yer alan ve uzerine gelindiginde ancak
+                                                    //gorunen icona tiklar. Sira sayisi parametre olarak girilmeli
+    WebElement iconButton=Driver.getDriver().findElement(By.xpath("(//i[@class='fa fa-reorder'])["+sira+"]"));
+    JSUtilities.clickWithJS(Driver.getDriver(),iconButton);
     }
 }

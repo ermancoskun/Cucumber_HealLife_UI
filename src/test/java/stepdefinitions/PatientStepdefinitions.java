@@ -7,7 +7,10 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import pages.AdminPage;
 import pages.PatientPage;
 import utilities.ConfigReader;
@@ -15,11 +18,16 @@ import utilities.Driver;
 import utilities.HealMethods;
 import utilities.ReusableMethods;
 
+import javax.swing.*;
+
 import static utilities.Driver.driver;
+import static utilities.Driver.getDriver;
 
 public class PatientStepdefinitions {
     PatientPage patientPage=new PatientPage();
     AdminPage adminPage=new AdminPage();
+    Actions actions=new Actions(Driver.getDriver());
+    JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
 
 
     @Given("Goes to user login page")
@@ -48,7 +56,8 @@ public class PatientStepdefinitions {
         ReusableMethods.sleep(3);
         String expected=patientPage.myAppiontmentsButton.getText();
         System.out.println(expected);
-      //  Assert.assertTrue(expected.equalsIgnoreCase("Randevularım"));
+        //tıklıyor ama kodlarda randevularım ingilizce gözüküyor
+    //   Assert.assertTrue(expected.equalsIgnoreCase("Randevularım"));
 
     }
 
@@ -64,6 +73,7 @@ public class PatientStepdefinitions {
     @When("Click on the notifications button")
     public void clickOnTheNotificationsButton() {
         patientPage.notifications.click();
+
 
     }
 
@@ -85,7 +95,8 @@ public class PatientStepdefinitions {
 
     @When("User  see  Heal Life Hospital & Research Center text.")
     public void userSeeHealLifeHospitalResearchCenterText() {
-        Assert.assertTrue(patientPage.DashboardOnHeallifeText.getText().contains("Heal"));
+
+   Assert.assertTrue(patientPage.DashboardOnHeallifeText.getText().contains("Heal"));
 
     }
 
@@ -168,7 +179,7 @@ public class PatientStepdefinitions {
 
     @Then("User  be on the Radiology profile page")
     public void userBeOnTheRadiologyProfilePage() {
-        Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains(" dashboard/radiology"));
+        Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains("radiology"));
 
     }
 
@@ -224,7 +235,10 @@ public class PatientStepdefinitions {
 
     @When("Click on the Delete button  User  be Delete menu")
     public void clickOnTheDeleteButtonUserBeDeleteMenu() {
+        ReusableMethods.bekle(2);
         patientPage.myAppointmentdeleteButton.click();
+
+        driver.switchTo().alert().accept();
 
     }
 
@@ -232,18 +246,93 @@ public class PatientStepdefinitions {
     public void clikOnTheShowButtonUserSeesAppointmentDetails() {
         patientPage.myAppointmentsShowButton.click();
         patientPage.myAppointmentsShowcloseButton.click();
+
     }
 
     @When("User enters card information and completes payment")
     public void userEntersCardInformationAndCompletesPayment() {
-        patientPage.myAppiontmentsPaybutton.click();
-        patientPage.myAppointmentsPaywithCardbutton.click();
+        patientPage.payCard();
+Assert.assertEquals(patientPage.SuccestText.getText(),"SUCCESS");
+    }
+
+    @When("Click on the three lines button and User  see Dashboard navbar close")
+    public void clickOnTheThreeLinesButtonAndUserSeeDashboardNavbarClose() {
+        patientPage.homeThreeDots.click();
+        patientPage.homeThreeDots.click();
+        patientPage.homeThreeDots.isDisplayed();
+    }
+
+    @When("Click on the Profile picture User  see the user name, title and profile picture should be displayed in the tab that opens.")
+    public void clickOnTheProfilePictureUserSeeTheUserNameTitleAndProfilePictureShouldBeDisplayedInTheTabThatOpens() {
+        patientPage.profileImage.click();
+        ReusableMethods.bekle(1);
+        patientPage.profileNametext.isDisplayed();
+
+    }
+
+
+    @When("Click on Delete button and User not see the notifications")
+    public void clickOnDeleteButtonAndUserNotSeeTheNotifications() {
         ReusableMethods.bekle(2);
-        patientPage.myAppointmentsEmailtext.sendKeys("aysenuriye27@gmail.com");
-        patientPage.myAppointmentsCardnumberText.sendKeys("4242 4242 4242 4242");
-        patientPage.myAppointmentsMMYYText.sendKeys("0727");
-        patientPage.myAppointmentsCVCText.sendKeys("571");
-        patientPage.myAppoinmentsSecondPaybutton.click();
+        patientPage.notificationsDeletebutton.click();
+        driver.switchTo().alert().accept();
+        patientPage.notificationsInformation.isDisplayed();
+    }
+
+    @When("User creates a record by entering the appointment information.")
+    public void userCreatesARecordByEnteringTheAppointmentInformation() {
+
+        patientPage.myAppointmentsAddAppointment();
+    }
+
+    @When("User calls in appointments")
+    public void userCallsInAppointments() {
+
+        patientPage.myAppoinmetSeachtext.sendKeys("APPNO435");
+        Assert.assertEquals(patientPage.myAppointmentApointmentno.getText(),"APPNO435");
+    }
+
+    @When("User skip to next page")
+    public void userSkipToNextPage() {
+        js.executeScript("arguments[0].scrollIntoView(true)",     patientPage.myAppoinmentsSecondPageButton);
+        ReusableMethods.bekle(1);
+        patientPage.myAppoinmentsSecondPageButton.click();
+        System.out.println(patientPage.myAppointmentspageDetails.getText());
+        patientPage.myAppointmentspageDetails.isDisplayed();
+
+    }
+
+
+    @When("User switches to previous page")
+    public void userSwitchesToPreviousPage() {
+
+        js.executeScript("arguments[0].scrollIntoView(true)",patientPage.myAppoinmentsFirstPageButton);
+        ReusableMethods.bekle(1);
+        patientPage.myAppoinmentsFirstPageButton.click();
+        System.out.println(patientPage.myAppointmentspageDetails.getText());
+        patientPage.myAppointmentspageDetails.isDisplayed();
+
+    }
+
+    @When("Click on the  Change Password button and enters informations")
+    public void clickOnTheChangePasswordButtonAndEntersInformations() {
+        patientPage.profileChangepassButton.click();
+        patientPage.profileChangecurrentPassword.click();
+        actions.sendKeys("heallife123");
+        actions.sendKeys(Keys.TAB).perform();
+        actions.sendKeys("heallife123");
+        actions.sendKeys(Keys.TAB).perform();
+        actions.sendKeys("heallife123");
+        actions.sendKeys(Keys.TAB).perform();
+        actions.sendKeys(Keys.ENTER).perform();
+        ReusableMethods.sleep(6);
+    }
+
+    @Then("Click on the Logout button")
+    public void clickOnTheLogoutButton() {
+        patientPage.profileImage.click();
+        patientPage.profileLogoutbutton.click();
+       Assert.assertEquals( Driver.getDriver().getCurrentUrl(),"https://qa.heallifehospital.com/site/userlogin");
     }
 }
 

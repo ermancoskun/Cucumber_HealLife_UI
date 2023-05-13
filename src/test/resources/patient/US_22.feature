@@ -32,8 +32,8 @@ Feature: As a user (patient) I want to have an appointment page where I can chec
     Given Goes to user login page
     Then Login with "ayse.nuriye.alcik" and  "heallife123" datas
     When Click on the My Appointments button
-  # When Click on the Delete button  User  be Delete menu
-   # When Clik on the Show button  User sees Appointment Details
+  When Click on the Delete button  User  be Delete menu
+   When Clik on the Show button  User sees Appointment Details
     When User enters card information and completes payment
 
 

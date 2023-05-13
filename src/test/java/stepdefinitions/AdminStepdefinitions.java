@@ -62,10 +62,9 @@ public class AdminStepdefinitions {//
         HealMethods.makeSearchBoxTest();
     }
 
-
     @And("Click on the Add Patient button")
     public void clickOnTheAddPatientButton() {
-        adminPage.addPatientButton.click();
+        HealMethods.clickBlueOrAnyButton(" Add Patient");
     }
 
     @And("Create a New Patient with random datas")
@@ -77,7 +76,19 @@ public class AdminStepdefinitions {//
     public void chooseAllAndOptionsForPatientDisplay(int arg0) {
         HealMethods.makeAll100Test();
     }
-
+    @Then("Verified redirected to Bill Details page")
+    public void verifiedRedirectedToBillDetailsPage() {
+        String actualWindowTitle=Driver.getDriver().findElement(By.xpath("(//h4[@class='modal-title'])[3]")).getText();
+        Assert.assertEquals("Unsuccessful redirection","Bill Details",actualWindowTitle);
+    }
+    @And("Click the Pathology button on Billing page")
+    public void clickThePathologyButtonOnBillingPage() {
+        adminPage.pathologyButton.click();
+    }
+    @And("Click {int}. iconButton under the last column for display first patient profile")
+    public void clickIconButtonUnderTheLastColumnForDisplayFirstPatientProfile(int sira) {
+        HealMethods.clickIconWith3Line(sira);
+    }
 
     @Given("Click on the Add Patient button in IPD page")
     public void clickOnTheAddPatientButtonInIPDPage() {
@@ -87,9 +98,8 @@ public class AdminStepdefinitions {//
     @Given("Click on the Discarged Patient button")
     public void clickOnTheDiscargedPatientButton() {
         adminPage.dischargedPatientButton.click();
-
-        
     }
+
 
     @And("user should be able to on the Discarged Patient page")
     public void userShouldBeAbleToOnTheDiscargedPatientPage() {
@@ -100,16 +110,27 @@ public class AdminStepdefinitions {//
     public void itShouldBeDisplayedInTheIPDDischargedPatientList(List<String> ipdTableHeads) {
         for (int i = 0; i < ipdTableHeads.size(); i++) {
             Assert.assertEquals(ipdTableHeads.get(i), adminPage.ipdDischargeTableHeaders.get(i).getText());
-
         }
+    }
 
+    @And("Click {int}. first name for display patient profile")
+    public void clickFirstNameForDisplayPatientProfile(int sira) {
+        HealMethods.clickANameFromList(1);
     }
 
 
-    @And("Click {int}. iconButton under the Total Recheckup for display first patient profile")
-    public void clickIconButtonUnderTheTotalRecheckupForDisplayFirstPatientProfile(int sira) {
-        HealMethods.clickIconWith3Line(sira);
+ /*   @Then("Sees the {string} that {string}")
+    public void seesTheThat(String filtreAdi, int sira) {
+        System.out.println("filtreAdi = " + filtreAdi);
+        System.out.println("sira = " + sira);
+        HealMethods.makeFilterTest(filtreAdi,sira,7);
+    }*/
+
+    @Then("Sees the name of {string} that their {string} number")
+    public void seesTheNameOfThatTheirNumber(String filtreAdi, String sira) {
+        HealMethods.makeFilterTest(filtreAdi,Integer.parseInt(sira),8);
     }
+
 
 
 
@@ -165,6 +186,9 @@ public class AdminStepdefinitions {//
     public void verifyThatTheNavbarHasTheTextHealLifeHospitalResearchCenter() {
         Assert.assertTrue("The text *Heal Life Hospital & Research Center* is not visible in Navbar",adminpage.healLifeHospitalResearchCenterText.isDisplayed());
     }
+
+
+
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////DGdown
 

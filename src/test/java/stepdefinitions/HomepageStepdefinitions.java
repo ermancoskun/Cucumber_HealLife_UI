@@ -321,8 +321,6 @@ public class HomepageStepdefinitions {//
         Driver.getDriver().navigate().back();
         ReusableMethods.bekle(2);
     }
-
-
 }
 
 

@@ -193,4 +193,58 @@ public class AdminStepdefinitions {//
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////DGdown
 
 
+    ////***Humeyra  42  *////////////
+    @Given("Verify that browser redirect to Pharmacy page.")
+    public void verifyThatBrowserRedirectToPharmacyPage() {
+        String expectedUrl="https://qa.heallifehospital.com/admin/pharmacy/bill";
+        String actualUrl=Driver.getDriver().getCurrentUrl();
+
+        Assert.assertEquals(expectedUrl,actualUrl);
+    }
+    @Given("Verify that The Pharmacy Bill List on the Pharmacy page have the heading Bill No")
+    public void verifyThatThePharmacyBillListOnThePharmacyPageHaveTheHeadingBillNo() {
+        Assert.assertTrue(adminPage.pharmacyBillNo.isDisplayed());
+    }
+
+    @Then("Verify that The Pharmacy Bill List on the Pharmacy page have the heading Case ID Patient ID")
+    public void verifyThatThePharmacyBillListOnThePharmacyPageHaveTheHeadingCaseIDPatientID() {
+        Assert.assertTrue(adminPage.pharmacyCaseID.isDisplayed());
+    }
+
+    @Then("Verify that The Pharmacy Bill List on the Pharmacy page have the heading Date")
+    public void verifyThatThePharmacyBillListOnThePharmacyPageHaveTheHeadingDate() {
+        Assert.assertTrue(adminPage.pharmacyDate.isDisplayed());
+    }
+
+    @Then("Verify that The Pharmacy Bill List on the Pharmacy page have the heading Patient Name.")
+    public void verifyThatThePharmacyBillListOnThePharmacyPageHaveTheHeadingPatientName() {
+        Assert.assertTrue(adminPage.pharmacyPatientName.isDisplayed());
+    }
+
+    @Then("Verify that The Pharmacy Bill List on the Pharmacy page have the heading Doctor Name.")
+    public void verifyThatThePharmacyBillListOnThePharmacyPageHaveTheHeadingDoctorName() {
+        Assert.assertTrue(adminPage.pharmacyDoctorName.isDisplayed());
+    }
+
+    @Then("Verify that The Pharmacy Bill List on the Pharmacy page have the heading Discount.")
+    public void verifyThatThePharmacyBillListOnThePharmacyPageHaveTheHeadingDiscount() {
+        Assert.assertTrue(adminPage.pharmacyDiscount.isDisplayed());
+    }
+
+    @Then("Verify that The Pharmacy Bill List on the Pharmacy page have the heading Amount.")
+    public void verifyThatThePharmacyBillListOnThePharmacyPageHaveTheHeadingAmount() {
+        Assert.assertTrue(adminPage.pharmacyAmount.isDisplayed());
+    }
+
+    @Then("Verify that The Pharmacy Bill List on the Pharmacy page have the heading Paid Amount.")
+    public void verifyThatThePharmacyBillListOnThePharmacyPageHaveTheHeadingPaidAmount() {
+        Assert.assertTrue(adminPage.pharmacyPaidAmount.isDisplayed());
+    }
+
+    @Then("Verify that The Pharmacy Bill List on the Pharmacy page have the heading Balance Amount.")
+    public void verifyThatThePharmacyBillListOnThePharmacyPageHaveTheHeadingBalanceAmount() {
+        Assert.assertTrue(adminPage.pharmacyBalanceAmount.isDisplayed());
+    }
+
+
 }

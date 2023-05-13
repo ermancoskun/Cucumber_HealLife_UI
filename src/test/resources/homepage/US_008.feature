@@ -1,4 +1,4 @@
-@US038
+
 Feature: Bir kullanici olarak sayfa ici erisimleri daha efektif kullanabilmek icin ana sayfa alt barinda en cok gidilen sayfalara yönlendirme yapan linklerin bulunmasini istiyorum
 
   Scenario: TC01 Ana sayfa alt barinda Home, Academics, Gallery, About, Event, Contact US sayfa basliklarinin görünür

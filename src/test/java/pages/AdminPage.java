@@ -80,8 +80,9 @@ public class AdminPage extends Base{
     @FindBy (xpath = "//h3[@class=\"box-title titlefix\"]")
     public WebElement ipdDischargedConfirmationText;
 
+    //Admin > IPD &  Discharge Patient  > Table headers
     @FindBy (xpath = "//*[@id=\"DataTables_Table_0\"]//th")
-    public List<WebElement> ipdDischargeTableHeaders;
+    public List<WebElement> ipdPatientAndDischargePatientTableHeaders;
 
 
     //********************Duygu*************************************//
@@ -118,6 +119,11 @@ public class AdminPage extends Base{
     @FindBy(xpath = "//span[@class='sidebar-session']")
     public WebElement healLifeHospitalResearchCenterText;
 
+    @FindBy(xpath = "//ul[@class=\"nav nav-tabs navlistscroll\"]//li")
+    public List<WebElement>ipdPersonalInformationHeaders;
+
+    @FindBy(xpath = "//div[@class=\"scrtabs-tab-scroll-arrow scrtabs-js-tab-scroll-arrow-right\"]")
+    public WebElement scrollRightButton;
     //********************Duygu*************************************//
     //////////////////////////////////////////////////////////////////
 

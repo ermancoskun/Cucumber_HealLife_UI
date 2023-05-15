@@ -1,6 +1,7 @@
 package utilities;
 
 import com.github.javafaker.Faker;
+import org.checkerframework.framework.qual.DefaultQualifier;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -142,7 +143,9 @@ public class HealMethods {
         filter.click();
         ReusableMethods.bekle(4);
         List<String> filtreList=new ArrayList<>();
+
         for (int i = filtreKacinciSirada; i <toplamSutunSayisi*10 ; i=(i+toplamSutunSayisi)) {
+
             WebElement hucreElement=Driver.getDriver().findElement(By.xpath("(//td)["+i+"]"));
             filtreList.add(hucreElement.getText());
         }
@@ -241,51 +244,55 @@ public class HealMethods {
     public static void clickANameFromList(int sira){
         Driver.getDriver().findElement(By.xpath("(//td)["+sira+"]"));
     }
-    public static void clickAddViewPaymentIcon(int sira){
-        WebElement moneyIcon=Driver.getDriver().findElement(By.xpath("(//i[@class='fa fa-money'])["+sira+"]"));
-        JSUtilities.clickWithJS(Driver.getDriver(),moneyIcon);
-    }
-    public static void makePaymentOptionsTest(){//metot henüz tam fonksiyonel degil 15.5.23
-                                        // payments sayfasina gelindiginde odeme testi yapar
-                                        //Payments baslik yazısını dogrular
-                                        //Eski odemeyi siler
-                                        //Yerine bugunun tarihiyle aynı miktarda odeme yapar, dogrular(test)
-        //WebElement paymentsElement=Driver.getDriver().findElement(By.xpath("(//h4[text()='Payments'])[1]"));
-        //Assert.assertEquals("Payments",paymentsElement.getText());
-        WebElement dateElement=Driver.getDriver().findElement(By.xpath("(//input[@name='payment_date'])[1]"));
-        WebElement amount=Driver.getDriver().findElement(By.xpath("(//td[@class='text text-right'])[1]"));
-        String amountStr=amount.getText().replaceAll("$",""); //odenecek miktarı bi kenara not ediyoz cunku silecez
-        double amountDouble=Double.parseDouble(amountStr);
-        if (amountDouble==0){//odeme yapılmamıssa odeme yap
-            JSUtilities.clickWithJS(Driver.getDriver(),dateElement); //tarih gir
-            actions.sendKeys(Keys.TAB).perform();//yan sekme
-            actions.sendKeys("10").perform();
-            actions.sendKeys(Keys.TAB).sendKeys(Keys.TAB).perform();
-            actions.sendKeys(faker.finance().iban()).perform(); //note kısmına IBAN uyduruyoruz
-            ReusableMethods.bekle(2);
-            Driver.getDriver().findElement(By.xpath("(//*[.='Save'])[1]")).click();
-            String basariliOdeme=Driver.getDriver().findElement(By.xpath("(//div[@class='toast-message'])[1]")).getText();
-            Assert.assertEquals("Record Saved Successfully",basariliOdeme);//basarili odemeyi test ediyoruz
-        }else {//odeme yapılmıssa odemeyi silip yeniden odeme yap
-            WebElement deleteIcon=Driver.getDriver().findElement(By.xpath("//a[@class='btn btn-default btn-xs delete_trans']"));
-            deleteIcon.click(); //odemeyi siliyoruz
-            Driver.getDriver().switchTo().alert().accept();
-            String uyariText=Driver.getDriver().findElement(By.xpath("(//div[@class='toast-message'])[1]")).getText();
-            Assert.assertEquals("Record Deleted Successfully",uyariText); //silindigini test ediyoruz
-            JSUtilities.clickWithJS(Driver.getDriver(),dateElement);
-            actions.sendKeys(Keys.TAB).perform();//yan sekme
-            actions.sendKeys(amountStr).perform();//kaydedilen borcu yolla
-            actions.sendKeys(Keys.TAB).sendKeys(Keys.TAB).perform();
-            actions.sendKeys(faker.finance().iban()).perform(); //note kısmına IBAN uyduruyoruz
-            ReusableMethods.bekle(10);
-            Driver.getDriver().findElement(By.xpath("(//*[.='Save'])[1]")).click();
-            String uyariText2=Driver.getDriver().findElement(By.xpath("(//div[@class='toast-message'])[1]")).getText();
-            Assert.assertEquals("Record Saved Successfully",uyariText2);//basarili odemeyi test ediyoruz
+
+
+    public static void testHeaders(List<String> headersList) {
+        for (int i = 0; i < headersList.size(); i++) {
+            Assert.assertEquals(headersList.get(i), adminPage.ipdPatientAndDischargePatientTableHeaders.get(i).getText());
+
+        }}
+
+        public static void clickAddViewPaymentIcon ( int sira){
+            WebElement moneyIcon = Driver.getDriver().findElement(By.xpath("(//i[@class='fa fa-money'])[" + sira + "]"));
+            JSUtilities.clickWithJS(Driver.getDriver(), moneyIcon);
         }
+        public static void makePaymentOptionsTest () {//metot henüz tam fonksiyonel degil 15.5.23
+            // payments sayfasina gelindiginde odeme testi yapar
+            //Payments baslik yazısını dogrular
+            //Eski odemeyi siler
+            //Yerine bugunun tarihiyle aynı miktarda odeme yapar, dogrular(test)
+            //WebElement paymentsElement=Driver.getDriver().findElement(By.xpath("(//h4[text()='Payments'])[1]"));
+            //Assert.assertEquals("Payments",paymentsElement.getText());
+            WebElement dateElement = Driver.getDriver().findElement(By.xpath("(//input[@name='payment_date'])[1]"));
+            WebElement amount = Driver.getDriver().findElement(By.xpath("(//td[@class='text text-right'])[1]"));
+            String amountStr = amount.getText().replaceAll("$", ""); //odenecek miktarı bi kenara not ediyoz cunku silecez
+            double amountDouble = Double.parseDouble(amountStr);
+            if (amountDouble == 0) {//odeme yapılmamıssa odeme yap
+                JSUtilities.clickWithJS(Driver.getDriver(), dateElement); //tarih gir
+                actions.sendKeys(Keys.TAB).perform();//yan sekme
+                actions.sendKeys("10").perform();
+                actions.sendKeys(Keys.TAB).sendKeys(Keys.TAB).perform();
+                actions.sendKeys(faker.finance().iban()).perform(); //note kısmına IBAN uyduruyoruz
+                ReusableMethods.bekle(2);
+                Driver.getDriver().findElement(By.xpath("(//*[.='Save'])[1]")).click();
+                String basariliOdeme = Driver.getDriver().findElement(By.xpath("(//div[@class='toast-message'])[1]")).getText();
+                Assert.assertEquals("Record Saved Successfully", basariliOdeme);//basarili odemeyi test ediyoruz
+            } else {//odeme yapılmıssa odemeyi silip yeniden odeme yap
+                WebElement deleteIcon = Driver.getDriver().findElement(By.xpath("//a[@class='btn btn-default btn-xs delete_trans']"));
+                deleteIcon.click(); //odemeyi siliyoruz
+                Driver.getDriver().switchTo().alert().accept();
+                String uyariText = Driver.getDriver().findElement(By.xpath("(//div[@class='toast-message'])[1]")).getText();
+                Assert.assertEquals("Record Deleted Successfully", uyariText); //silindigini test ediyoruz
+                JSUtilities.clickWithJS(Driver.getDriver(), dateElement);
+                actions.sendKeys(Keys.TAB).perform();//yan sekme
+                actions.sendKeys(amountStr).perform();//kaydedilen borcu yolla
+                actions.sendKeys(Keys.TAB).sendKeys(Keys.TAB).perform();
+                actions.sendKeys(faker.finance().iban()).perform(); //note kısmına IBAN uyduruyoruz
+                ReusableMethods.bekle(10);
+                Driver.getDriver().findElement(By.xpath("(//*[.='Save'])[1]")).click();
+                String uyariText2 = Driver.getDriver().findElement(By.xpath("(//div[@class='toast-message'])[1]")).getText();
+                Assert.assertEquals("Record Saved Successfully", uyariText2);//basarili odemeyi test ediyoruz
+            }
 
-
-
-
-
+        }
     }
-}

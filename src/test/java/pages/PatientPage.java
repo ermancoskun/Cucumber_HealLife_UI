@@ -1,17 +1,31 @@
 package pages;
 
 
+
+
+
+
+import org.junit.Assert;
+
+import org.openqa.selenium.By;
+
+import org.openqa.selenium.WebElement;
+
 import com.github.javafaker.Faker;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import utilities.ConfigReader;
 import utilities.Driver;
+
+import java.util.List;
+
 import utilities.ReusableMethods;
 
 
@@ -25,6 +39,7 @@ import java.util.Date;
 import java.util.ArrayList;
 import java.util.Collections;
 
+
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -32,9 +47,12 @@ import java.util.concurrent.TimeUnit;
 import static utilities.Driver.driver;
 
 
+
 public class PatientPage extends Base {
+
     Faker faker=new Faker();
     Actions actions=new Actions(Driver.getDriver());
+
     // Userlogin >
     @FindBy(xpath = "//a[text()='Login']")
     public WebElement entryLoginbutton;
@@ -490,6 +508,10 @@ public class PatientPage extends Base {
         String[] liste = data.split(", ");
         int count = 0;
 
+
+
+
+
         for (int i = 0; i < liste.length; i++) {
             for (int j = 0; j < baslikListesiActual.size(); j++) {
                 if (baslikListesiActual.get(j).contains(liste[i])) {
@@ -500,6 +522,7 @@ public class PatientPage extends Base {
         if (count == liste.length) {
             return true;
         }
+
 
         return false;
     }
@@ -516,6 +539,9 @@ public class PatientPage extends Base {
             ActualStringList.add(each.getText().replaceAll("[^\\d]", ""));
         }
         System.out.println(ActualStringList);
+
+
+
 
 
         List<String> ExpectedList = new ArrayList<>(ActualStringList);
@@ -633,6 +659,7 @@ public class PatientPage extends Base {
 
     //============================================ Nesibe [US_023] OPD MENU SONU =======================================
 }
+
 
 
 

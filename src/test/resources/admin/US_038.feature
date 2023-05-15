@@ -4,7 +4,9 @@ Feature: US_038 As an admin I would like to have a page in the dashboard sidebar
     Given Goes to Admin login page
     And Login with "ahmet.yazicioglu.admin@heallifehospital.com" and "heallife123" datas
     Then Click on the " Billing" link
-@deneme
+
+  @US038
+
   Scenario: TC_01 Clicking on the Billing link on the Dashboard sidebar should lead to the relevant page.
         Then Verified redirected to Billing page
 
@@ -33,11 +35,13 @@ Feature: US_038 As an admin I would like to have a page in the dashboard sidebar
             Total Recheckup heading in the OPD Billing List.
         And Click on the OPD button
         Then Click 1. iconButton under the last column for display first patient profile
+        Then Verified redirected to Patent Profile page
 
   Scenario: TC_08 When the names under Name in the OPD Billing List are clicked,
                   the information of the relevant patient (detail profile) should be displayed.
         And Click on the OPD button
-        Then Click 1. first name for display patient profile
+        And Click first name for display patient profile
+        Then Verified redirected to Patent Profile page
 
   Scenario: TC_09 When Pathology board in the Single Module Billing window is clicked,(all)Amounts)
                   should be displayed.
@@ -64,7 +68,11 @@ Feature: US_038 As an admin I would like to have a page in the dashboard sidebar
           Then Verified redirected to Bill Details page
 
     Scenario: TC_14
-    Scenario: TC_15
+    Scenario: TC_15 When you click on the names under Name in the Pathology Billing List, the information of
+                    the relevant patient (detail profile) should be displayed.
+          And Click the Pathology button on Billing page
+          And Click first name for display patient profile under the Patient Name
+          Then Verified redirected to Patent Profile page
 
     Scenario: TC_16 Radiology Billing Lists headings on the page that opens when you click on the Radiology board
           And Click the Radiology button on Billing page
@@ -89,9 +97,11 @@ Feature: US_038 As an admin I would like to have a page in the dashboard sidebar
           And Click the Radiology button on Billing page
           Then Click 1. iconButton under the last column for display first patient profile
           Then Verified redirected to Bill Details page
-  @US038
+
     Scenario: TC_21 Additional payment can be added to the invoice of the relevant patient under
                     the heading Balance Amount ($) in the Radiology Billing List
           And Click the Radiology button on Billing page
-          And Click the Add View Payment iconButton for additional payments for patient of 2.
+          And Click the Add View Payment iconButton for additional payments for patient of 1.
           Then Test the payment options
+
+    Scenario:

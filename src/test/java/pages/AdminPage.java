@@ -1,15 +1,13 @@
 package pages;
 
 
+import io.cucumber.java.zh_cn.假如;
 import org.checkerframework.checker.calledmethods.qual.EnsuresCalledMethodsIf;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import utilities.ConfigReader;
-import utilities.Driver;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AdminPage extends Base{
@@ -84,6 +82,13 @@ public class AdminPage extends Base{
     @FindBy (xpath = "//*[@id=\"DataTables_Table_0\"]//th")
     public List<WebElement> ipdPatientAndDischargePatientTableHeaders;
 
+    //Admin > Pathology > Generate Bill Button
+    @FindBy(xpath = "//button[@id=\"load1\"]")
+    public WebElement generateBillButton;
+
+    //X icon
+    @FindBy(xpath = "(//button[@type=\"button\"])[10]")
+    public WebElement xIconButton;
 
     //********************Duygu*************************************//
 
@@ -96,6 +101,7 @@ public class AdminPage extends Base{
     // adminLoginPage
     @FindBy(xpath = "//button[@type='submit']")
     public WebElement signInButton;
+
 
 
     // adminpage > Navbardaki Heallife Logosu
@@ -165,57 +171,6 @@ public class AdminPage extends Base{
     //admin>Pharmacy>Balance Amount
     @FindBy(xpath = "//*[text()='Balance Amount ($)']")
     public WebElement pharmacyBalanceAmount;
-
-    //admin>pharmacy>Generate Bill button
-    @FindBy(xpath = "//*[text()=' Generate Bill']")
-    public WebElement pharmacyGenerateButton;
-
-    //admin>pharmacy>Generate Bill>admin>prescription No
-    @FindBy(id = "prescription_no")
-    public WebElement pharmacyPrescrtionButton;
-
-    //admin>pharmacy>Generate Bill>PatientNameEnter
-    @FindBy(id = "select2-addpatient_id-container")
-    public WebElement pharmacyGenerateEnterPatientName;
-
-    //admin>pharmacy>Generate Bill>PatientMedicineCategory
-    @FindBy(id = "select2-medicine_category_id_1-iu-container")
-    public WebElement pharmacyGenerateMedicineCategory;
-
-    //admin>pharmacy>Generate Bill>PatientMedicineName
-    @FindBy(id = "select2-medicine_name0-container")
-    public WebElement pharmacyGenerateMedicineName;
-
-    //admin>pharmacy>Generate Bill>BatchNo
-    @FindBy(xpath = "(//*[@role='combobox'])[4]")
-    public WebElement pharmacyGenerateBatchNo;
-
-    //admin>pharmacy>Generate Bill>HospitalDoctor
-    @FindBy(xpath = "(//*[@role='combobox'])[5]")
-    public WebElement pharmacyGenerateHospitalDoctor;
-
-    //admin>pharmacy>Generate Bill>Payment Methode
-    @FindBy(className = "form-control payment_mode")
-    public WebElement pharmacyGeneratePaymentMethode;
-
-    //admin>pharmacy>Generate Bill>Save button
-    @FindBy(xpath = "(//*[text()=' Save'])[1]")
-    public  WebElement pharmacyGenerateSaveButton;
-
-    @FindBy(xpath = "(//*[text()='humeyra.uysal (107)'])[1]")
-    public WebElement pharmacyGenerateVerify;
-    //admin>pharmacy>Generate Bill>ExpiryDate
-    @FindBy(id="expire_date0")
-    public WebElement pharmacyGenerateExpiryDate;
-
-    //admin>pharmacy>Generate Bill>quatity
-    @FindBy(id="quantity0")
-    public WebElement pharmacyGenerateQuantatity;
-
-    //admin>pharmacy>Generate Bill>SalePrice
-    @FindBy(id="sale_price0")
-    public WebElement pharmacyGenerateSalePrices;
-
 
 
     ///////LOGIN METHODU///////

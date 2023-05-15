@@ -11,6 +11,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import pages.AdminPage;
+import utilities.ConfigReader;
 import utilities.Driver;
 import utilities.HealMethods;
 import utilities.ReusableMethods;
@@ -56,11 +57,50 @@ public class AdminStepdefinitions {//
         adminPage.opdButton.click();
     }
 
+
     @And("Sees the {string} and their {string}")
     public void seesTheAndTheir(String filtreAdi, int sirasi) {
-        HealMethods.makeFilterTest(filtreAdi, sirasi, 7);
+        HealMethods.makeFilterTest(filtreAdi, sirasi, 7);}
+
+    @Then("Sees the FilterName and their Order")
+    public void seesTheFilterNameAndTheirOrder() {
+        HealMethods.makeFilterTest("Name",1,11);
+        HealMethods.makeFilterTest("Patient Id",2,11);
+        HealMethods.makeFilterTest("Guardian Name",3,11);
+        HealMethods.makeFilterTest("Gender",4,11);
+        HealMethods.makeFilterTest("Phone",5,11);
+        HealMethods.makeFilterTest("Consultant",6,11);
+        HealMethods.makeFilterTest("Last Visit",7,11);
+        HealMethods.makeFilterTest("Total Recheckup",8,11);
+
     }
 
+    @Then("Sees the name of Billing List and their contents")
+    public void seesTheNameOfBillingListAndTheirContents() {
+        HealMethods.makeFilterTest("Bill No",1,8);
+        HealMethods.makeFilterTest("Case ID / Patient ID",2,8);
+        HealMethods.makeFilterTest("Reporting Date",3,8);
+        HealMethods.makeFilterTest("Patient Name",4,8);
+        HealMethods.makeFilterTest("Reference Doctor",5,8);
+        HealMethods.makeFilterTest("Amount ($)",6,8);
+        HealMethods.makeFilterTest("Paid Amount ($)",7,8);
+    }
+    @And("Sees the name of Radiology Billing List and their contents")
+    public void seesTheNameOfRadiologyBillingListAndTheirContents() {
+        HealMethods.makeFilterTest("Bill No",1,9);
+        HealMethods.makeFilterTest("Case ID / Patient ID",2,9);
+        HealMethods.makeFilterTest("Reporting Date",3,9);
+        HealMethods.makeFilterTest("Patient Name",4,9);
+        HealMethods.makeFilterTest("Reference Doctor",5,9);
+        HealMethods.makeFilterTest("Note",6,9);
+        HealMethods.makeFilterTest("Amount ($)",7,9);
+        HealMethods.makeFilterTest("Paid Amount ($)",8,9);
+    }
+    @And("Click the Radiology button on Billing page")
+    public void clickTheRadiologyButtonOnBillingPage() {
+        adminPage.radiologyButton.click();
+
+    }
     @And("test to searcbox")
     public void testToSearcbox() {
         HealMethods.makeSearchBoxTest();
@@ -83,8 +123,13 @@ public class AdminStepdefinitions {//
 
     @Then("Verified redirected to Bill Details page")
     public void verifiedRedirectedToBillDetailsPage() {
+
         String actualWindowTitle = Driver.getDriver().findElement(By.xpath("(//h4[@class='modal-title'])[3]")).getText();
         Assert.assertEquals("Unsuccessful redirection", "Bill Details", actualWindowTitle);
+
+        WebElement billDetailsElement=Driver.getDriver().findElement(By.xpath("(//h4[text()='Bill Details'])[1]"));
+        Assert.assertTrue(billDetailsElement.isDisplayed());
+
     }
 
     @And("Click the Pathology button on Billing page")
@@ -96,6 +141,15 @@ public class AdminStepdefinitions {//
     public void clickIconButtonUnderTheLastColumnForDisplayFirstPatientProfile(int sira) {
         HealMethods.clickIconWith3Line(sira);
     }
+    @And("Click the Add View Payment iconButton for additional payments for patient of {int}.")
+    public void clickTheAddViewPaymentIconButtonForAdditionalPaymentsForPatientOf(int sira) {
+        HealMethods.clickAddViewPaymentIcon(sira);
+    }
+    @Then("Test the payment options")
+    public void testThePaymentOptions() {
+        HealMethods.makePaymentOptionsTest();
+    }
+
 
     @Given("Click on the Add Patient button in IPD page")
     public void clickOnTheAddPatientButtonInIPDPage() {
@@ -126,18 +180,12 @@ public class AdminStepdefinitions {//
     }
 
 
- /*   @Then("Sees the {string} that {string}")
-    public void seesTheThat(String filtreAdi, int sira) {
-        System.out.println("filtreAdi = " + filtreAdi);
-        System.out.println("sira = " + sira);
-        HealMethods.makeFilterTest(filtreAdi,sira,7);
-    }*/
+
 
     @Then("Sees the name of {string} that their {string} number")
     public void seesTheNameOfThatTheirNumber(String filtreAdi, String sira) {
         HealMethods.makeFilterTest(filtreAdi, Integer.parseInt(sira), 8);
     }
-
 
     ///////////////////////////////////////////////////////////////////////////////////////////////////DGup
     @And("Login to admin page as {string} {string}")
@@ -191,6 +239,7 @@ public class AdminStepdefinitions {//
     public void verifyThatTheNavbarHasTheTextHealLifeHospitalResearchCenter() {
         Assert.assertTrue("The text *Heal Life Hospital & Research Center* is not visible in Navbar", adminpage.healLifeHospitalResearchCenterText.isDisplayed());
     }
+
 
 
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////DGdown
@@ -251,18 +300,6 @@ public class AdminStepdefinitions {//
     }
 
 
-    @Given("Click the sort button of Bill No.Verify sorted by bill number.")
-    public void clickTheSortButtonOfBillNoVerifySortedByBillNumber() {
-        adminPage.pharmacyBillNo.click();
-
-
-    }
-
-
-    @Then("Click the sort button of Case ID Patient ID.Verify sorted by Case ID Patient ID.")
-    public void clickTheSortButtonOfCaseIDPatientIDVerifySortedByCaseIDPatientID() {
-        adminPage.pharmacyCaseID.click();
-    }
 
 
     @Given("Verify that the pharmacy page have a search box.")
@@ -270,10 +307,7 @@ public class AdminStepdefinitions {//
         HealMethods.makeSearchBoxTest();
     }
 
-    @Given("Select the list to be displayed in the Pharmacy Bill List on the Pharmacy page contains {int} items.")
-    public void selectTheListToBeDisplayedInThePharmacyBillListOnThePharmacyPageContainsItems(int arg0) {
-        HealMethods.makeAll100Test();
-    }
+
 
 
     @Given("Verify that Generate Bill button is disabled.")
@@ -303,5 +337,86 @@ public class AdminStepdefinitions {//
     public void verifyThatPrescriptionButtonIsEnabled() {
         Assert.assertTrue(adminPage.pharmacyPrescrtionButton.isEnabled());
     }
+    @Given("Click the sort button of Bill No.Verify sorted by bill number.")
+    public void clickTheSortButtonOfBillNoVerifySortedByBillNumber() {
+       adminPage.pharmacyBillNo.click();
+        HealMethods.makeFilterTest("Bill No",1,9);
 
+
+    }
+
+
+    @Then("Click the sort button of Case ID Patient ID.Verify sorted by Case ID Patient ID.")
+    public void clickTheSortButtonOfCaseIDPatientIDVerifySortedByCaseIDPatientID() {
+        adminPage.pharmacyCaseID.click();
+        HealMethods.makeFilterTest("Case ID / Patient ID",2,9);
+    }
+    @Then("Click the sort button of Date.Verify sorted by Date.")
+    public void clickTheSortButtonOfDateVerifySortedByDate() {
+        adminPage.pharmacyDate.click();
+        HealMethods.makeFilterTest("Date",3,9);
+    }
+
+    @Then("Click the sort button of Patient Name.Verify sorted by Patient Name.")
+    public void clickTheSortButtonOfPatientNameVerifySortedByPatientName() {
+        adminPage.pharmacyPatientName.click();
+        HealMethods.makeFilterTest("Patient Name",4,9);
+    }
+
+    @Then("Click the sort button of Doctor Name.Verify sorted by  Doctor Name.")
+    public void clickTheSortButtonOfDoctorNameVerifySortedByDoctorName() {
+        adminPage.pharmacyDoctorName.click();
+        HealMethods.makeFilterTest("Doctor Name",5,9);
+    }
+
+    @Then("Click the sort button of Discount.Verify sorted by Discount.")
+    public void clickTheSortButtonOfDiscountVerifySortedByDiscount() {
+        adminPage.pharmacyDiscount.click();
+        HealMethods.makeFilterTest("Discount ($)",6,9);
+    }
+
+    @Then("Click the sort button of Amount.Verify sorted by Amount.")
+    public void clickTheSortButtonOfAmountVerifySortedByAmount() {
+        adminPage.pharmacyAmount.click();
+        HealMethods.makeFilterTest("Amount ($)",7,9);
+    }
+
+    @Then("Click the sort button of Paid Amount.Verify sorted by Paid Amount.")
+    public void clickTheSortButtonOfPaidAmountVerifySortedByPaidAmount() {
+        adminPage.pharmacyPaidAmount.click();
+        HealMethods.makeFilterTest("Paid Amount ($)",8,9);
+    }
+
+
+    @Then("Click the sort button of Balance Amount.Verify sorted by Balance Amount.")
+    public void clickTheSortButtonOfBalanceAmountVerifySortedByBalanceAmount() {
+        adminPage.pharmacyBalanceAmount.click();
+        HealMethods.makeFilterTest("Balance Amount ($)",9,9);
+    }
+
+
+    @Then("Create an invoice by entering the correct information Medicine Category, Medicine Name, Batch No, Expiry Date, Quantity Available Qty, Sale Price ,Tax Amount.")
+    public void createAnInvoiceByEnteringTheCorrectInformationMedicineCategoryMedicineNameBatchNoExpiryDateQuantityAvailableQtySalePriceTaxAmount() {
+
+        adminPage.pharmacyGenerateEnterPatientName.sendKeys(ConfigReader.getProperty("pharmacyPatientName"));
+        Select select=new Select(adminPage.pharmacyGenerateMedicineCategory);
+        select.selectByVisibleText(ConfigReader.getProperty("pharmacyMedicineCategory"));
+        select=new Select(adminPage.pharmacyGenerateMedicineName);
+        select.selectByVisibleText(ConfigReader.getProperty("pharmacyMedicineName"));
+        select=new Select(adminPage.pharmacyGenerateBatchNo);
+        select.selectByVisibleText(ConfigReader.getProperty("pharmacyBatchNo"));
+        select=new Select(adminPage.pharmacyGenerateHospitalDoctor);
+        select.selectByVisibleText(ConfigReader.getProperty("pharmacyHospitalDoctor"));
+        select=new Select(adminPage.pharmacyGeneratePaymentMethode);
+        select.selectByVisibleText(ConfigReader.getProperty("pharmacyPaymentMethode"));
+        adminPage.pharmacyGenerateQuantatity.sendKeys(ConfigReader.getProperty("pharmacyQuatity"));
+
+        adminPage.pharmacyGenerateSaveButton.click();
+
+    }
+
+    @Then("Verify that invoice has been created")
+    public void verifyThatInvoiceHasBeenCreated() {
+        Assert.assertTrue(adminPage.pharmacyGenerateVerify.isDisplayed());
+    }
 }

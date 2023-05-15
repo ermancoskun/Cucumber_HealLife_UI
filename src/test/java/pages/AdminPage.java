@@ -63,6 +63,10 @@ public class AdminPage extends Base{
     @FindBy (xpath = "//p[.='Pathology']")
     public WebElement pathologyButton;
 
+    //Admin > Billing
+    @FindBy (xpath = "//p[.='Radiology']")
+    public WebElement radiologyButton;
+
 
     //Admin > IPD >
     @FindBy(id = "addp")
@@ -165,32 +169,47 @@ public class AdminPage extends Base{
     @FindBy(id = "prescription_no")
     public WebElement pharmacyPrescrtionButton;
 
-    //admin>Pharmacy>BillNoList
-    @FindBy(xpath = "//*[@class='odd']")
-    public List<WebElement> billList;
+    //admin>pharmacy>Generate Bill>PatientNameEnter
+    @FindBy(id = "select2-addpatient_id-container")
+    public WebElement pharmacyGenerateEnterPatientName;
 
-      public List<WebElement> getBillList() {
-          List<WebElement> pharmacyBillList = new ArrayList<>();
-          for (int i = 1; i < (billList.size() * 9); i = i + 9) {
-              WebElement element = Driver.getDriver().findElement(By.xpath("(//td)[" + i + "]"));
-              pharmacyBillList.add(element);
-          }
+    //admin>pharmacy>Generate Bill>PatientMedicineCategory
+    @FindBy(id = "select2-medicine_category_id_1-iu-container")
+    public WebElement pharmacyGenerateMedicineCategory;
 
-          return pharmacyBillList;
+    //admin>pharmacy>Generate Bill>PatientMedicineName
+    @FindBy(id = "select2-medicine_name0-container")
+    public WebElement pharmacyGenerateMedicineName;
 
-      }
-      //admin> pharmacy>Case id/Patient Id
-    public List<WebElement> getCaseIdList() {
-        List<WebElement> pharmacyCaseIDList = new ArrayList<>();
-        for (int i = 2; i < (billList.size() * 9); i = i + 9) {
-            WebElement element = Driver.getDriver().findElement(By.xpath("(//td)[" + i + "]"));
-            pharmacyCaseIDList.add(element);
-        }
+    //admin>pharmacy>Generate Bill>BatchNo
+    @FindBy(xpath = "(//*[@role='combobox'])[4]")
+    public WebElement pharmacyGenerateBatchNo;
 
-        return pharmacyCaseIDList;
+    //admin>pharmacy>Generate Bill>HospitalDoctor
+    @FindBy(xpath = "(//*[@role='combobox'])[5]")
+    public WebElement pharmacyGenerateHospitalDoctor;
 
-    }
+    //admin>pharmacy>Generate Bill>Payment Methode
+    @FindBy(className = "form-control payment_mode")
+    public WebElement pharmacyGeneratePaymentMethode;
 
+    //admin>pharmacy>Generate Bill>Save button
+    @FindBy(xpath = "(//*[text()=' Save'])[1]")
+    public  WebElement pharmacyGenerateSaveButton;
+
+    @FindBy(xpath = "(//*[text()='humeyra.uysal (107)'])[1]")
+    public WebElement pharmacyGenerateVerify;
+    //admin>pharmacy>Generate Bill>ExpiryDate
+    @FindBy(id="expire_date0")
+    public WebElement pharmacyGenerateExpiryDate;
+
+    //admin>pharmacy>Generate Bill>quatity
+    @FindBy(id="quantity0")
+    public WebElement pharmacyGenerateQuantatity;
+
+    //admin>pharmacy>Generate Bill>SalePrice
+    @FindBy(id="sale_price0")
+    public WebElement pharmacyGenerateSalePrices;
 
 
 

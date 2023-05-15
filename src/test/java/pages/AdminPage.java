@@ -98,7 +98,6 @@ public class AdminPage extends Base{
     public WebElement signInButton;
 
 
-
     // adminpage > Navbardaki Heallife Logosu
     @FindBy(xpath = "//span[@class='logo-lg']")
     public WebElement heallifeLogo;

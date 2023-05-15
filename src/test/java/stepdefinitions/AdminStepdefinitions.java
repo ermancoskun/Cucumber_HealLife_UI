@@ -94,7 +94,7 @@ public class AdminStepdefinitions {//
     @Given("It should be displayed in the IPD Discharged Patient List")
     public void itShouldBeDisplayedInTheIPDDischargedPatientList(List<String> ipdTableHeads) {
         for (int i = 0; i < ipdTableHeads.size(); i++) {
-            Assert.assertEquals(ipdTableHeads.get(i), adminPage.ipdDischargeTableHeaders.get(i).getText());
+            Assert.assertEquals(ipdTableHeads.get(i), adminPage.ipdPatientAndDischargePatientTableHeaders.get(i).getText());
         }
     }
 

@@ -9,6 +9,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import pages.AdminPage;
+import pages.HomePage;
 
 import java.io.File;
 import java.time.LocalDate;
@@ -35,7 +36,7 @@ public class HealMethods {
         WebElement loginButton = Driver.getDriver().findElement(By.xpath("//button[@type='submit']"));
         loginButton.click();
     }
-    public static void loginAsUser(String username, String password) {
+    public static  void loginAsUser(String username, String password) {
         Driver.getDriver().get("https://qa.heallifehospital.com/site/userlogin");
         WebElement usernameLocate = Driver.getDriver().findElement(By.id("email"));
         usernameLocate.sendKeys(username);
@@ -241,9 +242,30 @@ public class HealMethods {
     JSUtilities.clickWithJS(Driver.getDriver(),iconButton);
     ReusableMethods.bekle(3);
     }
-    public static void clickANameFromList(int sira){
-        Driver.getDriver().findElement(By.xpath("(//td)["+sira+"]"));
+    public static void clickANameFromList(int sira) {
+        Driver.getDriver().findElement(By.xpath("(//td)[" + sira + "]"));
+
+
+
+
+
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
     public static void testHeaders(List<String> headersList) {

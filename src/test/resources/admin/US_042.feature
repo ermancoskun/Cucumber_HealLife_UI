@@ -7,6 +7,7 @@ Feature: As an administrator (admin), I would like to have a page in the dashboa
     Then Login with "humeyra.uysal.admin@heallifehospital.com" and "heallife123" datas
     Then Click on the " Pharmacy" link
 
+
   Scenario: TC 01 When you click on the Pharmacy link on the Dashboard sidebar, it should redirect to the relevant page.
 
   Given Verify that browser redirect to Pharmacy page.

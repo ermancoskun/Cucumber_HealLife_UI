@@ -1,27 +1,25 @@
 package stepdefinitions;
 
+import io.cucumber.java.en.Given;
+import io.cucumber.java.en.Then;
+import org.junit.Assert;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.interactions.Actions;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import org.junit.Assert;
-
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.interactions.Actions;
+import java.util.List;
 import pages.HomePage;
 import utilities.ConfigReader;
 import utilities.Driver;
 import utilities.ReusableMethods;
 
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.interactions.Actions;
-
-
-
-import java.util.List;
-
-
-public class HomepageStepdefinitions {
-
-
-    HomePage homepage = new HomePage();
+public class HomepageStepdefinitions {//
+    HomePage homepage=new HomePage();
+    Actions actions=new Actions(Driver.getDriver());
 
 
 
@@ -43,7 +41,6 @@ public class HomepageStepdefinitions {
         }
     }
 
-    Actions actions = new Actions(Driver.getDriver());
 
 
     /////////////////////////////////////////////////////////////////////////////////////
@@ -222,6 +219,108 @@ public class HomepageStepdefinitions {
 
     //============================================ Nesibe [US_005] Feauture Boards End ================================================
 
+
+  //********Humeyra**********
+  @Given("Go to url")
+  public void goToUrl() {
+
+      Driver.getDriver().get(ConfigReader.getProperty("healLife"));
+  }
+
+    @Then("Verify that Home page title is visible in the home page bottom bar.")
+    public void verifyThatHomePageTitleIsVisibleInTheHomePageBottomBar() {
+        actions.sendKeys(Keys.END);
+        ReusableMethods.bekle(2);
+        Assert.assertTrue(homepage.bottomHomeLink.isDisplayed());
+
+
+    }
+
+    @Then("Verify that Academics page title is visible in the home page bottom bar.")
+    public void verifyThatAcademicsPageTitleIsVisibleInTheHomePageBottomBar() {
+        actions.scrollToElement(homepage.bottomAcademicsLink);
+        ReusableMethods.bekle(2);
+        Assert.assertTrue(homepage.bottomAcademicsLink.isDisplayed());
+    }
+
+    @Then("Verify that  Gallery page title is visible in the home page bottom bar.")
+    public void verifyThatGalleryPageTitleIsVisibleInTheHomePageBottomBar() {
+        actions.scrollToElement(homepage.bottomAcademicsLink);
+        ReusableMethods.bekle(2);
+        Assert.assertTrue(homepage.bottomAcademicsLink.isDisplayed());
+    }
+
+    @Then("Verify that  About page title is visible in the home page bottom bar")
+    public void verifyThatAboutPageTitleIsVisibleInTheHomePageBottomBar() {
+        actions.scrollToElement(homepage.bottomAboutLink);
+        ReusableMethods.bekle(2);
+        Assert.assertTrue(homepage.bottomAboutLink.isDisplayed());
+    }
+
+
+    @Then("Verify that Contact US page title is visible in the home page bottom bar")
+    public void verifyThatContactUSPageTitleIsVisibleInTheHomePageBottomBar() {
+        actions.scrollToElement(homepage.bottomContactUsLink);
+        ReusableMethods.bekle(2);
+        Assert.assertTrue(homepage.bottomContactUsLink.isDisplayed());
+    }
+
+
+    @Then("Click Home title. Verify that browser redirects to the Home page.")
+    public void clickHomeTitleVerifyThatBrowserRedirectsToTheHomePage() {
+        homepage.bottomHomeLink.click();
+        String expectedUrl="https://qa.heallifehospital.com/frontend";
+        String actualUrl= Driver.getDriver().getCurrentUrl();
+        Assert.assertEquals(expectedUrl,actualUrl);
+        Driver.getDriver().navigate().back();
+        ReusableMethods.bekle(2);
+    }
+
+    @Then("Click Academics title.Verify that browser redirects to the Academics page.")
+    public void clickAcademicsTitleVerifyThatBrowserRedirectsToTheAcademicsPage() {
+        actions.sendKeys(Keys.END);
+        homepage.bottomAcademicsLink.click();
+        String expectedUrl="https://qa.heallifehospital.com/page/meet-our-doctors";
+        String actualUrl= Driver.getDriver().getCurrentUrl();
+        Assert.assertEquals(expectedUrl,actualUrl);
+        Driver.getDriver().navigate().back();
+        ReusableMethods.bekle(2);
+    }
+
+    @Then("Click Gallery title.Verify that browser redirects to the  Gallery page.")
+    public void clickGalleryTitleVerifyThatBrowserRedirectsToTheGalleryPage() {
+        actions.scrollToElement(homepage.bottomGaleryLink);
+        ReusableMethods.bekle(2);
+        homepage.bottomGaleryLink.click();
+        String expectedUrl="https://qa.heallifehospital.com/page/gallery";
+        String actualUrl= Driver.getDriver().getCurrentUrl();
+        Assert.assertEquals(expectedUrl,actualUrl);
+        Driver.getDriver().navigate().back();
+        ReusableMethods.bekle(2);
+    }
+
+    @Then("Click About title.Verify that browser redirects to the About page.")
+    public void clickAboutTitleVerifyThatBrowserRedirectsToTheAboutPage() {
+        actions.sendKeys(Keys.END);
+        homepage.bottomAboutLink.click();
+
+        String expectedUrl="https://qa.heallifehospital.com/page/about-hospitals";
+        String actualUrl= Driver.getDriver().getCurrentUrl();
+        Assert.assertEquals(expectedUrl,actualUrl);
+        Driver.getDriver().navigate().back();
+        ReusableMethods.bekle(2);
+    }
+
+    @Then("Click Contact US title. Verify that browser redirects to the Contact US page.")
+    public void clickContactUSTitleVerifyThatBrowserRedirectsToTheContactUSPage() {
+        actions.sendKeys(Keys.END);
+        homepage.bottomContactUsLink.click();
+        String expectedUrl="https://qa.heallifehospital.com/page/contact-us";
+        String actualUrl= Driver.getDriver().getCurrentUrl();
+        Assert.assertEquals(expectedUrl,actualUrl);
+        Driver.getDriver().navigate().back();
+        ReusableMethods.bekle(2);
+    }
 }
 
 

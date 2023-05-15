@@ -245,7 +245,8 @@ public class HealMethods {
         WebElement moneyIcon=Driver.getDriver().findElement(By.xpath("(//i[@class='fa fa-money'])["+sira+"]"));
         JSUtilities.clickWithJS(Driver.getDriver(),moneyIcon);
     }
-    public static void makePaymentOptionsTest(){//payments sayfasina gelindiginde odeme testi yapar
+    public static void makePaymentOptionsTest(){//metot henüz tam fonksiyonel degil 15.5.23
+                                        // payments sayfasina gelindiginde odeme testi yapar
                                         //Payments baslik yazısını dogrular
                                         //Eski odemeyi siler
                                         //Yerine bugunun tarihiyle aynı miktarda odeme yapar, dogrular(test)

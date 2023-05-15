@@ -45,3 +45,4 @@ Feature: As an administrator (admin), I would like to have a page in
     Scenario: TC_06  It should be possible to sort through the titles in the IPD Discharged Patient List.
       Given Click on the Discarged Patient button
 
+

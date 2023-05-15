@@ -131,6 +131,16 @@ public class AdminStepdefinitions {//
     public void testThePaymentOptions() {
         HealMethods.makePaymentOptionsTest();
     }
+    @And("Click first name for display patient profile under the Patient Name")
+    public void clickFirstNameForDisplayPatientProfileUnderThePatientName() {
+        Driver.getDriver().findElement(By.xpath("(//td)[4]")).click();
+
+    }
+    @Then("Verified redirected to Patent Profile page")
+    public void verifiedRedirectedToPatentProfilePage() {
+        Assert.assertTrue("Not redirected to patent profile page",
+                Driver.getDriver().getCurrentUrl().contains("patient_profile"));
+    }
 
 
     @Given("Click on the Add Patient button in IPD page")
@@ -156,8 +166,8 @@ public class AdminStepdefinitions {//
         }
     }
 
-    @And("Click {int}. first name for display patient profile")
-    public void clickFirstNameForDisplayPatientProfile(int sira) {
+    @And("Click first name for display patient profile")
+    public void clickFirstNameForDisplayPatientProfile() {
         HealMethods.clickANameFromList(1);
     }
 
@@ -277,6 +287,7 @@ public class AdminStepdefinitions {//
     public void verifyThatThePharmacyBillListOnThePharmacyPageHaveTheHeadingBalanceAmount() {
         Assert.assertTrue(adminPage.pharmacyBalanceAmount.isDisplayed());
     }
+
 
 
 }

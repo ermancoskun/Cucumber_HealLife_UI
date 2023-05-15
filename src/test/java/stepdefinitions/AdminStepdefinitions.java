@@ -7,6 +7,7 @@ import io.cucumber.java.en.Then;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import pages.AdminPage;
@@ -52,11 +53,44 @@ public class AdminStepdefinitions {//
         adminPage.opdButton.click();
     }
 
-    @And("Sees the {string} and their {string}")
-    public void seesTheAndTheir(String filtreAdi, int sirasi) {
-        HealMethods.makeFilterTest(filtreAdi,sirasi,7);
+    @Then("Sees the FilterName and their Order")
+    public void seesTheFilterNameAndTheirOrder() {
+        HealMethods.makeFilterTest("Name",1,11);
+        HealMethods.makeFilterTest("Patient Id",2,11);
+        HealMethods.makeFilterTest("Guardian Name",3,11);
+        HealMethods.makeFilterTest("Gender",4,11);
+        HealMethods.makeFilterTest("Phone",5,11);
+        HealMethods.makeFilterTest("Consultant",6,11);
+        HealMethods.makeFilterTest("Last Visit",7,11);
+        HealMethods.makeFilterTest("Total Recheckup",8,11);
     }
 
+    @Then("Sees the name of Billing List and their contents")
+    public void seesTheNameOfBillingListAndTheirContents() {
+        HealMethods.makeFilterTest("Bill No",1,8);
+        HealMethods.makeFilterTest("Case ID / Patient ID",2,8);
+        HealMethods.makeFilterTest("Reporting Date",3,8);
+        HealMethods.makeFilterTest("Patient Name",4,8);
+        HealMethods.makeFilterTest("Reference Doctor",5,8);
+        HealMethods.makeFilterTest("Amount ($)",6,8);
+        HealMethods.makeFilterTest("Paid Amount ($)",7,8);
+    }
+    @And("Sees the name of Radiology Billing List and their contents")
+    public void seesTheNameOfRadiologyBillingListAndTheirContents() {
+        HealMethods.makeFilterTest("Bill No",1,9);
+        HealMethods.makeFilterTest("Case ID / Patient ID",2,9);
+        HealMethods.makeFilterTest("Reporting Date",3,9);
+        HealMethods.makeFilterTest("Patient Name",4,9);
+        HealMethods.makeFilterTest("Reference Doctor",5,9);
+        HealMethods.makeFilterTest("Note",6,9);
+        HealMethods.makeFilterTest("Amount ($)",7,9);
+        HealMethods.makeFilterTest("Paid Amount ($)",8,9);
+    }
+    @And("Click the Radiology button on Billing page")
+    public void clickTheRadiologyButtonOnBillingPage() {
+        adminPage.radiologyButton.click();
+
+    }
     @And("test to searcbox")
     public void testToSearcbox() {
         HealMethods.makeSearchBoxTest();
@@ -78,8 +112,8 @@ public class AdminStepdefinitions {//
     }
     @Then("Verified redirected to Bill Details page")
     public void verifiedRedirectedToBillDetailsPage() {
-        String actualWindowTitle=Driver.getDriver().findElement(By.xpath("(//h4[@class='modal-title'])[3]")).getText();
-        Assert.assertEquals("Unsuccessful redirection","Bill Details",actualWindowTitle);
+        WebElement billDetailsElement=Driver.getDriver().findElement(By.xpath("(//h4[text()='Bill Details'])[1]"));
+        Assert.assertTrue(billDetailsElement.isDisplayed());
     }
     @And("Click the Pathology button on Billing page")
     public void clickThePathologyButtonOnBillingPage() {
@@ -89,6 +123,15 @@ public class AdminStepdefinitions {//
     public void clickIconButtonUnderTheLastColumnForDisplayFirstPatientProfile(int sira) {
         HealMethods.clickIconWith3Line(sira);
     }
+    @And("Click the Add View Payment iconButton for additional payments for patient of {int}.")
+    public void clickTheAddViewPaymentIconButtonForAdditionalPaymentsForPatientOf(int sira) {
+        HealMethods.clickAddViewPaymentIcon(sira);
+    }
+    @Then("Test the payment options")
+    public void testThePaymentOptions() {
+        HealMethods.makePaymentOptionsTest();
+    }
+
 
     @Given("Click on the Add Patient button in IPD page")
     public void clickOnTheAddPatientButtonInIPDPage() {
@@ -119,17 +162,7 @@ public class AdminStepdefinitions {//
     }
 
 
- /*   @Then("Sees the {string} that {string}")
-    public void seesTheThat(String filtreAdi, int sira) {
-        System.out.println("filtreAdi = " + filtreAdi);
-        System.out.println("sira = " + sira);
-        HealMethods.makeFilterTest(filtreAdi,sira,7);
-    }*/
 
-    @Then("Sees the name of {string} that their {string} number")
-    public void seesTheNameOfThatTheirNumber(String filtreAdi, String sira) {
-        HealMethods.makeFilterTest(filtreAdi,Integer.parseInt(sira),8);
-    }
 
 
 
@@ -186,7 +219,6 @@ public class AdminStepdefinitions {//
     public void verifyThatTheNavbarHasTheTextHealLifeHospitalResearchCenter() {
         Assert.assertTrue("The text *Heal Life Hospital & Research Center* is not visible in Navbar",adminpage.healLifeHospitalResearchCenterText.isDisplayed());
     }
-
 
 
 

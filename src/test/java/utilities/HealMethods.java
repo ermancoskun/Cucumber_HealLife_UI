@@ -8,6 +8,7 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import pages.AdminPage;
+import pages.HomePage;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -250,7 +251,27 @@ public class HealMethods {
     JSUtilities.clickWithJS(Driver.getDriver(),iconButton);
     ReusableMethods.bekle(3);
     }
-    public static void clickANameFromList(int sira){
-        Driver.getDriver().findElement(By.xpath("(//td)["+sira+"]"));
+    public static void clickANameFromList(int sira) {
+        Driver.getDriver().findElement(By.xpath("(//td)[" + sira + "]"));
+
+
+
+
+
     }
-}
+
+
+
+        }
+
+
+
+
+
+
+
+
+
+
+
+

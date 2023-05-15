@@ -1,12 +1,19 @@
 package pages;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import utilities.Driver;
+import org.openqa.selenium.interactions.Actions;
+
+
 
 
 import java.util.List;
+
+import static utilities.Driver.driver;
 
 public class HomePage extends Base {
 
@@ -51,9 +58,13 @@ public class HomePage extends Base {
 
 
 
+    // homepage ->
     @FindBy (xpath = "(//a[text()='Gallery'])[1]")
 
     public WebElement GalleryButton;
+
+    @FindBy(xpath = "//div[@class='col-md-4 col-sm-4']) //img")
+    public List<WebElement> GalleryPhotos;
 
 
     @FindBy (xpath = "//h2[text()='Gallery']")
@@ -67,5 +78,46 @@ public class HomePage extends Base {
     @FindBy (xpath = "//*[@id=\"navbar-collapse-3\"]/ul/li[2]/a")
     public WebElement appointmentButton;
 
+    //homepage -> Gallery
+    @FindBy(xpath = "(//div[@class='col-md-4 col-sm-4']) [1]")
+    public WebElement xImageHealthWellness;
+    @FindBy(xpath = "(//div[@class='col-md-4 col-sm-4']) [2]")
+    public WebElement xImageHospitalsAndDirections;
+    @FindBy(xpath = "(//div[@class='col-md-4 col-sm-4']) [3]")
+    public WebElement xImageSpecialities;
+    @FindBy(xpath = "(//div[@class='col-md-4 col-sm-4']) [4]")
+    public WebElement xImageRecreationCentre;
+    @FindBy(xpath = "(//div[@class='col-md-4 col-sm-4']) [5]")
+    public WebElement xImageYourHealth;
+    @FindBy(xpath = "(//div[@class='col-md-4 col-sm-4']) [6]")
+    public WebElement xImageSurgery;
 
-}
+
+
+
+    }
+
+
+
+
+
+
+
+
+
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

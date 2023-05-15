@@ -16,6 +16,7 @@ import utilities.ConfigReader;
 
 
 import java.util.List;
+import java.util.Random;
 
 
 public class HomepageStepdefinitions {
@@ -41,59 +42,66 @@ public class HomepageStepdefinitions {
     }
 
 
-
-
     Actions actions = new Actions(Driver.getDriver());
 
 
     /////////////////////////////////////////////////////////////////////////////////////
     @Given("Launch browser.")
     public void launchBrowser() {
-        Driver.getDriver();}
+        Driver.getDriver();
+    }
 
     @Then("Go to {string}")
     public void goTo(String url) {
-        Driver.getDriver().get(ConfigReader.getProperty(url));}
+        Driver.getDriver().get(ConfigReader.getProperty(url));
+    }
 
     @And("Go to the home page footer section.")
-    public void goToTheHomePageFooterSection() {actions.sendKeys(Keys.END).perform();}
+    public void goToTheHomePageFooterSection() {
+        actions.sendKeys(Keys.END).perform();
+    }
 
     @And("Verify that the complain button and icon are visible.")
     public void verifyThatTheComplainButtonAndIconAreVisible() {
-        Assert.assertTrue("Complain icon are not visible",homepage.complainIcon.isDisplayed());
-        Assert.assertTrue("Complain button are not visible",homepage.complainButton.isDisplayed());
-        Assert.assertTrue("Complain icon are not clickable",homepage.complainIcon.isEnabled());
-        Assert.assertTrue("Complain button are not clickable",homepage.complainButton.isEnabled());}
+        Assert.assertTrue("Complain icon are not visible", homepage.complainIcon.isDisplayed());
+        Assert.assertTrue("Complain button are not visible", homepage.complainButton.isDisplayed());
+        Assert.assertTrue("Complain icon are not clickable", homepage.complainIcon.isEnabled());
+        Assert.assertTrue("Complain button are not clickable", homepage.complainButton.isEnabled());
+    }
 
     @And("Close browser")
     public void closeBrowser() {
-        Driver.closeDriver();}
+        Driver.closeDriver();
+    }
 
     @And("Click on the complainIcon")
     public void clickOnTheComplainIcon() {
-        homepage.complainButton.click();}
+        homepage.complainButton.click();
+    }
 
     @And("Verify that it redirects to the {string} page.")
     public void verifyThatItRedirectsToThePage(String url) {
         String actualUrl = Driver.getDriver().getCurrentUrl();
         String expectedUrl = ConfigReader.getProperty(url);
 
-        Assert.assertEquals("The 'Complain' button on the homepage does not redirect to the complain page.",expectedUrl,actualUrl);}
+        Assert.assertEquals("The 'Complain' button on the homepage does not redirect to the complain page.", expectedUrl, actualUrl);
+    }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
 
 
-
     @Given("User goes to the home page")
     public void user_goes_to_the_home_page() {
-        Driver.getDriver().get(ConfigReader.getProperty("homePageUrl"));}
+        Driver.getDriver().get(ConfigReader.getProperty("homePageUrl"));
+    }
 
     @Then("Verify that the URL of the website is correct")
     public void verify_that_the_url_of_the_website_is_correct() {
         String actualUrl = Driver.getDriver().getCurrentUrl();
         String expectedUrl = ConfigReader.getProperty("homePageUrl");
-        Assert.assertEquals("The Url of the home page is correct",expectedUrl,actualUrl);
+        Assert.assertEquals("The Url of the home page is correct", expectedUrl, actualUrl);
     }
+
     @Then("Close the web browser")
     public void close_the_web_browser() {
         Driver.closeDriver();
@@ -104,57 +112,84 @@ public class HomepageStepdefinitions {
         ReusableMethods.bekle(1);
         Assert.assertTrue("Home page is visible", homepage.MainBanner.isDisplayed());
     }
+
     @Then("Click the Appointment Button")
     public void click_the_appointment_button() {
         ReusableMethods.bekle(1);
         homepage.appointmentButton.click();
 
     }
+
     @Then("Verify that the URL of the Appointment page is correct")
     public void verify_that_the_url_of_the_appointment_page_is_correct() {
         ReusableMethods.bekle(1);
         String actualUrl = Driver.getDriver().getCurrentUrl();
         String expectedUrl = ConfigReader.getProperty("appointmentPageUrl");
-        Assert.assertEquals("The Url of the Appointment page is correct",expectedUrl,actualUrl);
-
-
-
-
-
-
+        Assert.assertEquals("The Url of the Appointment page is correct", expectedUrl, actualUrl);
 
 
         ///////////////////////////////////////
 
 
+    }
 
 
 
 
-        }
-        @Then("Gallery button clicks")
-        public void gallery_button_clicks() {
 
-          homepage.GalleryButton.click();
-        }
-        @Then("Goes to the gallery page")
-        public void goes_to_the_gallery_page() {
-
-      Assert.assertTrue(homepage.GalleryxLabel.isDisplayed());
-
-        }
-        @Then("The browser is closed")
-        public void the_browser_is_closed() {
+    @Then("The browser is closed")
+    public void the_browser_is_closed () {
 
         Driver.closeDriver();
 
-
-        }
-
-
-
-
     }
+
+    @Then("Gallery button clicks")
+    public void gallery_button_clicks() {
+
+        homepage.GalleryButton.click();
+    }
+
+    @Then("Goes to the gallery page")
+    public void goes_to_the_gallery_page() {
+
+        Assert.assertTrue(homepage.GalleryxLabel.isDisplayed());
+    }
+
+        @Then("Gallery page displays reserved pictures about hospital and health")
+    public void gallery_page_displays_reserved_pictures_about_hospital_and_health() {
+
+        List<WebElement>galleryList=Driver.getDriver().findElements(By.xpath("//*[@id='postList']"));
+            Random random = new Random();
+            int sayi = random.nextInt(galleryList.size())+1;
+
+                    WebElement gallery=Driver.getDriver().findElement(By.xpath("(//h3)["+sayi+"]"));
+                    Assert.assertTrue(gallery.isDisplayed());
+                    String expGalleryText=gallery.getText();
+                    gallery.click();
+                    WebElement actTitle=Driver.getDriver().findElement(By.xpath("(//h1)[1]"));
+                    Assert.assertTrue(expGalleryText.contains(actTitle.getText()));
+
+
+
+
+
+                }
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

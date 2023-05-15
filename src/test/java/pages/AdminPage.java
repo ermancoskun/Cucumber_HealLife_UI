@@ -60,6 +60,10 @@ public class AdminPage extends Base{
     @FindBy (xpath = "//p[.='Pathology']")
     public WebElement pathologyButton;
 
+    //Admin > Billing
+    @FindBy (xpath = "//p[.='Radiology']")
+    public WebElement radiologyButton;
+
 
     //Admin > IPD >
     @FindBy(id = "addp")

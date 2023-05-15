@@ -619,7 +619,111 @@ Assert.assertEquals(patientPage.SuccestText.getText(),"SUCCESS");
     }
 
     //========================================= Nesibe [US_023] OPD MENU SONU ==========================================
-}
+    //==============================================Busra US26=======================================================
+    @Given("Click on the {string} linkkk")
+    public void click_on_the_linkkk(String string) {
+        patientPage.pathologySideBox.click();
+    }
 
+        @And("Verified redirected to Pathology page")
+        public void verifiedRedirectedToPathologyPage () {
+        Assert.assertTrue(patientPage.pathologytTextReportYazisi.isDisplayed());
+
+    }
+
+    @And("Verify that {string} in the Pathology Bill List are displayed")
+    public void verifyThatInThePathologyBillListAreDisplayed(String data) {
+        Assert.assertTrue(PatientPage.baslikListelemeMethod2(data));
+    }
+
+    @Then("Enter the excistingg {string}")
+    public void enterTheExcistingg(String arg0) {
+        patientPage.searchBox.sendKeys("PATHOB100");
+    }
+    @And("It is verified that filtering is done by entering the bill number in the Search Boxx.")
+    public void ıtIsVerifiedThatFilteringIsDoneByEnteringTheBillNumberInTheSearchBoxx() {
+        patientPage.pathologytPATHOB100Yazisi.isDisplayed();
+
+    }
+    @Then("It is verified that the headings are sorted by clickingg on them.")
+    public void ıtIsVerifiedThatTheHeadingsAreSortedByClickinggOnThem() {
+        Assert.assertTrue(PatientPage.intListSortTest2(1));
+    }
+
+    @Then("The visibility of the amount text is verifiedd")
+    public void theVisibilityOfTheAmountTextIsVerifiedd() {
+        patientPage.pathologyPaymentTextYazisi.isDisplayed();
+
+    }
+    @Then("close the screennn")
+    public void closeTheScreennn() {
+        patientPage.pathologyClose.click();
+    }
+    @Then("Click the View reports.")
+    public void clickTheViewReports() {
+        patientPage.pharmacyShowButton.click();
+    }
+    @Then("Name text \\(ayse.busra.pehlıvan {int}) should visible")
+    public void nameTextAyseBusraPehlıvanShouldVisible(int arg0) {
+        patientPage.pathologyNameText.isDisplayed();
+
+    }
+    @Then("close the screennnn")
+    public void closeTheScreennnn() {
+        patientPage.pathologyViewwClose.click();
+    }
+    @Then("Click the Pathology pay button.")
+    public void clickThePathologyPayButton() {
+        patientPage.pathologyPayButton.click();
+        ReusableMethods.bekle(3);
+        patientPage.pathologyPaymentAmountBox.clear();
+        ReusableMethods.bekle(2);
+        patientPage.pathologyPaymentAmountBox.sendKeys("30");
+        patientPage.pathologyAddButton.click();
+    }
+    @And("Click the pay with cardd.")
+    public void clickThePayWithCardd() {
+        patientPage.pathologyPayWithCard.click();
+        ReusableMethods.bekle(3);
+
+    }
+    @Given("e-mail, card number, date and cvc code are enteredd")
+    public void eMailCardNumberDateAndCvcCodeAreEnteredd() {
+        ReusableMethods.bekle(3);
+        Actions actions = new Actions(Driver.getDriver());
+        ReusableMethods.bekle(3);
+        ReusableMethods.bekle(3);
+
+        actions.sendKeys("asd@gmail.com").build().perform();
+        //actions.sendKeys(faker.internet().emailAddress()).perform();
+        actions.sendKeys(Keys.TAB).perform();
+        ReusableMethods.bekle(2);
+        actions.sendKeys("4242 4242").build().perform();
+        ReusableMethods.bekle(2);
+        actions.sendKeys("4242 4242").build().perform();
+        ReusableMethods.bekle(3);
+        ReusableMethods.bekle(3);
+        actions.sendKeys(Keys.TAB).perform();
+        actions.sendKeys("04").perform();
+        ReusableMethods.bekle(3);
+        actions.sendKeys("28").perform();
+        ReusableMethods.bekle(2);
+        actions.sendKeys(Keys.TAB).build().perform();
+        ReusableMethods.bekle(2);
+        actions.sendKeys("123").build().perform();
+        actions.sendKeys(Keys.TAB).perform();
+        ReusableMethods.bekle(2);
+        actions.sendKeys("456").build().perform();
+        ReusableMethods.bekle(2);
+        actions.sendKeys(Keys.TAB).build().perform();
+        ReusableMethods.bekle(2);
+        actions.sendKeys(Keys.ENTER).perform();
+
+        // patientPage.pharmacyPayBox.click();
+        ReusableMethods.bekle(2);
+
+    }
+
+}
 
 

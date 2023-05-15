@@ -1,10 +1,5 @@
 package pages;
 
-
-
-
-
-
 import org.junit.Assert;
 
 import org.openqa.selenium.By;
@@ -33,14 +28,17 @@ import javax.swing.*;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDate;
-import java.util.Calendar;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+
 
 import java.util.ArrayList;
 import java.util.Collections;
 
 
 import java.util.List;
+
 import java.util.concurrent.TimeUnit;
 
 
@@ -485,8 +483,6 @@ public class PatientPage extends Base {
     @FindBy(xpath = "//input[@id='card_number']")
     public WebElement pharmacyCardNumberBox;
 
-    @FindBy(xpath = "//div[@class='bodyView']//button[@id='submitButton']")
-    public WebElement pharmacyPayBox;
 
     @FindBy(xpath = "//i[@class='fa fa-check']")
     public WebElement pharmacySuccesfulText;
@@ -495,10 +491,42 @@ public class PatientPage extends Base {
     @FindBy(xpath = "(//button[@class='close'])[2]")
     public WebElement pharmacyClose;
 
+    @FindBy(xpath = "//td[text()='Payment']")
+    public WebElement pathologyPaymentTextYazisi;
+
+
+    @FindBy(xpath = "(//button[@class='close'])[6]")
+    public WebElement pathologyClose;
+
+
+    @FindBy(xpath = "//td[text()='ayse.busra.pehlivan (338)']")
+    public WebElement pathologyNameText;
+
+
+
+    @FindBy(xpath = "(//button[@type='button'])[9]")
+    public WebElement pathologyViewwClose;
+
+    @FindBy(xpath = "(//button[@type='button'])[2]")
+    public WebElement pathologyPayButton;
+
+
+    @FindBy(xpath = "//input[@id='amount_total_paid']")
+    public WebElement pathologyPaymentAmountBox;
+
+    @FindBy(xpath = "//button[@id='pay_button']")
+    public WebElement pathologyAddButton;
+
+    @FindBy(xpath = "//span[text()='Pay with Card']")
+    public WebElement pathologyPayWithCard;
+
+
+
+
 
 
     public static boolean baslikListelemeMethod(String data) {
-        List<WebElement> actualList = Driver.getDriver().findElements(By.xpath("//th[@aria-controls='DataTables_Table_0']"));
+        List<WebElement> actualList = Driver.getDriver().findElements(By.xpath("//*[@id=\"DataTables_Table_0\"]/thead/tr[1]//th"));
         List<String> baslikListesiActual = new ArrayList<>();
         for (WebElement each : actualList
         ) {
@@ -506,7 +534,11 @@ public class PatientPage extends Base {
         }
         System.out.println(baslikListesiActual);
         String[] liste = data.split(", ");
+
+
+        System.out.println(Arrays.toString(liste));
         int count = 0;
+
 
 
 
@@ -514,7 +546,7 @@ public class PatientPage extends Base {
 
         for (int i = 0; i < liste.length; i++) {
             for (int j = 0; j < baslikListesiActual.size(); j++) {
-                if (baslikListesiActual.get(j).contains(liste[i])) {
+                if (baslikListesiActual.get(j).equals(liste[i])) {
                     count++;
                 }
             }
@@ -522,6 +554,7 @@ public class PatientPage extends Base {
         if (count == liste.length) {
             return true;
         }
+
 
 
         return false;
@@ -542,6 +575,95 @@ public class PatientPage extends Base {
 
 
 
+
+
+        List<String> ExpectedList = new ArrayList<>(ActualStringList);
+        Collections.sort(ExpectedList);
+        if (ActualStringList.equals(ExpectedList)) {
+            return true;
+        }
+        return false;
+
+    }
+
+    @FindBy(xpath = "//span[text()=' Pathology']")
+    public WebElement pathologySideBox;
+
+    @FindBy(xpath = "//h3[text()='Pathology Test Reports']")
+    public WebElement pathologytTextReportYazisi;
+
+    @FindBy(xpath = "//td[text()='PATHOB100']")
+    public WebElement pathologytPATHOB100Yazisi;
+
+
+
+
+
+    public static boolean baslikListelemeMethod2(String data) {
+        List<WebElement> actualList = Driver.getDriver().findElements(By.xpath("//*[@id=\"testreport\"]/thead/tr/th"));
+        List<String> baslikListesiActual = new ArrayList<>();
+        for (WebElement each : actualList
+        ) {
+            baslikListesiActual.add(each.getText());
+        }
+        System.out.println(baslikListesiActual);
+        String[] liste = data.split(", ");
+
+        System.out.println(Arrays.toString(liste));
+        int count = 0;
+        for (int i = 0; i < liste.length; i++) {
+            for (int j = 0; j < baslikListesiActual.size(); j++) {
+                if (baslikListesiActual.get(j).equals(liste[i])) {
+                    count++;
+                }
+            }
+        }
+        if (count == liste.length) {
+            return true;
+        }
+        return false;
+    }
+    public static boolean TarihListSiralamaTesti(int sutunNo) {
+        Select select = new Select(Driver.getDriver().findElement(By.xpath("//select[@name='DataTables_Table_0_length']")));
+        ReusableMethods.bekle(3);
+        select.selectByVisibleText("All");
+        ReusableMethods.bekle(3);
+        WebElement baslik = Driver.getDriver().findElement(By.xpath("//*[@id=\"DataTables_Table_0\"]/thead/tr[1]//th[" + sutunNo + "]"));
+        baslik.click();
+        ReusableMethods.bekle(3);
+        List<WebElement> ActualList = Driver.getDriver().findElements(By.xpath("//*[@id=\"DataTables_Table_0\"]/tbody/tr/td[" + sutunNo + "]"));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm a", Locale.ENGLISH);
+
+        List<LocalDateTime> tarihler=new ArrayList<>();
+        for (WebElement each:ActualList
+        ) {
+            String data=each.getText();
+            LocalDateTime dateTime = LocalDateTime.parse(data, formatter);
+            tarihler.add(dateTime);
+        }
+        int sayi=0;
+        for (int i = 0; i <tarihler.size()-1 ; i++) {
+            sayi=tarihler.get(i).compareTo(tarihler.get(i+1));
+            if (sayi>0){
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    public static boolean intListSortTest2 ( int sutunNo){
+        WebElement baslik = Driver.getDriver().findElement(By.xpath("(//th[@class='sorting'])[" + sutunNo + "]"));
+        baslik.click();
+        ReusableMethods.bekle(3);
+        List<WebElement> ActualList = Driver.getDriver().findElements(By.xpath("(//th[@class='sorting'])[\" + sutunNo + \"]"));
+
+        List<String> ActualStringList = new ArrayList<>();
+        for (WebElement each : ActualList
+        ) {
+            ActualStringList.add(each.getText().replaceAll("[^\\d]", ""));
+        }
+        System.out.println(ActualStringList);
 
 
         List<String> ExpectedList = new ArrayList<>(ActualStringList);

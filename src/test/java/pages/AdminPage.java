@@ -2,11 +2,14 @@ package pages;
 
 
 import org.checkerframework.checker.calledmethods.qual.EnsuresCalledMethodsIf;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 
 import utilities.ConfigReader;
+import utilities.Driver;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AdminPage extends Base{
@@ -153,6 +156,43 @@ public class AdminPage extends Base{
     //admin>Pharmacy>Balance Amount
     @FindBy(xpath = "//*[text()='Balance Amount ($)']")
     public WebElement pharmacyBalanceAmount;
+
+    //admin>pharmacy>Generate Bill button
+    @FindBy(xpath = "//*[text()=' Generate Bill']")
+    public WebElement pharmacyGenerateButton;
+
+    //admin>pharmacy>Generate Bill>admin>prescription No
+    @FindBy(id = "prescription_no")
+    public WebElement pharmacyPrescrtionButton;
+
+    //admin>Pharmacy>BillNoList
+    @FindBy(xpath = "//*[@class='odd']")
+    public List<WebElement> billList;
+
+      public List<WebElement> getBillList() {
+          List<WebElement> pharmacyBillList = new ArrayList<>();
+          for (int i = 1; i < (billList.size() * 9); i = i + 9) {
+              WebElement element = Driver.getDriver().findElement(By.xpath("(//td)[" + i + "]"));
+              pharmacyBillList.add(element);
+          }
+
+          return pharmacyBillList;
+
+      }
+      //admin> pharmacy>Case id/Patient Id
+    public List<WebElement> getCaseIdList() {
+        List<WebElement> pharmacyCaseIDList = new ArrayList<>();
+        for (int i = 2; i < (billList.size() * 9); i = i + 9) {
+            WebElement element = Driver.getDriver().findElement(By.xpath("(//td)[" + i + "]"));
+            pharmacyCaseIDList.add(element);
+        }
+
+        return pharmacyCaseIDList;
+
+    }
+
+
+
 
     ///////LOGIN METHODU///////
     public void loginAsAdmin (String username,String password){

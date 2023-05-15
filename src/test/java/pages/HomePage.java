@@ -78,21 +78,6 @@ public class HomePage extends Base {
     @FindBy (xpath = "//*[@id=\"navbar-collapse-3\"]/ul/li[2]/a")
     public WebElement appointmentButton;
 
-    //homepage -> Gallery
-    @FindBy(xpath = "(//div[@class='col-md-4 col-sm-4']) [1]")
-    public WebElement xImageHealthWellness;
-    @FindBy(xpath = "(//div[@class='col-md-4 col-sm-4']) [2]")
-    public WebElement xImageHospitalsAndDirections;
-    @FindBy(xpath = "(//div[@class='col-md-4 col-sm-4']) [3]")
-    public WebElement xImageSpecialities;
-    @FindBy(xpath = "(//div[@class='col-md-4 col-sm-4']) [4]")
-    public WebElement xImageRecreationCentre;
-    @FindBy(xpath = "(//div[@class='col-md-4 col-sm-4']) [5]")
-    public WebElement xImageYourHealth;
-    @FindBy(xpath = "(//div[@class='col-md-4 col-sm-4']) [6]")
-    public WebElement xImageSurgery;
-
-
 
 
     }

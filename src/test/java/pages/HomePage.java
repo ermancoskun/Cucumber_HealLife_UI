@@ -44,4 +44,14 @@ public class HomePage extends Base {
     public WebElement complainButton;
 
     //////////////////////////////////////////////////////////////////
+
+
+    // homepage > Mainbanner
+    @FindBy (tagName = "html")
+    public WebElement MainBanner;
+
+    // homepage > Appointment Button
+    @FindBy (xpath = "//*[@id=\"navbar-collapse-3\"]/ul/li[2]/a")
+    public WebElement appointmentButton;
+
 }

@@ -41,7 +41,7 @@ public class AdminPage extends Base{
     public WebElement guardianNameBox;
 
     //Admin > Billing > OPD > Add Patient > New Patient
-    @FindBy(id = "addformgender")
+    @FindBy(xpath = "//select[@name='gender']")
     public WebElement genderDropDown;
 
     //Admin > Billing > OPD > Add Patient > New Patient
@@ -49,12 +49,16 @@ public class AdminPage extends Base{
     public WebElement birthDateBox;
 
     //Admin > Billing > OPD > Add Patient > New Patient
-    @FindBy(xpath = "(//select[@name='blood_group'])[2]")
+    @FindBy(xpath = "//select[@name='blood_group']")
     public WebElement bloodGroupDropDown;
 
     //Admin > Billing > OPD > Add Patient > New Patient
-    @FindBy(xpath = "(//select[@name='marital_status'])[2]")
+    @FindBy(xpath = "//select[@name='marital_status']")
     public WebElement maritalStatusDropDown;
+
+    //Admin > Billing
+    @FindBy (xpath = "//p[.='Pathology']")
+    public WebElement pathologyButton;
 
 
     //Admin > IPD >
@@ -72,6 +76,7 @@ public class AdminPage extends Base{
     //Admin > IPD &  Discharge Patient  > Table headers
     @FindBy (xpath = "//*[@id=\"DataTables_Table_0\"]//th")
     public List<WebElement> ipdPatientAndDischargePatientTableHeaders;
+
 
     //********************Duygu*************************************//
 
@@ -113,6 +118,11 @@ public class AdminPage extends Base{
     @FindBy(xpath = "//span[@class='sidebar-session']")
     public WebElement healLifeHospitalResearchCenterText;
 
+    @FindBy(xpath = "//ul[@class=\"nav nav-tabs navlistscroll\"]//li")
+    public List<WebElement>ipdPersonalInformationHeaders;
+
+    @FindBy(xpath = "//div[@class=\"scrtabs-tab-scroll-arrow scrtabs-js-tab-scroll-arrow-right\"]")
+    public WebElement scrollRightButton;
     //********************Duygu*************************************//
     //////////////////////////////////////////////////////////////////
 

@@ -58,7 +58,20 @@ Feature: As an administrator (admin), I would like to have a page in
   Consultant Register, Lab Investigation, Operations, Charges, Payments, Bed History, Timeline,Treatment History) from the button
   under Total($) in the IPD Discharged Patient List.
     Given Click on the Discarged Patient button
-#    And I should be able to view all the patient's information from the button under Total($)
+    And I should be able to view all the patient's information from the button under Total($)
+      | Overview            |
+      | Nurse Notes         |
+      | Medication          |
+      | Prescription        |
+      | Consultant Register |
+      | Lab Investigation   |
+      | Operations          |
+      | Charges             |
+      | Payments            |
+      | Live Consultation   |
+      | Bed History         |
+      | Timeline            |
+      | Treatment History   |
 
   Scenario: TC_10 The IPD Patient List on the IPD page should have headings (Name, Case ID/Patient ID, Name, Gender, Phone, Consultant, Bed, Credit Limit($)).
     Given  It should be displayed in the IPD Patient List
@@ -83,5 +96,19 @@ Feature: As an administrator (admin), I would like to have a page in
   Scenario: TC_14 Access to all information (Overview, Nurse Notes, Medication, Prescription, Consultant Register, Lab Investigation,
   Operations, Charges, Payments, Bed History, Timeline, Treatment History) of the relevant patient from the button under Credit Limit($)
   in the IPD Patient List on the IPD page. should be.
+    And I should be able to view all the patient's information from the button under Credit Limit($)
+      | Overview            |
+      | Nurse Notes         |
+      | Medication          |
+      | Prescription        |
+      | Consultant Register |
+      | Lab Investigation   |
+      | Operations          |
+      | Charges             |
+      | Payments            |
+      | Live Consultation   |
+      | Bed History         |
+      | Timeline            |
+      | Treatment History   |
 
     

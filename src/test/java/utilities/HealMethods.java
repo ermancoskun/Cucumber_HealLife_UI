@@ -1,6 +1,7 @@
 package utilities;
 
 import com.github.javafaker.Faker;
+import org.checkerframework.framework.qual.DefaultQualifier;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -62,8 +63,8 @@ public class HealMethods {
 
     public static void makeAll100Test(){
 
-        WebElement all100=Driver.getDriver().findElement(By.xpath("//select[@name='DataTables_Table_0_length']"));
-        WebElement alttakiMetin=Driver.getDriver().findElement(By.id("DataTables_Table_0_info"));
+        WebElement all100=Driver.getDriver().findElement(By.xpath("(//select[@name])[1]"));
+        WebElement alttakiMetin=Driver.getDriver().findElement(By.xpath("//div[@class='dataTables_info']"));
         Select select=new Select(all100);
 
         //=====All seciyoruz========
@@ -143,7 +144,7 @@ public class HealMethods {
         filter.click();
         ReusableMethods.bekle(4);
         List<String> filtreList=new ArrayList<>();
-        for (int i = filtreKacinciSirada; i <=toplamSutunSayisi*100 ; i=(i+toplamSutunSayisi+1)) {
+        for (int i = filtreKacinciSirada; i <=toplamSutunSayisi*24 ; i=(i+toplamSutunSayisi+1)) {
             WebElement hucreElement=Driver.getDriver().findElement(By.xpath("(//td)["+i+"]"));
             filtreList.add(hucreElement.getText());
         }
@@ -179,21 +180,26 @@ public class HealMethods {
         Assert.assertTrue("Download of "+aranacakKelime+format+" not successful",fileFound);
     }
 
-    public static void clickBlueButton(String butonIsmi){
-        Driver.getDriver().findElement(By.xpath("//h4[text()='"+butonIsmi+"']")).click();
+    public static void clickBlueOrAnyButton(String butonIsmi){ // parametre yollarken buton isminin
+                                            //onunde bosluk olup olmadigina dikkat edip, featurea oyle yazalım
+        Driver.getDriver().findElement(By.xpath("//*[text()='"+butonIsmi+"']")).click();
     }
 
     public static void createNewPatient(){ // +New Patient butonuna basar, bilgileri random girer save yapar, kayıt yaptığını doğrular
         Driver.getDriver().findElement(By.xpath("//span[text()='New Patient']")).click();
         adminPage.nameBox.sendKeys(faker.name().fullName());
-        adminPage.guardianNameBox.sendKeys(faker.name().fullName());
+        actions.sendKeys(Keys.TAB).perform();
+        actions.sendKeys(faker.name().fullName()).perform();
         Select select=new Select(adminPage.genderDropDown);
         select.selectByIndex(faker.random().nextInt(1,2));
-        adminPage.birthDateBox.sendKeys(faker.date().birthday().toString());
+        adminPage.birthDateBox.sendKeys(faker.date().birthday().toString().replaceAll("0",""));
         actions.sendKeys(Keys.TAB).perform();
-        actions.sendKeys(faker.number().digits(23)).perform();
-        actions.sendKeys(Keys.TAB).perform();
-        actions.sendKeys(faker.number().digits(8)).perform();
+        int ageYear=faker.number().numberBetween(1,100);//rastgele yas (yıl olarak) int tipinde
+        actions.sendKeys(Integer.toString(ageYear)).perform(); //rastgele yası toString olarak gonder
+        int ageMonth=faker.number().numberBetween(1,12);//rastgele yas (ay olarak) int tipinde
+        actions.sendKeys(Integer.toString(ageMonth)).perform(); //rastgele yası toString olarak gonder
+        int ageDay=faker.number().numberBetween(1,30);//rastgele yas (gun olarak) int tipinde
+        actions.sendKeys(Integer.toString(ageDay)).perform(); //rastgele yası toString olarak gonder
         actions.sendKeys(Keys.TAB).perform();
         actions.sendKeys(faker.number().digits(5)).perform();
 
@@ -240,7 +246,19 @@ public class HealMethods {
     }
     public static void clickIconWith3Line(int sira){ //listenin en saginda yer alan ve uzerine gelindiginde ancak
                                                     //gorunen icona tiklar. Sira sayisi parametre olarak girilmeli
+        //bir sayfada mavi buton uzerinde bile 3cizgi elementi var ise ilk ona tiklayacaktir.Dikkat etmeliyiz
     WebElement iconButton=Driver.getDriver().findElement(By.xpath("(//i[@class='fa fa-reorder'])["+sira+"]"));
     JSUtilities.clickWithJS(Driver.getDriver(),iconButton);
+    ReusableMethods.bekle(3);
+    }
+    public static void clickANameFromList(int sira){
+        Driver.getDriver().findElement(By.xpath("(//td)["+sira+"]"));
+    }
+
+    public static void testHeaders(List<String> headersList){
+        for (int i = 0; i < headersList.size(); i++) {
+            Assert.assertEquals(headersList.get(i), adminPage.ipdPatientAndDischargePatientTableHeaders.get(i).getText());
+
+        }
     }
 }

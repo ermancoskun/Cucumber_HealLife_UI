@@ -81,7 +81,39 @@ public class HomepageStepdefinitions {
 
 
 
+    @Given("User goes to the home page")
+    public void user_goes_to_the_home_page() {
+        Driver.getDriver().get(ConfigReader.getProperty("homePageUrl"));}
 
+    @Then("Verify that the URL of the website is correct")
+    public void verify_that_the_url_of_the_website_is_correct() {
+        String actualUrl = Driver.getDriver().getCurrentUrl();
+        String expectedUrl = ConfigReader.getProperty("homePageUrl");
+        Assert.assertEquals("The Url of the home page is correct",expectedUrl,actualUrl);
+    }
+    @Then("Close the web browser")
+    public void close_the_web_browser() {
+        Driver.closeDriver();
+    }
+
+    @Then("Verify that home page is visible")
+    public void verify_that_home_page_is_visible() {
+        ReusableMethods.bekle(1);
+        Assert.assertTrue("Home page is visible", homepage.MainBanner.isDisplayed());
+    }
+    @Then("Click the Appointment Button")
+    public void click_the_appointment_button() {
+        ReusableMethods.bekle(1);
+        homepage.appointmentButton.click();
+
+    }
+    @Then("Verify that the URL of the Appointment page is correct")
+    public void verify_that_the_url_of_the_appointment_page_is_correct() {
+        ReusableMethods.bekle(1);
+        String actualUrl = Driver.getDriver().getCurrentUrl();
+        String expectedUrl = ConfigReader.getProperty("appointmentPageUrl");
+        Assert.assertEquals("The Url of the Appointment page is correct",expectedUrl,actualUrl);
+    }
 }
 
 

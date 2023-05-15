@@ -7,6 +7,9 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.By;
+
+import org.openqa.selenium.JavascriptExecutor;
+
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -17,11 +20,16 @@ import utilities.Driver;
 import utilities.HealMethods;
 import utilities.ReusableMethods;
 
+import javax.swing.*;
+
 import static utilities.Driver.driver;
+import static utilities.Driver.getDriver;
 
 public class PatientStepdefinitions {
     PatientPage patientPage=new PatientPage();
     AdminPage adminPage=new AdminPage();
+    Actions actions=new Actions(Driver.getDriver());
+    JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
 
 
     @Given("Goes to user login page")
@@ -50,7 +58,8 @@ public class PatientStepdefinitions {
         ReusableMethods.sleep(3);
         String expected=patientPage.myAppiontmentsButton.getText();
         System.out.println(expected);
-      //  Assert.assertTrue(expected.equalsIgnoreCase("Randevularım"));
+        //tıklıyor ama kodlarda randevularım ingilizce gözüküyor
+    //   Assert.assertTrue(expected.equalsIgnoreCase("Randevularım"));
 
     }
 
@@ -66,6 +75,7 @@ public class PatientStepdefinitions {
     @When("Click on the notifications button")
     public void clickOnTheNotificationsButton() {
         patientPage.notifications.click();
+
 
     }
 
@@ -87,7 +97,8 @@ public class PatientStepdefinitions {
 
     @When("User  see  Heal Life Hospital & Research Center text.")
     public void userSeeHealLifeHospitalResearchCenterText() {
-        Assert.assertTrue(patientPage.DashboardOnHeallifeText.getText().contains("Heal"));
+
+   Assert.assertTrue(patientPage.DashboardOnHeallifeText.getText().contains("Heal"));
 
     }
 
@@ -170,7 +181,7 @@ public class PatientStepdefinitions {
 
     @Then("User  be on the Radiology profile page")
     public void userBeOnTheRadiologyProfilePage() {
-        Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains(" dashboard/radiology"));
+        Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains("radiology"));
 
     }
 
@@ -226,7 +237,10 @@ public class PatientStepdefinitions {
 
     @When("Click on the Delete button  User  be Delete menu")
     public void clickOnTheDeleteButtonUserBeDeleteMenu() {
+        ReusableMethods.bekle(2);
         patientPage.myAppointmentdeleteButton.click();
+
+        driver.switchTo().alert().accept();
 
     }
 
@@ -234,18 +248,93 @@ public class PatientStepdefinitions {
     public void clikOnTheShowButtonUserSeesAppointmentDetails() {
         patientPage.myAppointmentsShowButton.click();
         patientPage.myAppointmentsShowcloseButton.click();
+
     }
 
     @When("User enters card information and completes payment")
     public void userEntersCardInformationAndCompletesPayment() {
-        patientPage.myAppiontmentsPaybutton.click();
-        patientPage.myAppointmentsPaywithCardbutton.click();
+        patientPage.payCard();
+Assert.assertEquals(patientPage.SuccestText.getText(),"SUCCESS");
+    }
+
+    @When("Click on the three lines button and User  see Dashboard navbar close")
+    public void clickOnTheThreeLinesButtonAndUserSeeDashboardNavbarClose() {
+        patientPage.homeThreeDots.click();
+        patientPage.homeThreeDots.click();
+        patientPage.homeThreeDots.isDisplayed();
+    }
+
+    @When("Click on the Profile picture User  see the user name, title and profile picture should be displayed in the tab that opens.")
+    public void clickOnTheProfilePictureUserSeeTheUserNameTitleAndProfilePictureShouldBeDisplayedInTheTabThatOpens() {
+        patientPage.profileImage.click();
+        ReusableMethods.bekle(1);
+        patientPage.profileNametext.isDisplayed();
+
+    }
+
+
+    @When("Click on Delete button and User not see the notifications")
+    public void clickOnDeleteButtonAndUserNotSeeTheNotifications() {
         ReusableMethods.bekle(2);
-        patientPage.myAppointmentsEmailtext.sendKeys("aysenuriye27@gmail.com");
-        patientPage.myAppointmentsCardnumberText.sendKeys("4242 4242 4242 4242");
-        patientPage.myAppointmentsMMYYText.sendKeys("0727");
-        patientPage.myAppointmentsCVCText.sendKeys("571");
-        patientPage.myAppoinmentsSecondPaybutton.click();
+        patientPage.notificationsDeletebutton.click();
+        driver.switchTo().alert().accept();
+        patientPage.notificationsInformation.isDisplayed();
+    }
+
+    @When("User creates a record by entering the appointment information.")
+    public void userCreatesARecordByEnteringTheAppointmentInformation() {
+
+        patientPage.myAppointmentsAddAppointment();
+    }
+
+    @When("User calls in appointments")
+    public void userCallsInAppointments() {
+
+        patientPage.myAppoinmetSeachtext.sendKeys("APPNO435");
+        Assert.assertEquals(patientPage.myAppointmentApointmentno.getText(),"APPNO435");
+    }
+
+    @When("User skip to next page")
+    public void userSkipToNextPage() {
+        js.executeScript("arguments[0].scrollIntoView(true)",     patientPage.myAppoinmentsSecondPageButton);
+        ReusableMethods.bekle(1);
+        patientPage.myAppoinmentsSecondPageButton.click();
+        System.out.println(patientPage.myAppointmentspageDetails.getText());
+        patientPage.myAppointmentspageDetails.isDisplayed();
+
+    }
+
+
+    @When("User switches to previous page")
+    public void userSwitchesToPreviousPage() {
+
+        js.executeScript("arguments[0].scrollIntoView(true)",patientPage.myAppoinmentsFirstPageButton);
+        ReusableMethods.bekle(1);
+        patientPage.myAppoinmentsFirstPageButton.click();
+        System.out.println(patientPage.myAppointmentspageDetails.getText());
+        patientPage.myAppointmentspageDetails.isDisplayed();
+
+    }
+
+    @When("Click on the  Change Password button and enters informations")
+    public void clickOnTheChangePasswordButtonAndEntersInformations() {
+        patientPage.profileChangepassButton.click();
+        patientPage.profileChangecurrentPassword.click();
+        actions.sendKeys("heallife123");
+        actions.sendKeys(Keys.TAB).perform();
+        actions.sendKeys("heallife123");
+        actions.sendKeys(Keys.TAB).perform();
+        actions.sendKeys("heallife123");
+        actions.sendKeys(Keys.TAB).perform();
+        actions.sendKeys(Keys.ENTER).perform();
+        ReusableMethods.sleep(6);
+    }
+
+    @Then("Click on the Logout button")
+    public void clickOnTheLogoutButton() {
+        patientPage.profileImage.click();
+        patientPage.profileLogoutbutton.click();
+       Assert.assertEquals( Driver.getDriver().getCurrentUrl(),"https://qa.heallifehospital.com/site/userlogin");
     }
 
 
@@ -419,6 +508,117 @@ public class PatientStepdefinitions {
     public void closeTheScreenn() {
         patientPage.pharmacyClose.click();
     }
+
+
+    //=========================================== Nesibe [US_023] OPD MENU =============================================
+
+    @Given("Launch browser.")
+    public void launchBrowser() {
+        Driver.getDriver();}
+
+/*    @Then("Go to {string}")
+    public void goTo(String url) {
+        Driver.getDriver().get(ConfigReader.getProperty(url));}*/
+
+    @Then("Login as a patient with username password")
+    public void loginPatient(String userName, String Password) {
+        HealMethods.loginAsUser("userNameNesibe", "userPasswordNesibe");
+
+    }
+    @Then("Verify  the patient dashboard page is redirected")
+    public void patientPageRedirected() {
+        Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains("patient"));
+
+    }
+
+    @Then("Verify the “OPD” menu title in the dashboard is visible and clickable")
+    public void verifyOpdMenuTitleEnabled() {
+        String expectedTitle = "OPD";
+        String actualTitle= Driver.getDriver().findElement(By.xpath("//*[@id=sibe-box]/ul/li[3]/a")).getText();
+        Assert.assertTrue( actualTitle.contains(expectedTitle));
+
+    }
+
+    @Then("Click the “OPD” menu")
+    public void clickOpdMenu() {
+        HealMethods.clickASidebarLink("OPD");
+    }
+
+    @Then("Verify the {string} page is redirected")
+    public void verifyPatientPage(String arg0) {
+        Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains("patient"));
+    }
+
+   /* @And("Close the page")
+    public void closePage() {
+        Driver.closeDriver();
+    }*/
+
+
+    @Then("Verify the “ Overview, Visits, Lab Investigation, Treatment History, Timeline” items visible and accesable.")
+    public void headingsOpdPage() {
+        Assert.assertTrue(patientPage.overview.isDisplayed());
+        Assert.assertTrue(patientPage.visits.isDisplayed());
+        Assert.assertTrue(patientPage.labInvestigation.isDisplayed());
+        Assert.assertTrue(patientPage.treatmentHistory.isDisplayed());
+        Assert.assertTrue(patientPage.timeline.isDisplayed());
+    }
+
+    @Then("Verify the “ Gender, Age, Guardian Name, Phone” items displayed correctly in the Overview page")
+    public void theItemsOverview() {
+        Assert.assertTrue(patientPage.gender.isDisplayed());
+        Assert.assertTrue(patientPage.age.isDisplayed());
+        Assert.assertTrue(patientPage.guardianName.isDisplayed());
+        Assert.assertTrue(patientPage.phone.isDisplayed());
+    }
+
+    @Then("Verify the summaries of Visits, Lab Investigation, Treatment History, Timeline displayed correctly in the Overview page")
+    public void summariesOfOtherPages() {
+        Assert.assertTrue(patientPage.sumVisitDetails.isDisplayed());
+        Assert.assertTrue(patientPage.sumlabInvestigation.isDisplayed());
+        Assert.assertTrue(patientPage.sumTreatmentHistory.isDisplayed());
+        Assert.assertTrue(patientPage.sumTimeline.isDisplayed());
+
+    }
+
+    @Then("Verify the “ Consultant doctor” item displayed correctly in the Overview page.")
+    public void consultantDoctorItemDisplayed() {
+        patientPage.consultantDoctor.isDisplayed();
+    }
+
+    @Then("Click the “Visits” menu")
+    public void clickTheVisitsMenu() {
+        patientPage.visits.click();
+    }
+
+    @Then("Verify the headings in Visits List, OPD No, Case ID, Appointment Date, Consultant, Reference displayed correctly")
+    public void headingsInVisitsPage() {
+        Assert.assertTrue(patientPage.opdNo.isDisplayed());
+        Assert.assertTrue(patientPage.caseId.isDisplayed());
+        Assert.assertTrue(patientPage.appointmentDate.isDisplayed());
+        Assert.assertTrue(patientPage.consultant.isDisplayed());
+        Assert.assertTrue(patientPage.referance.isDisplayed());
+    }
+
+    @Then("Verify the seacrhTextBox  in Visit page is displayed and to be able to search correctly")
+    public void theSeacrhTextBox() {
+        HealMethods.makeSearchBoxTest();
+    }
+
+    @Then("Verify the list titles in the Visits List are to be able to sort effectively")
+    public void ListTitlesSorting() {
+
+    }
+
+    @Then("Verify the accessiblity to the details of the visit and the prescription information under the Actions heading in the Visits")
+    public void prescriptionVisits () {
+    }
+
+    @Then("Verify the visit details and prescription information must be recorded on the correct patient name.")
+    public void visitsRecordedCorrectPatient() {
+    }
+
+    //========================================= Nesibe [US_023] OPD MENU SONU ==========================================
 }
 
 

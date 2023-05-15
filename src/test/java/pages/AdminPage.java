@@ -60,6 +60,10 @@ public class AdminPage extends Base{
     @FindBy (xpath = "//p[.='Pathology']")
     public WebElement pathologyButton;
 
+    //Admin > Billing
+    @FindBy (xpath = "//p[.='Radiology']")
+    public WebElement radiologyButton;
+
 
     //Admin > IPD >
     @FindBy(id = "addp")
@@ -90,13 +94,7 @@ public class AdminPage extends Base{
     @FindBy(xpath = "//button[@type='submit']")
     public WebElement signInButton;
 
-    ///////LOGIN METHODU///////
-    public void loginAsAdmin (String username,String password){
-        emailBox.sendKeys(ConfigReader.getProperty(username));
-        passwordBox.sendKeys(ConfigReader.getProperty(password));
-        signInButton.click();
-    }
-    ///////////////////////////
+
 
     // adminpage > Navbardaki Heallife Logosu
     @FindBy(xpath = "//span[@class='logo-lg']")
@@ -127,6 +125,50 @@ public class AdminPage extends Base{
     //////////////////////////////////////////////////////////////////
 
 
+ ////////////////***********Humeyra******//////////
+
+  //admin>Pharmacy>Bill No
+    @FindBy(xpath = "//*[text()='Bill No']")
+    public WebElement pharmacyBillNo;
+
+    //admin>Pharmacy>Case ID / Patient ID
+    @FindBy(xpath = "(//*[text()='Case ID / Patient ID'])[1]")
+    public WebElement pharmacyCaseID;
+
+    //admin>Pharmacy>Date
+    @FindBy(xpath = "//*[text()='Date']")
+    public WebElement pharmacyDate;
+
+    //admin>Pharmacy>PatientName
+    @FindBy(xpath = "//*[text()='Patient Name']")
+    public WebElement pharmacyPatientName;
+
+    //admin>Pharmacy>DoktorName
+    @FindBy(xpath = "//*[text()='Doctor Name']")
+    public WebElement pharmacyDoctorName;
+
+    //admin>Pharmacy>Discount
+    @FindBy(xpath = "//*[text()='Discount ($)']")
+    public WebElement pharmacyDiscount;
 
 
+    //admin>Pharmacy>Amount
+    @FindBy(xpath = "//*[text()='Amount ($)']")
+    public WebElement pharmacyAmount;
+
+    //admin>Pharmacy>Paid Amount
+    @FindBy(xpath = "//*[text()='Paid Amount ($)']")
+    public WebElement pharmacyPaidAmount;
+
+    //admin>Pharmacy>Balance Amount
+    @FindBy(xpath = "//*[text()='Balance Amount ($)']")
+    public WebElement pharmacyBalanceAmount;
+
+    ///////LOGIN METHODU///////
+    public void loginAsAdmin (String username,String password){
+        emailBox.sendKeys(ConfigReader.getProperty(username));
+        passwordBox.sendKeys(ConfigReader.getProperty(password));
+        signInButton.click();
+    }
+    ///////////////////////////
 }

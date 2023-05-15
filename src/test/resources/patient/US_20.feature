@@ -24,14 +24,27 @@ Feature: As a user (patient), I would like to have functions in the navbar of my
     Given Goes to user login page
     Then Login with "ayse.nuriye.alcik" and  "heallife123" datas
     When Click on the notifications button
+    When Click on Delete button and User not see the notifications
 
-    Scenario: When you click on the profile picture in the Dashboard navbar, the user name, title and profile picture should be displayed in the tab that opens.
+  Scenario: When you click on the profile picture in the Dashboard navbar, the user name, title and profile picture should be displayed in the tab that opens.
+    Given Goes to user login page
+    Then Login with "ayse.nuriye.alcik" and  "heallife123" datas
+    When Click on the Profile picture User  see the user name, title and profile picture should be displayed in the tab that opens.
+
+  Scenario: The registered password can be changed from the tab that opens when the profile picture on the Dashboard navbar is clicked, and logout can be made (taken) from the system.
+    Given Goes to user login page
+    Then Login with "ayse.nuriye.alcik" and  "heallife123" datas
+    When Click on the Profile picture User  see the user name, title and profile picture should be displayed in the tab that opens.
+ When Click on the  Change Password button and enters informations
+    Then  Click on the Logout button
 
 
-     Scenario: The registered password can be changed from the tab that opens when the profile picture on the Dashboard navbar is clicked, and logout can be made (taken) from the system.
+  Scenario: Dashboard navbar should have "Heal Life Hospital & Research Center" text.
+    Given Goes to user login page
+    Then Login with "ayse.nuriye.alcik" and  "heallife123" datas
+    When User  see  Heal Life Hospital & Research Center text.
 
-Scenario: Dashboard navbar should have "Heal Life Hospital & Research Center" text.
-  When User  see  Heal Life Hospital & Research Center text.
+
   Scenario: The dashboard sidebar should close and open when the menu icon (three lines one below the other) is clicked on the Dashboard navbar.
     Given Goes to user login page
     Then Login with "ayse.nuriye.alcik" and  "heallife123" datas

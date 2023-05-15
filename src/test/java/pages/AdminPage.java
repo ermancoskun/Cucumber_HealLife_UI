@@ -1,6 +1,7 @@
 package pages;
 
 
+import io.cucumber.java.zh_cn.假如;
 import org.checkerframework.checker.calledmethods.qual.EnsuresCalledMethodsIf;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -77,9 +78,17 @@ public class AdminPage extends Base{
     @FindBy (xpath = "//h3[@class=\"box-title titlefix\"]")
     public WebElement ipdDischargedConfirmationText;
 
+    //Admin > IPD &  Discharge Patient  > Table headers
     @FindBy (xpath = "//*[@id=\"DataTables_Table_0\"]//th")
-    public List<WebElement> ipdDischargeTableHeaders;
+    public List<WebElement> ipdPatientAndDischargePatientTableHeaders;
 
+    //Admin > Pathology > Generate Bill Button
+    @FindBy(xpath = "//button[@id=\"load1\"]")
+    public WebElement generateBillButton;
+
+    //X icon
+    @FindBy(xpath = "(//button[@type=\"button\"])[10]")
+    public WebElement xIconButton;
 
     //********************Duygu*************************************//
 
@@ -115,6 +124,11 @@ public class AdminPage extends Base{
     @FindBy(xpath = "//span[@class='sidebar-session']")
     public WebElement healLifeHospitalResearchCenterText;
 
+    @FindBy(xpath = "//ul[@class=\"nav nav-tabs navlistscroll\"]//li")
+    public List<WebElement>ipdPersonalInformationHeaders;
+
+    @FindBy(xpath = "//div[@class=\"scrtabs-tab-scroll-arrow scrtabs-js-tab-scroll-arrow-right\"]")
+    public WebElement scrollRightButton;
     //********************Duygu*************************************//
     //////////////////////////////////////////////////////////////////
 
@@ -157,6 +171,7 @@ public class AdminPage extends Base{
     //admin>Pharmacy>Balance Amount
     @FindBy(xpath = "//*[text()='Balance Amount ($)']")
     public WebElement pharmacyBalanceAmount;
+
 
     ///////LOGIN METHODU///////
     public void loginAsAdmin (String username,String password){

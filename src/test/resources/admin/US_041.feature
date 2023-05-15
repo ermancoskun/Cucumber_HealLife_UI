@@ -29,20 +29,87 @@ Feature: As an administrator (admin), I would like to have a page in
   Gender, Phone, Consultant, Admission Date, Discharged Date, Tay($), Net Amount($), Total($)).
     Given Click on the Discarged Patient button
     And user should be able to on the Discarged Patient page
-  Given It should be displayed in the IPD Discharged Patient List
-  |Name|
-  |Patient Id|
-  |Case ID / Patient ID|
-  |Gender|
-  |Phone|
-  |Consultant|
-  |Admission Date|
-  |Discharged Date|
-  |Tax ($)|
-  |Net Amount ($)|
-  |Total ($)|
+    Given It should be displayed in the IPD Discharged Patient List
+      | Name                 |
+      | Patient Id           |
+      | Case ID / Patient ID |
+      | Gender               |
+      | Phone                |
+      | Consultant           |
+      | Admission Date       |
+      | Discharged Date      |
+      | Tax ($)              |
+      | Net Amount ($)       |
+      | Total ($)            |
 
-    Scenario: TC_06  It should be possible to sort through the titles in the IPD Discharged Patient List.
-      Given Click on the Discarged Patient button
+  Scenario: TC_06  It should be possible to sort through the titles in the IPD Discharged Patient List.
+    Given Click on the Discarged Patient button
+    And It should be possible to sort through the titles
+
+
+  Scenario: TC_07 In order to search the IPD Discharged Patient List, the page must have a searchBox.
+    Given Click on the Discarged Patient button
+    And test to searcbox
+
+  Scenario:  TC_08  I should be able to select the list items to be displayed in the IPD Discharged Patient List (as all or 100)
+    Given Click on the Discarged Patient button
+    And Choose All and 100 options for patient display
+
+  Scenario: TC_09  I should be able to view all the patient's information (Overview, Nurse Notes, Medication, Prescription,
+  Consultant Register, Lab Investigation, Operations, Charges, Payments, Bed History, Timeline,Treatment History) from the button
+  under Total($) in the IPD Discharged Patient List.
+    Given Click on the Discarged Patient button
+    And I should be able to view all the patient's information from the button under Total($)
+      | Overview            |
+      | Nurse Notes         |
+      | Medication          |
+      | Prescription        |
+      | Consultant Register |
+      | Lab Investigation   |
+      | Operations          |
+      | Charges             |
+      | Payments            |
+      | Live Consultation   |
+      | Bed History         |
+      | Timeline            |
+      | Treatment History   |
+
+  Scenario: TC_10 The IPD Patient List on the IPD page should have headings (Name, Case ID/Patient ID, Name, Gender, Phone, Consultant, Bed, Credit Limit($)).
+    Given  It should be displayed in the IPD Patient List
+      | IPD No               |
+      | Case ID / Patient ID |
+      | Name                 |
+      | Gender               |
+      | Phone                |
+      | Consultant           |
+      | Bed                  |
+      | Credit Limit ($)     |
+
+  Scenario: TC_11 It should be possible to sort through the titles in the IPD Patient List on the IPD page.
+    And It should be possible to sort through the titles
+
+  Scenario: TC_12 In order to search the IPD Patient List on the IPD page, the page must have a searchBox.
+    And test to searcbox
+
+  Scenario: TC_13 should be able to select the list items to be displayed in the IPD Patient List on the IPD page (as all or 100)
+    And Choose All and 100 options for patient display
+
+  Scenario: TC_14 Access to all information (Overview, Nurse Notes, Medication, Prescription, Consultant Register, Lab Investigation,
+  Operations, Charges, Payments, Bed History, Timeline, Treatment History) of the relevant patient from the button under Credit Limit($)
+  in the IPD Patient List on the IPD page. should be.
+    And I should be able to view all the patient's information from the button under Credit Limit($)
+      | Overview            |
+      | Nurse Notes         |
+      | Medication          |
+      | Prescription        |
+      | Consultant Register |
+      | Lab Investigation   |
+      | Operations          |
+      | Charges             |
+      | Payments            |
+      | Live Consultation   |
+      | Bed History         |
+      | Timeline            |
+      | Treatment History   |
 
 

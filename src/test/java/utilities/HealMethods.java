@@ -225,4 +225,8 @@ public class HealMethods {
     WebElement iconButton=Driver.getDriver().findElement(By.xpath("(//i[@class='fa fa-reorder'])["+sira+"]"));
     JSUtilities.clickWithJS(Driver.getDriver(),iconButton);
     }
+    public static void clickBlueOrAnyButton(String butonIsmi){ // parametre yollarken buton isminin
+        //onunde bosluk olup olmadigina dikkat edip, featurea oyle yazalım
+        Driver.getDriver().findElement(By.xpath("//*[text()='"+butonIsmi+"']")).click();
+    }
 }

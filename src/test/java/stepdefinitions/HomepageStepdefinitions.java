@@ -66,8 +66,7 @@ public class HomepageStepdefinitions {
         Assert.assertTrue("Complain button are not clickable",homepage.complainButton.isEnabled());}
 
     @And("Close browser")
-    public void closeBrowser() {
-        Driver.closeDriver();}
+    public void closeBrowser() {/* browser is closed by the hooks class */}
 
     @And("Click on the complainIcon")
     public void clickOnTheComplainIcon() {
@@ -78,7 +77,7 @@ public class HomepageStepdefinitions {
         String actualUrl = Driver.getDriver().getCurrentUrl();
         String expectedUrl = ConfigReader.getProperty(url);
 
-        Assert.assertEquals("The 'Complain' button on the homepage does not redirect to the complain page.",expectedUrl,actualUrl);}
+        Assert.assertEquals("Does not redirect to the relevant page",expectedUrl,actualUrl);}
 
     //////////////////////////////////////////////////////////////////////////////////////////////////
 

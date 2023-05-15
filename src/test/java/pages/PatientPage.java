@@ -4,12 +4,23 @@ package pages;
 
 
 
+
 import org.junit.Assert;
 
 import org.openqa.selenium.By;
 
 import org.openqa.selenium.WebElement;
+
+import com.github.javafaker.Faker;
+import org.junit.Assert;
+import org.junit.Test;
+import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
+
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import utilities.ConfigReader;
 import utilities.Driver;
 
@@ -17,9 +28,20 @@ import java.util.List;
 
 import utilities.ReusableMethods;
 
+
+import javax.swing.*;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.util.Calendar;
+import java.util.Date;
+
 import java.util.ArrayList;
 import java.util.Collections;
 
+
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 
 import static utilities.Driver.driver;
@@ -27,6 +49,9 @@ import static utilities.Driver.driver;
 
 
 public class PatientPage extends Base {
+
+    Faker faker=new Faker();
+    Actions actions=new Actions(Driver.getDriver());
 
     // Userlogin >
     @FindBy(xpath = "//a[text()='Login']")
@@ -64,9 +89,9 @@ public class PatientPage extends Base {
     public WebElement notifications;
     @FindBy(xpath = "//h3[@class=\"box-title titlefix\"]")
     public WebElement notificationsboard;
-    @FindBy(xpath = "//button[@autocomplete='off']")
+    @FindBy(xpath = "//button[@class='btn btn-primary btn-sm checkbox-toggle delete_all']")
     public WebElement notificationsDeletebutton;
-    @FindBy(xpath = "//*[text()=\"No Record Found\"]")
+    @FindBy(xpath = "//*[text()='No Record Found']")
     public WebElement notificationsInformation;
 
     //PatientHome page Profile_İmage
@@ -100,7 +125,7 @@ public class PatientPage extends Base {
 
     //Paitientpage_Dashborad_ON_Heallife_Textfield
 
-    @FindBy(xpath = "(//img[@alt='Heal Life Hospital & Research Center'])[2]")
+    @FindBy(xpath = "//span[@class='sidebar-session']")
     public WebElement DashboardOnHeallifeText;
 
 
@@ -171,7 +196,7 @@ public class PatientPage extends Base {
     @FindBy(xpath = "(//option[@value='1'])[3]")
     public WebElement addAppointmentpriorityNormal;
 
-    @FindBy(xpath = "//textarea[@name='message']")
+    @FindBy(xpath = "//textarea[@id='message']")
     public WebElement addAppointmentsmessageText;
 
     @FindBy(xpath = "//span[@id='slot_0']")
@@ -220,6 +245,7 @@ public class PatientPage extends Base {
     //MypAppoinmetSeachtext
     @FindBy(xpath = "//input[@type='search']")
     public WebElement myAppoinmetSeachtext;
+
     @FindBy(xpath = "//tr[@class='odd']/td[1]")
     public WebElement myAppointmentApointmentno;
     //MyAppoinments NextPage
@@ -228,15 +254,17 @@ public class PatientPage extends Base {
     @FindBy(xpath = "//*[text()='']")
     public WebElement myAppoinmentsFirstPageButton;
 
-    @FindBy(xpath = "//*[text()='Records: 1 to 10 of 12']")
-    public WebElement myAppointmentsFirstpageDetails;
+    @FindBy(xpath = "//*[@id='DataTables_Table_0_info']")
+    public WebElement myAppointmentspageDetails;
 
     @FindBy(xpath = "//*[text()='Records: 11 to 12 of 12']")
     public WebElement myAppointmentsSecondspageDetails;
     @FindBy(xpath = "//ul[@class='list-group list-group-unbordered']\n")
     public WebElement myInformations;
-
-
+    @FindBy(xpath = "//*[text()='Amount']")
+    public WebElement showDetailtext;
+    @FindBy(xpath = "//*[text()='Success']")
+    public WebElement SuccestText;
 
 
 
@@ -290,23 +318,112 @@ public class PatientPage extends Base {
 
 
 
-    public void myAppointmentsAddAppointment(){
-        userLogin();
+    public  void myAppointmentsAddAppointment(){
+        PatientPage patientPage=new PatientPage();
         myAppiontmentsButton.click();
-        addAppointmentsButton.click();
-        addAppointmentDatetext.click();
-        addAppointmentDateoptionsMay27.click();
-        addAppointmentSpecialistButton.click();
-        addAppointmentSpecialistValue.click();
-        addAppointmentsDoctorbutton.click();
-        addAppointmentdoctorAysenuriye.click();
-        addAppointmentsShiftButton.click();
-        addAppointmentsshiftEvening.click();
-        addAppointmentsslotButton.click();
-        addAppointmentsSlot04PM.click();
-        addAppointmentsmessageText.sendKeys("HASTAA");
+        addAppointmentsButton.click();      ReusableMethods.bekle(1);
+        addAppointmentDatetext.click();     ReusableMethods.bekle(1);
+/*
+        Date currentDate = new Date();
+        Date randomDate = faker.date().future(25, TimeUnit.DAYS, currentDate);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        String formattedDate = dateFormat.format(randomDate);
+        actions.sendKeys(addAppointmentDatetext, formattedDate).build().perform();
+
+ */
+       /* Date currentDate = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(currentDate);
+        calendar.add(Calendar.DATE, 1); // bir sonraki güne ilerleyin
+
+        Date randomDate = faker.date().between(calendar.getTime(), new Date(calendar.getTimeInMillis() + TimeUnit.DAYS.toMillis(24))); // 25 gün sonrasına kadar rastgele bir tarih seçin
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        String formattedDate = dateFormat.format(randomDate);
+        actions.sendKeys(addAppointmentDatetext, formattedDate).build().perform();
+
+        */
+        Date currentDate = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(currentDate);
+        calendar.add(Calendar.MONTH, 11); // 3 ay ileriye ilerleyin
+
+        Date randomDate = faker.date().between(calendar.getTime(), new Date(calendar.getTimeInMillis() + TimeUnit.DAYS.toMillis(90))); // 90 gün sonrasına kadar rastgele bir tarih seçin
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        String formattedDate = dateFormat.format(randomDate);
+        actions.sendKeys(addAppointmentDatetext, formattedDate).build().perform();
+        addAppointmentDateoptionsMay27.click();   ReusableMethods.bekle(1);
+
+        addAppointmentSpecialistButton.click();     ReusableMethods.bekle(1);
+        addAppointmentSpecialistValue.click();        ReusableMethods.bekle(1);
+        addAppointmentsDoctorbutton.click();   ReusableMethods.bekle(1);
+        addAppointmentdoctorAysenuriye.click();   ReusableMethods.bekle(1);
+
+        Select select=new Select(addAppointmentsShiftButton);
+        select.selectByIndex(1);
+         ReusableMethods.bekle(2);
+         select=new Select(addAppointmentsslotButton);
+         select.selectByVisibleText("04:00 PM - 05:00 PM");
+
+
+        addAppointmentsmessageText.click();
+        addAppointmentsmessageText.sendKeys(faker.medical().diseaseName());
+        ReusableMethods.bekle(1);
         addAppointmentsslot04.click();
-        addAppointmentsSaveButton.click();
+
+        try {
+            // Alerti kontrol etmek için switchTo() ve alert() metodlarını kullanın
+            Alert alert = driver.switchTo().alert();
+
+            // Alert mevcutsa kabul et (OK düğmesine tıkla)
+            alert.accept();
+
+            // Web Element A'ya tıkla
+            addAppointmentsslot0450.click();
+            addAppointmentsSaveButton.click();
+        } catch (NoAlertPresentException e) {
+            // Alert mevcut değilse Web Element B'ye tıkla
+            addAppointmentsSaveButton.click();
+        }
+
+
+
+
+
+
+
+
+    }
+    public void payCard(){
+        PatientPage patientPage=new PatientPage();
+         myAppiontmentsPaybutton.click();
+        myAppointmentsPaywithCardbutton.click();
+        ReusableMethods.bekle(2);
+
+      actions.sendKeys(faker.internet().emailAddress()).perform();
+      actions.sendKeys(Keys.TAB).perform();
+      actions.sendKeys("4242 4242 4242 4242").perform();
+        actions.sendKeys(Keys.TAB).perform();
+
+        //myAppointmentsCardnumberText.sendKeys(");
+     actions.sendKeys("0727").perform();
+        actions.sendKeys(Keys.TAB).perform();
+        actions.sendKeys("571").perform();
+        actions.sendKeys(Keys.TAB).perform();
+        actions.sendKeys("27200").perform();
+        actions.sendKeys(Keys.TAB).perform();
+       actions.sendKeys(Keys.ENTER).perform();
+
+
+
+       /* WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.elementToBeClickable(myAppoinmentsSecondPaybutton)).click();
+*/
+
+     /*   JavascriptExecutor executor = (JavascriptExecutor) driver;
+        executor.executeScript("arguments[0].click();", myAppoinmentsSecondPaybutton);
+
+
+      */
 
 
     }
@@ -435,6 +552,112 @@ public class PatientPage extends Base {
         return false;
 
     }
+
+    //============================================ Nesibe [US_023] OPD MENU ============================================
+
+    @FindBy(xpath = "//*[@id=sibe-box]/ul/li[3]/a")
+    public WebElement opdMenu ;
+
+    @FindBy(xpath = "//*[text()=' Overview']")
+    public WebElement overview ;
+
+    @FindBy(xpath = "//*[text()=' Visits']")
+    public WebElement visits ;
+
+    @FindBy(xpath = "//*[text()=' Lab Investigation']")
+    public WebElement labInvestigation ;
+
+    @FindBy(xpath = "//*[text()=' Treatment History']")
+    public WebElement treatmentHistory ;
+
+    @FindBy(xpath = "//*[text()=' Timeline']")
+    public WebElement timeline ;
+
+    @FindBy(xpath = "//*[text()='Gender']")
+    public WebElement gender ;
+
+    @FindBy(xpath = "//*[text()='Age']")
+    public WebElement age ;
+
+    @FindBy(xpath = "//*[text()='Guardian Name']")
+    public WebElement guardianName ;
+
+    @FindBy(xpath = "//*[text()='Phone']")
+    public WebElement phone ;
+
+    @FindBy(xpath = "//*[text()='Visit Details']")
+    public WebElement sumVisitDetails ;
+
+    @FindBy(xpath = "(//*[text()='Lab Investigation'])[1]")
+    public WebElement sumlabInvestigation ;
+
+    @FindBy(xpath = "(//input[@type='search'])[2]")
+    public WebElement searchLabInvestigation ;
+
+    @FindBy(xpath = "(//*[text()='Treatment History'])[1]")
+    public WebElement sumTreatmentHistory ;
+
+    @FindBy(xpath = "(//*[text()='Timeline'])[1]")
+    public WebElement sumTimeline ;
+
+    @FindBy(xpath = "(//*[text()='Consultant Doctor'])[1]")
+    public WebElement consultantDoctor ;
+
+    @FindBy(xpath = "(//*[@class='sorting'])[1]")
+    public WebElement opdNo ;
+
+    @FindBy(xpath = "(//*[@class='sorting'])[2]")
+    public WebElement caseId ;
+
+    @FindBy(xpath = "(//*[@class='sorting'])[3]")
+    public WebElement appointmentDate ;
+
+    @FindBy(xpath = "(//*[@class='sorting'])[4]")
+    public WebElement consultant ;
+
+    @FindBy(xpath = "(//*[@class='sorting'])[5]")
+    public WebElement referance ;
+
+    @FindBy(xpath = "(//input[@type='search'])[1]")
+    public WebElement searchVisit ;
+
+    @FindBy(xpath = "//*[text()='Test Name']")
+    public WebElement testName ;
+
+    @FindBy(xpath = "(//*[text()='Case ID / Patient ID'])[3]")
+    public WebElement caseId2 ;
+
+    @FindBy(xpath = "//*[text()='Lab']")
+    public WebElement lab ;
+
+    @FindBy(xpath = "//*[text()='Sample Collected']")
+    public WebElement sampleCollected ;
+
+    @FindBy(xpath = "//*[text()='Expected Date']")
+    public WebElement expectedData ;
+
+    @FindBy(xpath = "(//*[text()='Approved By'])")
+    public WebElement approvedBy ;
+
+    @FindBy(xpath = "(//*[text()='Appointment Date'])[3]")
+    public WebElement appointmentDate2 ;
+
+    @FindBy(xpath = "(//*[text()='Symptoms'])")
+    public WebElement symptoms ;
+
+    @FindBy(xpath = "(//input[@type='search'])[3]")
+    public WebElement searchTreatment ;
+
+    @FindBy(xpath = "(//*[text()='Action'])[1]")
+    public WebElement actionVisit ;
+
+    @FindBy(xpath = "((//*[text()='Action'])[2]")
+    public WebElement actionLabInvestigation ;
+
+    @FindBy(xpath = "(//*[text()='Action'])[3]")
+    public WebElement actionTreatmentHistory ;
+
+    //============================================ Nesibe [US_023] OPD MENU SONU =======================================
 }
 
 

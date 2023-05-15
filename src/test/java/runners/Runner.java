@@ -15,6 +15,7 @@ import org.junit.runner.RunWith;
         glue={"stepdefinitions","hooks"}, //stepdefinitions package icinde hooks yoksa ayrica belirtmeliyiz
         tags= "@azat",
         dryRun =false
+
 )
 public class Runner {
 }

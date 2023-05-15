@@ -41,8 +41,6 @@ public class HomepageStepdefinitions {//
         }
     }
 
-
-
     /////////////////////////////////////////////////////////////////////////////////////
     @Given("Launch browser")
     public void launchBrowser() {

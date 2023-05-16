@@ -53,6 +53,14 @@ public class AdminPage extends Base{
     @FindBy(xpath = "//select[@name='blood_group']")
     public WebElement bloodGroupDropDown;
 
+    @FindBy(xpath = "(//select[@name='blood_group'])")
+    public WebElement bloodGroupDropDown2;
+
+     @FindBy(xpath = "(//div[@class='toast-message'])[1]")
+     public WebElement warningMessage;
+
+
+
     //Admin > Billing > OPD > Add Patient > New Patient
     @FindBy(xpath = "//select[@name='marital_status']")
     public WebElement maritalStatusDropDown;
@@ -64,6 +72,10 @@ public class AdminPage extends Base{
     //Admin > Billing
     @FindBy (xpath = "//p[.='Radiology']")
     public WebElement radiologyButton;
+
+    //Admin > Billing
+    @FindBy (xpath = "//p[.='Blood Issue']")
+    public WebElement bloodIssueButton;
 
 
     //Admin > IPD >
@@ -129,6 +141,25 @@ public class AdminPage extends Base{
 
     @FindBy(xpath = "//div[@class=\"scrtabs-tab-scroll-arrow scrtabs-js-tab-scroll-arrow-right\"]")
     public WebElement scrollRightButton;
+
+    //Admin > Pathology > Add Patient
+    @FindBy (xpath = "//select[@name='test_name_1']")
+    public WebElement testName;
+
+    //Admin > Pathology > Add Patient
+    @FindBy (xpath = "//*[@id=\"reportdate_1\"]")
+    public WebElement reportDate;
+
+    //Admin > Pathology > Add Patient
+    @FindBy (xpath = "//select[@name='test_name_2']")
+    public WebElement testName2;
+
+    //Admin > Pathology > Add Patient
+    @FindBy (xpath = "//select[@name='consultant_doctor']")
+    public WebElement ddmDoctor;
+    //********************Duygu*************************************//
+    //////////////////////////////////////////////////////////////////
+
 
 
 

@@ -1,5 +1,4 @@
 package stepdefinitions;
-
 import com.github.javafaker.Faker;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -15,8 +14,7 @@ import utilities.Driver;
 import utilities.HealMethods;
 import utilities.JSUtilities;
 import utilities.ReusableMethods;
-
-
+import java.io.IOException;
 import java.util.List;
 
 public class AdminStepdefinitions {
@@ -58,20 +56,15 @@ public class AdminStepdefinitions {
     }
 
 
-    @And("Sees the {string} and their {string}")
-    public void seesTheAndTheir(String filtreAdi, int sirasi) {
-        HealMethods.makeFilterTest(filtreAdi, sirasi, 7);
-    }
     @Then("Sees the FilterName and their Order")
     public void seesTheFilterNameAndTheirOrder () {
-        HealMethods.makeFilterTest("Name", 1, 11);
-        HealMethods.makeFilterTest("Patient Id", 2, 11);
-        HealMethods.makeFilterTest("Guardian Name", 3, 11);
-        HealMethods.makeFilterTest("Gender", 4, 11);
-        HealMethods.makeFilterTest("Phone", 5, 11);
-        HealMethods.makeFilterTest("Consultant", 6, 11);
-        HealMethods.makeFilterTest("Last Visit", 7, 11);
-        HealMethods.makeFilterTest("Total Recheckup", 8, 11);
+        HealMethods.makeFilterTest("Name", 1, 8);
+        HealMethods.makeFilterTest("Patient Id", 2, 8);
+        HealMethods.makeFilterTest("Guardian Name", 3, 8);
+        HealMethods.makeFilterTest("Gender", 4, 8);
+        HealMethods.makeFilterTest("Phone", 5, 8);
+        HealMethods.makeFilterTest("Consultant", 6, 8);
+        HealMethods.makeFilterTest("Last Visit", 7, 8);
 
     }
 
@@ -96,6 +89,17 @@ public class AdminStepdefinitions {
         HealMethods.makeFilterTest("Amount ($)", 7, 9);
         HealMethods.makeFilterTest("Paid Amount ($)", 8, 9);
     }
+    @Then("Sees the name of Blood Issue Billing List and their contents")
+    public void seesTheNameOfBloodIssueBillingListAndTheirContents() {
+        HealMethods.makeFilterTest("Bill No",1,11);
+        HealMethods.makeFilterTest("Case ID / Patient ID",2,11);
+        HealMethods.makeFilterTest("Issue Date",3,11);
+        HealMethods.makeFilterTest("Received To",4,11);
+        HealMethods.makeFilterTest("Blood Group",5,11);
+        HealMethods.makeFilterTest("Gender",6,11);
+        HealMethods.makeFilterTest("Donor Name",7,11);
+        HealMethods.makeFilterTest("Bags",8,11);
+    }
     @And("Click the Radiology button on Billing page")
     public void clickTheRadiologyButtonOnBillingPage () {
         adminPage.radiologyButton.click();
@@ -106,9 +110,9 @@ public class AdminStepdefinitions {
         HealMethods.makeSearchBoxTest();
     }
 
-    @And("Click on the Add Patient button")
-    public void clickOnTheAddPatientButton () {
-        HealMethods.clickBlueOrAnyButton(" Add Patient");
+    @And("Click on the {string} button")
+    public void clickOnTheButton(String isim) {
+        HealMethods.clickBlueOrAnyButton(isim);
     }
 
     @And("Create a New Patient with random datas")
@@ -120,21 +124,52 @@ public class AdminStepdefinitions {
     public void chooseAllAndOptionsForPatientDisplay ( int arg0){
         HealMethods.makeAll100Test();
     }
+    @Then("Verified redirected to Patent Profile page")
+    public void verifiedRedirectedToPatentProfilePage() {
+        Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains("patient_profile"));
+    }
 
     @Then("Verified redirected to Bill Details page")
     public void verifiedRedirectedToBillDetailsPage () {
 
         String actualWindowTitle = Driver.getDriver().findElement(By.xpath("(//h4[@class='modal-title'])[3]")).getText();
-        Assert.assertEquals("Unsuccessful redirection", "Bill Details", actualWindowTitle);
+        boolean flag=false;
+        if (actualWindowTitle.equals("Bill Details")||
+                Driver.getDriver().findElement(By.xpath("(//h4[@class='modal-title'])[1]")).getText().equals("Bill Details")){
+                flag=true;
+        }
+          Assert.assertTrue("Unsuccessful redirection",flag);
 
         WebElement billDetailsElement = Driver.getDriver().findElement(By.xpath("(//h4[text()='Bill Details'])[1]"));
         Assert.assertTrue(billDetailsElement.isDisplayed());
-
     }
+    @Then("Verified redirected to Blood Issue Details page")
+    public void verifiedRedirectedToBloodIssueDetailsPage() {
+        String actualWindowTitle = Driver.getDriver().findElement(By.xpath("(//h4[@class='modal-title'])[2]")).getText();
+        boolean flag=false;
+        if (actualWindowTitle.equals("Blood Issue Details")||
+                Driver.getDriver().findElement(By.xpath("(//h4[@class='modal-title'])[1]")).getText().equals("Bill Details")){
+            flag=true;
+        }
 
+        Assert.assertTrue("Unsuccessful redirection",flag);
+        WebElement billDetailsElement = Driver.getDriver().findElement(By.xpath("(//h4[text()='Blood Issue Details'])"));
+        Assert.assertTrue(billDetailsElement.isDisplayed());
+    }
+    @Then("Click the trash icon for delete {int}. Bill")
+    public void clickTheTrashIconForDeleteBill(int sira) {
+        HealMethods.clickTrashIconForDelete(sira);
+        Driver.getDriver().switchTo().alert().accept();
+        String actualMessage=JSUtilities.getTextWithJS(Driver.getDriver(),adminPage.warningMessage);
+        Assert.assertEquals("Unsuccessful delete","Record Deleted Successfully",actualMessage);
+    }
     @And("Click the Pathology button on Billing page")
     public void clickThePathologyButtonOnBillingPage () {
         adminPage.pathologyButton.click();
+    }
+    @And("Click the Blood Issue button on Billing page")
+    public void clickTheBloodIssueButtonOnBillingPage() {
+        adminPage.bloodIssueButton.click();
     }
 
     @And("Click {int}. iconButton under the last column for display first patient profile")
@@ -142,15 +177,52 @@ public class AdminStepdefinitions {
         HealMethods.clickIconWith3Line(sira);
 
     }
-    @And("Click the Add View Payment iconButton for additional payments for patient of {int}.")
-    public void clickTheAddViewPaymentIconButtonForAdditionalPaymentsForPatientOf ( int sira){
-        HealMethods.clickAddViewPaymentIcon(sira);
-    }
-    @Then("Test the payment options")
-    public void testThePaymentOptions () {
-        HealMethods.makePaymentOptionsTest();
+
+    @And("Click {int}. +plus icon under the last column")
+    public void clickPlusIconUnderTheLastColumn(int sira) {
+        HealMethods.clickPlusIconForAddPayment(sira);
     }
 
+    @And("Click first name for display patient profile")
+    public void clickFirstNameForDisplayPatientProfile() {
+        HealMethods.clickANameFromList(1);
+    }
+    @And("Click first name for display patient profile under the Patient Name")
+    public void clickFirstNameForDisplayPatientProfileUnderThePatientName() {
+        HealMethods.clickANameFromList(4);
+    }
+    @And("Click {int}. money icon under the last column")
+    public void clickMoneyIconUnderTheLastColumn(int sira) {
+        HealMethods.clickAddViewPaymentIcon(sira);
+    }
+
+    @Then("Make or delete additional payments")
+    public void makeOrDeleteAdditionalPayments() {
+       HealMethods.makePaymentOptionsTest();
+    }
+    @Then("Make or delete additional payments for Bloods")
+    public void makeOrDeleteAdditionalPaymentsForBloods() {
+        HealMethods.makePaymentOptionsTestForBloods();
+    }
+    @Then("Edit and delete a Blood records")
+    public void editAndDeleteABloodRecords() {
+    JSUtilities.clickWithJS(Driver.getDriver(),Driver.getDriver().findElement(By.xpath("//a[@class='edit_blood_issue']")));
+    HealMethods.createNewPatient();
+    JSUtilities.clickWithJS(Driver.getDriver(),Driver.getDriver().findElement(By.xpath("//input[@id='dates_of_issue']")));
+    JSUtilities.clickWithJS(Driver.getDriver(),Driver.getDriver().findElement(By.xpath("//button[@id='formaddbtn']")));
+    Assert.assertEquals("Edit not successful","Record Saved Successfully",adminPage.warningMessage.getText());
+    JSUtilities.clickWithJS(Driver.getDriver(),adminPage.xIconButton);
+    ReusableMethods.bekle(7);
+    JSUtilities.clickWithJS(Driver.getDriver(),Driver.getDriver().findElement(By.xpath("//a[@class='delete_blood_issue']")));
+    Driver.getDriver().switchTo().alert().accept();
+    ReusableMethods.bekle(2);
+    Assert.assertEquals("Delete not successful","Record Deleted Successfully",adminPage.warningMessage.getText());
+
+    }
+    @Then("Create a New Bill with random datas")
+    public void createANewBillWithRandomDatas() throws IOException {
+        HealMethods.generateBillInfo();
+    }
 
     @Given("Click on the Add Patient button in IPD page")
     public void clickOnTheAddPatientButtonInIPDPage () {
@@ -175,22 +247,12 @@ public class AdminStepdefinitions {
         for (int i = 0; i < ipdTableHeads.size(); i++) {
             Assert.assertEquals(ipdTableHeads.get(i), adminPage.ipdPatientAndDischargePatientTableHeaders.get(i).getText());
 
-
         }
     }
 
-    @And("Click {int}. first name for display patient profile")
-    public void clickFirstNameForDisplayPatientProfile ( int sira){
-        HealMethods.clickANameFromList(1);
-    }
 
 
-    @Then("Sees the {string} that {string}")
-    public void seesTheThat (String filtreAdi,int sira){
-        System.out.println("filtreAdi = " + filtreAdi);
-        System.out.println("sira = " + sira);
-        HealMethods.makeFilterTest(filtreAdi, sira, 7);
-    }
+
 
 
 
@@ -266,7 +328,6 @@ public class AdminStepdefinitions {
         HealMethods.testHeaders(ipdTableHeads);
 
     }
-
 
     @And("I should be able to view all the patient's information from the button under Total\\($)")
     public void iShouldBeAbleToViewAllThePatientSInformationFromTheButtonUnderTotal$ (List < String > headers) {
@@ -552,4 +613,5 @@ public class AdminStepdefinitions {
         String expectedContact= ConfigReader.getProperty("contactName");
         Assert.assertTrue("Added person is not visible",actualContact.contains(expectedContact));
     }
+
 }

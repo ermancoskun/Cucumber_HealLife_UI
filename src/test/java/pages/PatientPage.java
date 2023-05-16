@@ -48,8 +48,8 @@ import static utilities.Driver.driver;
 
 public class PatientPage extends Base {
 
-    Faker faker=new Faker();
-    Actions actions=new Actions(Driver.getDriver());
+    Faker faker = new Faker();
+    Actions actions = new Actions(Driver.getDriver());
 
     // Userlogin >
     @FindBy(xpath = "//a[text()='Login']")
@@ -265,7 +265,6 @@ public class PatientPage extends Base {
     public WebElement SuccestText;
 
 
-
     public static void checkHeaderExistence(WebElement element) {
 
         String[] headerNames = {"Patient Id", "Gender", "Marital Status", "Phone", "Email", "Address", "Age", "Guardian Name", "Username", "Password"};
@@ -280,24 +279,24 @@ public class PatientPage extends Base {
         }
     }
 
-        public  static  boolean checkTableHeadersExist(WebElement table) {
-            List<WebElement> headers = table.findElements(By.tagName("th"));
-            String[] expectedHeaders = {"Appointment No", "Appointment Date", "Priority", "Specialist", "Doctor", "Status", "Message", "Action"};
+    public static boolean checkTableHeadersExist(WebElement table) {
+        List<WebElement> headers = table.findElements(By.tagName("th"));
+        String[] expectedHeaders = {"Appointment No", "Appointment Date", "Priority", "Specialist", "Doctor", "Status", "Message", "Action"};
 
-            if (headers.size() != expectedHeaders.length) {
+        if (headers.size() != expectedHeaders.length) {
+            return false;
+        }
+
+        for (int i = 0; i < expectedHeaders.length; i++) {
+            if (!headers.get(i).getText().equals(expectedHeaders[i])) {
                 return false;
             }
-
-            for (int i = 0; i < expectedHeaders.length; i++) {
-                if (!headers.get(i).getText().equals(expectedHeaders[i])) {
-                    return false;
-                }
-            }
+        }
 
         return true;
     }
 
-    public  void userLogin(){
+    public void userLogin() {
         Driver.getDriver().get(ConfigReader.getProperty("url"));
         entryLoginbutton.click();
         entryEmailText.sendKeys(ConfigReader.getProperty("usernameAysenuriye"));
@@ -305,22 +304,16 @@ public class PatientPage extends Base {
         Entry_SubmitButton.click();
 
 
-
     }
 
 
-
-
-
-
-
-
-
-    public  void myAppointmentsAddAppointment(){
-        PatientPage patientPage=new PatientPage();
+    public void myAppointmentsAddAppointment() {
+        PatientPage patientPage = new PatientPage();
         myAppiontmentsButton.click();
-        addAppointmentsButton.click();      ReusableMethods.bekle(1);
-        addAppointmentDatetext.click();     ReusableMethods.bekle(1);
+        addAppointmentsButton.click();
+        ReusableMethods.bekle(1);
+        addAppointmentDatetext.click();
+        ReusableMethods.bekle(1);
 /*
         Date currentDate = new Date();
         Date randomDate = faker.date().future(25, TimeUnit.DAYS, currentDate);
@@ -349,18 +342,23 @@ public class PatientPage extends Base {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         String formattedDate = dateFormat.format(randomDate);
         actions.sendKeys(addAppointmentDatetext, formattedDate).build().perform();
-        addAppointmentDateoptionsMay27.click();   ReusableMethods.bekle(1);
+        addAppointmentDateoptionsMay27.click();
+        ReusableMethods.bekle(1);
 
-        addAppointmentSpecialistButton.click();     ReusableMethods.bekle(1);
-        addAppointmentSpecialistValue.click();        ReusableMethods.bekle(1);
-        addAppointmentsDoctorbutton.click();   ReusableMethods.bekle(1);
-        addAppointmentdoctorAysenuriye.click();   ReusableMethods.bekle(1);
+        addAppointmentSpecialistButton.click();
+        ReusableMethods.bekle(1);
+        addAppointmentSpecialistValue.click();
+        ReusableMethods.bekle(1);
+        addAppointmentsDoctorbutton.click();
+        ReusableMethods.bekle(1);
+        addAppointmentdoctorAysenuriye.click();
+        ReusableMethods.bekle(1);
 
-        Select select=new Select(addAppointmentsShiftButton);
+        Select select = new Select(addAppointmentsShiftButton);
         select.selectByIndex(1);
-         ReusableMethods.bekle(2);
-         select=new Select(addAppointmentsslotButton);
-         select.selectByVisibleText("04:00 PM - 05:00 PM");
+        ReusableMethods.bekle(2);
+        select = new Select(addAppointmentsslotButton);
+        select.selectByVisibleText("04:00 PM - 05:00 PM");
 
 
         addAppointmentsmessageText.click();
@@ -384,32 +382,27 @@ public class PatientPage extends Base {
         }
 
 
-
-
-
-
-
-
     }
-    public void payCard(){
-        PatientPage patientPage=new PatientPage();
-         myAppiontmentsPaybutton.click();
+
+    public void payCard() {
+        PatientPage patientPage = new PatientPage();
+        myAppiontmentsPaybutton.click();
         myAppointmentsPaywithCardbutton.click();
         ReusableMethods.bekle(2);
 
-      actions.sendKeys(faker.internet().emailAddress()).perform();
-      actions.sendKeys(Keys.TAB).perform();
-      actions.sendKeys("4242 4242 4242 4242").perform();
+        actions.sendKeys(faker.internet().emailAddress()).perform();
+        actions.sendKeys(Keys.TAB).perform();
+        actions.sendKeys("4242 4242 4242 4242").perform();
         actions.sendKeys(Keys.TAB).perform();
 
         //myAppointmentsCardnumberText.sendKeys(");
-     actions.sendKeys("0727").perform();
+        actions.sendKeys("0727").perform();
         actions.sendKeys(Keys.TAB).perform();
         actions.sendKeys("571").perform();
         actions.sendKeys(Keys.TAB).perform();
         actions.sendKeys("27200").perform();
         actions.sendKeys(Keys.TAB).perform();
-       actions.sendKeys(Keys.ENTER).perform();
+        actions.sendKeys(Keys.ENTER).perform();
 
 
 
@@ -426,15 +419,15 @@ public class PatientPage extends Base {
 
     }
 
-        public void testStatusChangeMessage() {
-            // Assume that the language has been changed successfully
-            String message = "Status Change Successfully";
+    public void testStatusChangeMessage() {
+        // Assume that the language has been changed successfully
+        String message = "Status Change Successfully";
 
 
-            // Get the message element from the page
-            String pageSource = driver.getPageSource();
-            Assert.assertTrue(pageSource.contains(message));
-        }
+        // Get the message element from the page
+        String pageSource = driver.getPageSource();
+        Assert.assertTrue(pageSource.contains(message));
+    }
     //Pharmacy page=============================================//=======================
 
     @FindBy(xpath = "//h3[@class='box-title titlefix']")
@@ -503,7 +496,6 @@ public class PatientPage extends Base {
     public WebElement pathologyNameText;
 
 
-
     @FindBy(xpath = "(//button[@type='button'])[9]")
     public WebElement pathologyViewwClose;
 
@@ -546,10 +538,6 @@ public class PatientPage extends Base {
         int count = 0;
 
 
-
-
-
-
         for (int i = 0; i < liste.length; i++) {
             for (int j = 0; j < baslikListesiActual.size(); j++) {
                 if (baslikListesiActual.get(j).equals(liste[i])) {
@@ -562,11 +550,10 @@ public class PatientPage extends Base {
         }
 
 
-
         return false;
     }
 
-    public static boolean intListSortTest ( int sutunNo){
+    public static boolean intListSortTest(int sutunNo) {
         WebElement baslik = Driver.getDriver().findElement(By.xpath("//*[@id=\"DataTables_Table_0\"]/thead/tr/th[" + sutunNo + "]"));
         baslik.click();
         ReusableMethods.bekle(3);
@@ -578,9 +565,6 @@ public class PatientPage extends Base {
             ActualStringList.add(each.getText().replaceAll("[^\\d]", ""));
         }
         System.out.println(ActualStringList);
-
-
-
 
 
         List<String> ExpectedList = new ArrayList<>(ActualStringList);
@@ -600,6 +584,45 @@ public class PatientPage extends Base {
 
     @FindBy(xpath = "//td[text()='PATHOB100']")
     public WebElement pathologytPATHOB100Yazisi;
+
+    //=========================================US30===============================
+    @FindBy(xpath = "//span[text()='OPD']")
+    public WebElement dashboardOpdText;
+
+    @FindBy(xpath = "//span[text()='IPD']")
+    public WebElement dashboardIpdText;
+
+
+    @FindBy(xpath = "//span[text()='Pharmacy']")
+    public WebElement dashboardPharmacyText;
+
+    @FindBy(xpath = "//span[text()='Pathology']")
+    public WebElement dashboardPathologyText;
+
+    @FindBy(xpath = "//span[text()='Radiology']")
+    public WebElement dashboardRadiologyText;
+
+    @FindBy(xpath = "//span[text()='Blood Bank']")
+    public WebElement dashboardBloodBankText;
+
+    @FindBy(xpath = "//span[text()='Ambulance']")
+    public WebElement dashboardAmbulanceText;
+
+
+
+    @FindBy(xpath = "//canvas[@id='finding-bar-chart']")
+    public WebElement dashboardTop10FindingsChart;
+
+
+    @FindBy(xpath = "//canvas[@id='symptom-bar-chart']")
+    public WebElement dashboardTop10symptomChart;
+
+    @FindBy(xpath = "//canvas[@id='medical-history-chart']")
+    public WebElement dashboardMedicalHistoryChart;
+
+    @FindBy(xpath = "//span[text()=' Dashboard']")
+    public WebElement dashboardLinkk;
+
 
 
 

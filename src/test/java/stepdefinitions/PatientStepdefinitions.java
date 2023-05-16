@@ -731,15 +731,11 @@ public class PatientStepdefinitions {
     @Given("Click on the Radiology linkk")
     public void click_on_the_radiology_linkk() {
         patientPage.radiologyButtonn.click();
-
-
-
     }
 
     @And("Verify that {string} are displayed")
     public void verifyThatAreDisplayed(String arg0) {
         patientPage.radioBillNo.isDisplayed();
-        
     }
 
     @Then("Enter the excisting Radiology Bill")
@@ -756,6 +752,102 @@ public class PatientStepdefinitions {
     public void quitThePage() {
         Driver.closeDriver();
     }
+
+    @And("Verify that OPD,OPD, IPD, Pharmacy, Pathology, Radiology, Blood Bank, Ambulance are visible")
+    public void verifyThatOPDOPDIPDPharmacyPathologyRadiologyBloodBankAmbulanceAreVisible() {
+        Assert.assertTrue(patientPage.dashboardOpdText.isDisplayed());
+        Assert.assertTrue(patientPage.dashboardIpdText.isDisplayed());
+        Assert.assertTrue(patientPage.dashboardPharmacyText.isDisplayed());
+        Assert.assertTrue(patientPage.dashboardPathologyText.isDisplayed());
+        Assert.assertTrue(patientPage.dashboardBloodBankText.isDisplayed());
+        Assert.assertTrue(patientPage.dashboardRadiologyText.isDisplayed());
+        Assert.assertTrue(patientPage.dashboardAmbulanceText.isDisplayed());
+    }
+
+    @Then("Verify that OPD, IPD, Blood Bank, Ambulance are clikable")
+    public void verifyThatOPDIPDBloodBankAmbulanceAreClikable() {
+
+        patientPage.dashboardOpdText.click();
+        String expectedUrl = "https://qa.heallifehospital.com/patient/dashboard/profile";
+        String actualUrl = Driver.getDriver().getCurrentUrl();
+        Assert.assertEquals(expectedUrl, actualUrl);
+        Driver.getDriver().navigate().back();
+        ReusableMethods.bekle(2);
+
+        patientPage.dashboardIpdText.click();
+        String expectedIpdUrl = "https://qa.heallifehospital.com/patient/dashboard/ipdprofile";
+        String actualIpdUrl = Driver.getDriver().getCurrentUrl();
+        Assert.assertEquals(expectedIpdUrl, actualIpdUrl);
+        Driver.getDriver().navigate().back();
+        ReusableMethods.bekle(2);
+
+
+        patientPage.dashboardBloodBankText.click();
+        String expectedBloodBankdUrl = "https://qa.heallifehospital.com/patient/dashboard/bloodbank";
+        String actualBloodBankUrl = Driver.getDriver().getCurrentUrl();
+        Assert.assertEquals(expectedBloodBankdUrl, actualBloodBankUrl);
+        Driver.getDriver().navigate().back();
+        ReusableMethods.bekle(2);
+
+
+        patientPage.dashboardAmbulanceText.click();
+        String expectedAmbulancedUrl = "https://qa.heallifehospital.com/patient/dashboard/ambulance";
+        String actualAmbulanceUrl = Driver.getDriver().getCurrentUrl();
+        Assert.assertEquals(expectedAmbulancedUrl, actualAmbulanceUrl);
+        Driver.getDriver().navigate().back();
+        ReusableMethods.bekle(2);
+    }
+
+
+    @Then("Verify that Pharmacy, Pathology, Radiology are clikable")
+    public void verifyThatPharmacyPathologyRadiologyAreClikable() {
+        patientPage.dashboardPharmacyText.click();
+        String expectedPharmacydUrl = "https://qa.heallifehospital.com/patient/dashboard/pharmacybill";
+        String actualPharmacyUrl = Driver.getDriver().getCurrentUrl();
+        Assert.assertEquals(expectedPharmacydUrl, actualPharmacyUrl);
+        Driver.getDriver().navigate().back();
+        ReusableMethods.bekle(2);
+
+        patientPage.dashboardPathologyText.click();
+        String expectedPatalogydUrl = "https://qa.heallifehospital.com/patient/dashboard/pathology";
+        String actualPatalogyUrl = Driver.getDriver().getCurrentUrl();
+        Assert.assertEquals(expectedPatalogydUrl, actualPatalogyUrl);
+        Driver.getDriver().navigate().back();
+        ReusableMethods.bekle(2);
+
+        patientPage.dashboardRadiologyText.click();
+        String expectedRadiologydUrl = "https://qa.heallifehospital.com/patient/dashboard/radiology";
+        String actualRadiologyUrl = Driver.getDriver().getCurrentUrl();
+        Assert.assertEquals(expectedRadiologydUrl, actualRadiologyUrl);
+        Driver.getDriver().navigate().back();
+        ReusableMethods.bekle(2);
+
+    }
+
+    @And("Verify that Medical History Chart is visible")
+    public void verifyThatMedicalHistoryChartIsVisible() {
+       Assert.assertTrue(patientPage.dashboardMedicalHistoryChart.isDisplayed());
+
+    }
+
+    @And("Verify that Top{int}Findings Chart is visible")
+    public void verifyThatTopFindingsChartIsVisible(int arg0) {
+        Assert.assertTrue(patientPage.dashboardTop10FindingsChart.isDisplayed());
+
+    }
+
+    @And("Verify that Top{int}Symptoms Chart is visible")
+    public void verifyThatTopSymptomsChartIsVisible(int arg0) {
+            Assert.assertTrue(patientPage.dashboardTop10symptomChart.isDisplayed());
+    }
+
+    @Given("Click on the Dashboard linkk")
+    public void click_on_the_dashboard_linkk() {
+        patientPage.dashboardLinkk.click();
+    }
+
+
+
 }
 
 

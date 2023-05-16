@@ -44,6 +44,7 @@ Feature: US_038 As an admin I would like to have a page in the dashboard sidebar
         And Click first name for display patient profile
         Then Verified redirected to Patent Profile page
 
+
   Scenario: TC_09 When Pathology board in the Single Module Billing window is clicked,(all)Amounts)
                   should be displayed.
         And Click the Pathology button on Billing page

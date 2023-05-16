@@ -15,14 +15,14 @@ Feature: As an administrator (admin), I would like to have a page in the dashboa
   Scenario: TC 02 The Pharmacy Bill List on the Pharmacy page should have the headings (Bill No, Case ID/Patient ID, Date, Patient Name, Doctor Name, Discount($), Amount($), Paid Amount($), Balance Amount($)).
 
     Given Verify that The Pharmacy Bill List on the Pharmacy page have the heading Bill No
- Then Verify that The Pharmacy Bill List on the Pharmacy page have the heading Case ID Patient ID
- Then Verify that The Pharmacy Bill List on the Pharmacy page have the heading Date
-  Then Verify that The Pharmacy Bill List on the Pharmacy page have the heading Patient Name.
-  Then Verify that The Pharmacy Bill List on the Pharmacy page have the heading Doctor Name.
-  Then Verify that The Pharmacy Bill List on the Pharmacy page have the heading Discount.
-  Then Verify that The Pharmacy Bill List on the Pharmacy page have the heading Amount.
-  Then Verify that The Pharmacy Bill List on the Pharmacy page have the heading Paid Amount.
-  Then Verify that The Pharmacy Bill List on the Pharmacy page have the heading Balance Amount.
+    Then Verify that The Pharmacy Bill List on the Pharmacy page have the heading Case ID Patient ID
+    Then Verify that The Pharmacy Bill List on the Pharmacy page have the heading Date
+    Then Verify that The Pharmacy Bill List on the Pharmacy page have the heading Patient Name.
+    Then Verify that The Pharmacy Bill List on the Pharmacy page have the heading Doctor Name.
+    Then Verify that The Pharmacy Bill List on the Pharmacy page have the heading Discount.
+    Then Verify that The Pharmacy Bill List on the Pharmacy page have the heading Amount.
+    Then Verify that The Pharmacy Bill List on the Pharmacy page have the heading Paid Amount.
+    Then Verify that The Pharmacy Bill List on the Pharmacy page have the heading Balance Amount.
 
 
   Scenario: TC 03 It should be possible to sort through the titles in the Pharmacy Bill List on the Pharmacy page.

@@ -519,10 +519,16 @@ public class PatientPage extends Base {
 
     @FindBy(xpath = "//span[text()='Pay with Card']")
     public WebElement pathologyPayWithCard;
+    //=======================================================================================================
 
+    @FindBy(xpath = "//span[text()=' Radiology']")
+    public WebElement radiologyButtonn;
 
+    @FindBy(xpath = "//td[text()='RADIOB73']")
+    public WebElement radioBillNo;
 
-
+    @FindBy(xpath = "//td[text()='RADIOB73']")
+    public WebElement radioBillNoText;
 
 
     public static boolean baslikListelemeMethod(String data) {
@@ -561,7 +567,7 @@ public class PatientPage extends Base {
     }
 
     public static boolean intListSortTest ( int sutunNo){
-        WebElement baslik = Driver.getDriver().findElement(By.xpath("(//th[@aria-controls='DataTables_Table_0'])[" + sutunNo + "]"));
+        WebElement baslik = Driver.getDriver().findElement(By.xpath("//*[@id=\"DataTables_Table_0\"]/thead/tr/th[" + sutunNo + "]"));
         baslik.click();
         ReusableMethods.bekle(3);
         List<WebElement> ActualList = Driver.getDriver().findElements(By.xpath("//*[@id=\"DataTables_Table_0\"]/tbody/tr/td[" + sutunNo + "]"));
@@ -594,6 +600,7 @@ public class PatientPage extends Base {
 
     @FindBy(xpath = "//td[text()='PATHOB100']")
     public WebElement pathologytPATHOB100Yazisi;
+
 
 
 

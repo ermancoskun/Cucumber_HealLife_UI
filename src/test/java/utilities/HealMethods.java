@@ -152,7 +152,7 @@ public class HealMethods {
         }
         List<String> expectedList = new ArrayList<>(filtreList);
         Collections.sort(expectedList);
-
+        Assert.assertEquals(expectedList,filtreList);
     }
     public static void indirmeyiTestEt(String aranacakKelime,String format){//icon testinin yardımcı metodu,dogrudan kullanılmaz
         //bu metot downloads klasöründeki dosyaları sıralar ve dosya ismi "aranacakKelime.format" içeriyor mu diye test eder
@@ -242,29 +242,11 @@ public class HealMethods {
     JSUtilities.clickWithJS(Driver.getDriver(),iconButton);
     ReusableMethods.bekle(3);
     }
+
     public static void clickANameFromList(int sira) {
-        Driver.getDriver().findElement(By.xpath("(//td)[" + sira + "]"));
-
-
-
-
-
+        WebElement nameElement = Driver.getDriver().findElement(By.xpath("(//td)[" + sira + "]"));
+        nameElement.click();
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -316,5 +298,11 @@ public class HealMethods {
                 Assert.assertEquals("Record Saved Successfully", uyariText2);//basarili odemeyi test ediyoruz
             }
 
-        }
+
     }
+
+}
+
+
+
+

@@ -1,6 +1,7 @@
 package stepdefinitions;
 
 
+import com.github.dockerjava.api.command.HealthState;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -10,6 +11,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Select;
 import pages.AdminPage;
 import pages.PatientPage;
 import utilities.ConfigReader;
@@ -423,59 +425,45 @@ public class PatientStepdefinitions {
 
     //=========================================== Nesibe [US_023] OPD MENU =============================================
 
-    @Given("Launch browser.")
-    public void launchBrowser() {
-        Driver.getDriver();}
-
-/*    @Then("Go to {string}")
-    public void goTo(String url) {
-        Driver.getDriver().get(ConfigReader.getProperty(url));}*/
-
-    @Then("Login as a patient with username password")
-    public void loginPatient(String userName, String Password) {
-        HealMethods.loginAsUser("userNameNesibe", "userPasswordNesibe");
-
-    }
     @Then("Verify  the patient dashboard page is redirected")
     public void patientPageRedirected() {
-        Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains("patient"));
+        Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains("patient/dashboard"));
 
     }
 
-    @Then("Verify the “OPD” menu title in the dashboard is visible and clickable")
+    @Then("Verify the OPD menu title in the dashboard is visible and clickable")
     public void verifyOpdMenuTitleEnabled() {
-        String expectedTitle = "OPD";
-        String actualTitle= Driver.getDriver().findElement(By.xpath("//*[@id=sibe-box]/ul/li[3]/a")).getText();
-        Assert.assertTrue( actualTitle.contains(expectedTitle));
+        ReusableMethods.bekle(2);
+        Assert.assertEquals("OPD",patientPage.opdButton.getText());
 
     }
 
-    @Then("Click the “OPD” menu")
+    @Then("Click the OPD menu")
     public void clickOpdMenu() {
         HealMethods.clickASidebarLink("OPD");
     }
 
     @Then("Verify the {string} page is redirected")
     public void verifyPatientPage(String arg0) {
-        Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains("patient"));
+        Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains("profile"));
     }
 
-   /* @And("Close the page")
-    public void closePage() {
-        Driver.closeDriver();
-    }*/
-
-
-    @Then("Verify the “ Overview, Visits, Lab Investigation, Treatment History, Timeline” items visible and accesable.")
+    @Then("Verify the Overview, Visits, Lab Investigation, Treatment History, Timeline items are visible and accessable")
     public void headingsOpdPage() {
         Assert.assertTrue(patientPage.overview.isDisplayed());
         Assert.assertTrue(patientPage.visits.isDisplayed());
         Assert.assertTrue(patientPage.labInvestigation.isDisplayed());
         Assert.assertTrue(patientPage.treatmentHistory.isDisplayed());
         Assert.assertTrue(patientPage.timeline.isDisplayed());
+
+        Assert.assertTrue(patientPage.overview.isEnabled());
+        Assert.assertTrue(patientPage.visits.isEnabled());
+        Assert.assertTrue(patientPage.labInvestigation.isEnabled());
+        Assert.assertTrue(patientPage.treatmentHistory.isEnabled());
+        Assert.assertTrue(patientPage.timeline.isEnabled());
     }
 
-    @Then("Verify the “ Gender, Age, Guardian Name, Phone” items displayed correctly in the Overview page")
+    @Then("Verify the Gender, Age, Guardian Name, Phone items displayed correctly in the Overview page")
     public void theItemsOverview() {
         Assert.assertTrue(patientPage.gender.isDisplayed());
         Assert.assertTrue(patientPage.age.isDisplayed());
@@ -489,26 +477,25 @@ public class PatientStepdefinitions {
         Assert.assertTrue(patientPage.sumlabInvestigation.isDisplayed());
         Assert.assertTrue(patientPage.sumTreatmentHistory.isDisplayed());
         Assert.assertTrue(patientPage.sumTimeline.isDisplayed());
-
     }
 
-    @Then("Verify the “ Consultant doctor” item displayed correctly in the Overview page.")
+    @Then("Verify the Consultant doctor item displayed correctly in the Overview page")
     public void consultantDoctorItemDisplayed() {
-        patientPage.consultantDoctor.isDisplayed();
+        Assert.assertTrue(patientPage.consultantDoctor.isDisplayed());
     }
 
-    @Then("Click the “Visits” menu")
+    @Then("Click the Visits menu")
     public void clickTheVisitsMenu() {
         patientPage.visits.click();
     }
 
     @Then("Verify the headings in Visits List, OPD No, Case ID, Appointment Date, Consultant, Reference displayed correctly")
     public void headingsInVisitsPage() {
-        Assert.assertTrue(patientPage.opdNo.isDisplayed());
-        Assert.assertTrue(patientPage.caseId.isDisplayed());
-        Assert.assertTrue(patientPage.appointmentDate.isDisplayed());
-        Assert.assertTrue(patientPage.consultant.isDisplayed());
-        Assert.assertTrue(patientPage.referance.isDisplayed());
+        Assert.assertTrue(patientPage.opdNoFilter.isDisplayed());
+        Assert.assertTrue(patientPage.caseIdFilter.isDisplayed());
+        Assert.assertTrue(patientPage.appointmentDateFilter.isDisplayed());
+        Assert.assertTrue(patientPage.consultantFilter.isDisplayed());
+        Assert.assertTrue(patientPage.referanceFilter.isDisplayed());
     }
 
     @Then("Verify the seacrhTextBox  in Visit page is displayed and to be able to search correctly")
@@ -519,15 +506,164 @@ public class PatientStepdefinitions {
     @Then("Verify the list titles in the Visits List are to be able to sort effectively")
     public void ListTitlesSorting() {
 
+        ReusableMethods.bekle(1);
+        patientPage.opdNoFilter.click();
+        HealMethods.makeFilterTestPatientOPD("OPD No" , 1,7);
+
+        ReusableMethods.bekle(1);
+        patientPage.caseIdFilter.click();
+        HealMethods.makeFilterTestPatientOPD("Case ID / Patient ID" , 2,7);
+
+        ReusableMethods.bekle(1);
+        patientPage.appointmentDateFilter.click();
+        HealMethods.makeFilterTestPatientOPD("Appointment Date" , 3,7);
+
+        ReusableMethods.bekle(1);
+        patientPage.consultantFilter.click();
+        HealMethods.makeFilterTestPatientOPD("Consultant" , 4,7);
+
+        ReusableMethods.bekle(1);
+        patientPage.referanceFilter.click();
+        HealMethods.makeFilterTestPatientOPD("Reference" , 5,7);
+
+        ReusableMethods.bekle(1);
+        patientPage.symptomFilter.click();
+        HealMethods.makeFilterTestPatientOPD("Symptoms" , 6,7);
+
+        ReusableMethods.bekle(1);
+        patientPage.actionVisit.click();
+        HealMethods.makeFilterTestPatientOPD("Action" , 7,7);
+
     }
 
     @Then("Verify the accessiblity to the details of the visit and the prescription information under the Actions heading in the Visits")
     public void prescriptionVisits () {
+        patientPage.actionVisit.click();
+        Assert.assertTrue(patientPage.prescriptionNot.isDisplayed());
     }
 
-    @Then("Verify the visit details and prescription information must be recorded on the correct patient name.")
+    @Then("Verify the visit details and prescription information are recorded on the correct patient name")
     public void visitsRecordedCorrectPatient() {
+        patientPage.actionVisit.click();
+        Assert.assertTrue(patientPage.prescriptionNot.isEnabled());
     }
+
+    @Then("Click the Lab Investigation menu")
+    public void clickTheLabInvestigationMenu() {
+        patientPage.labInvestigation.click();
+    }
+
+    @Then("Verify titles in Lab Investigation List \\(Test Name, Case ID, Lab, Sample Collected, Expected Date, Approved By) displayed correctly on the Lab Investigation page")
+    public void verifyTitlesInLabInvestigation() {
+
+        Assert.assertTrue(patientPage.testName.isDisplayed());
+        Assert.assertTrue(patientPage.caseId2Filter.isDisplayed());
+        Assert.assertTrue(patientPage.labFilter.isDisplayed());
+        Assert.assertTrue(patientPage.sampleCollectedFilter.isDisplayed());
+        Assert.assertTrue(patientPage.expectedDateFilter.isDisplayed());
+        Assert.assertTrue(patientPage.approvedByFilter.isDisplayed());
+    }
+
+    @And("Verify the seacrhTextBox  in Lab Investigation page is displayed and to be able to search correctly")
+    public void verifyTheSeacrhTextBoxInLabInvestigation() {
+        ReusableMethods.bekle(2);
+        patientPage.searchLabInvestigation.click();
+        Assert.assertTrue(patientPage.searchLabInvestigation.isDisplayed());
+        patientPage.searchLabInvestigation.sendKeys("testing now...");
+        ReusableMethods.bekle(2);
+        patientPage.searchLabInvestigation.clear();
+        ReusableMethods.bekle(5);
+
+    }
+
+    @And("Verify the test result should be displayed under the Action title in the Lab Investigation List is displayed")
+    public void verifyTheTestResult() {
+        patientPage.testSonuc1.click();
+        ReusableMethods.bekle(2);
+        Assert.assertTrue(patientPage.testSonucEkran.isDisplayed());
+    }
+
+    @And("Verify the list over the titles in the Lab Investigation List are to be able to sort effectively")
+    public void verifyTheLabInvestigationListSort() {
+        patientPage.testName.click();
+        HealMethods.makeFilterTestPatientOPD("Test Name", 1, 7);
+
+        patientPage.caseId2Filter.click();
+        HealMethods.makeFilterTestPatientOPD("Case ID / Patient ID", 2,7);
+
+        patientPage.labFilter.click();
+        HealMethods.makeFilterTestPatientOPD("Lab",3,7);
+
+        patientPage.sampleCollectedFilter.click();
+        HealMethods.makeFilterTestPatientOPD("Sample Collected",4,7);
+
+        patientPage.expectedDateFilter.click();
+        HealMethods.makeFilterTestPatientOPD("Expected Date",5,7);
+
+        patientPage.approvedByFilter.click();
+        HealMethods.makeFilterTestPatientOPD("Approved By",6,7);
+    }
+
+
+    @Then("Click the Treatment History menu")
+    public void clickTheTreatmentHistoryMenu() {
+        patientPage.treatmentHistory.click();
+    }
+
+    @And("Verify titles in The Treatment History page \\(OPD No, Case ID, Appointment Date, Symptoms, Consultant, Action) displayed correctly on The Treatment History page")
+    public void verifyTitlesInTheTreatmentHistory() {
+        Assert.assertTrue(patientPage.opdNoTreatment.isDisplayed());
+        Assert.assertTrue(patientPage.caseId3.isDisplayed());
+        Assert.assertTrue(patientPage.appointmentDate2.isDisplayed());
+        Assert.assertTrue(patientPage.symptoms2.isDisplayed());
+        Assert.assertTrue(patientPage.consultantFilter2.isDisplayed());
+        Assert.assertTrue(patientPage.actionTreatmentHistory.isDisplayed());
+    }
+
+    @And("Verify the seacrhTextBox  in the Treatment History page is displayed and to be able to search correctly.")
+    public void verifyTheSeacrhTextBoxInTheTreatmentHistoryPageIsDisplayedAndToBeAbleToSearchCorrectly() {
+        ReusableMethods.bekle(2);
+        patientPage.searchTreatment.click();
+        Assert.assertTrue(patientPage.searchTreatment.isDisplayed());
+        patientPage.searchTreatment.sendKeys("testing now...");
+        ReusableMethods.bekle(2);
+        patientPage.searchTreatment.clear();
+        ReusableMethods.bekle(5);
+    }
+
+    @And("Verify the treatment history details should be displayed under the Action title in the “The Treatment History” list")
+    public void verifyTheTreatmentHistoryAction() {
+        Assert.assertTrue(patientPage.actionTreatmentHistory.isEnabled());
+    }
+
+    @And("Verify  that to select how many treatment histories \\({int} or All) will be displayed in the Treatment History list")
+    public void hundredOrAll(int arg0) {
+        // patientPage.makeAll.click();
+        HealMethods.makeAll100Test();
+
+    }
+
+    @Then("Click the Timeline menu")
+    public void clickTheTimelineMenu() {
+        ReusableMethods.bekle(1);
+        patientPage.timeline.click();
+
+    }
+
+    @And("Verify  that a line on the Timeline page showing the procedures waiting for the patient in the future is  displayed")
+    public void lineTimeline() {
+        ReusableMethods.bekle(1);
+        Assert.assertTrue(patientPage.timeLineShow.isDisplayed());
+        Assert.assertTrue(patientPage.timeLineDateFuture.isDisplayed());
+    }
+
+    @And("Verify  that the Line on the Timeline page contains all the necessary informations")
+    public void theTimelinePageContainsAllInformations() {
+        ReusableMethods.bekle(1);
+        Assert.assertTrue(patientPage.timeLineNameShow.isDisplayed());
+        Assert.assertTrue(patientPage.timeLineDateShow.isDisplayed());
+    }
+
 
     //========================================= Nesibe [US_023] OPD MENU SONU ==========================================
 }

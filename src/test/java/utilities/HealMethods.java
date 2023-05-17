@@ -18,7 +18,7 @@ import java.util.List;
 public class HealMethods {
     static AdminPage adminPage=new AdminPage();
     static Faker faker=new Faker();
-   static Actions actions=new Actions(Driver.getDriver());
+    static Actions actions=new Actions(Driver.getDriver());
 
 
     public static void loginAsAdmin(String username, String password){
@@ -252,5 +252,47 @@ public class HealMethods {
     }
     public static void clickANameFromList(int sira){
         Driver.getDriver().findElement(By.xpath("(//td)["+sira+"]"));
+    }
+
+
+    public static void makeFilterTestAdminOPD(String filterName,int filtreKacinciSirada, int toplamSutunSayisi){
+        WebElement all100=Driver.getDriver().findElement(By.xpath("(//select[@name])[1]"));
+        Select select=new Select(all100);
+        select.selectByVisibleText("All");
+        ReusableMethods.bekle(3);
+        WebElement filter=Driver.getDriver().findElement(By.xpath("(//th[text()='"+filterName+"'])[1]"));
+        ReusableMethods.bekle(2);
+        Assert.assertTrue(filter.isDisplayed());
+        filter.click();
+        ReusableMethods.bekle(4);
+        List<String> filtreList=new ArrayList<>();
+
+        for (int i = filtreKacinciSirada; i <toplamSutunSayisi*10 ; i=(i+toplamSutunSayisi)) {
+
+            WebElement hucreElement=Driver.getDriver().findElement(By.xpath("(//td)["+i+"]"));
+            filtreList.add(hucreElement.getText());
+        }
+        List<String> expectedList = new ArrayList<>(filtreList);
+        Collections.sort(expectedList);
+        Assert.assertEquals(expectedList,filtreList);
+    }
+
+    public static void makeFilterTestPatientOPD(String filterName,int filtreKacinciSirada, int toplamSutunSayisi){
+
+        WebElement filter=Driver.getDriver().findElement(By.xpath("(//th[text()='"+filterName+"'])[1]"));
+        ReusableMethods.bekle(2);
+        Assert.assertTrue(filter.isDisplayed());
+        filter.click();
+        ReusableMethods.bekle(4);
+        List<String> filtreList=new ArrayList<>();
+
+        for (int i = filtreKacinciSirada; i <toplamSutunSayisi*10 ; i=(i+toplamSutunSayisi)) {
+
+            WebElement hucreElement=Driver.getDriver().findElement(By.xpath("(//td)["+i+"]"));
+            filtreList.add(hucreElement.getText());
+        }
+        List<String> expectedList = new ArrayList<>(filtreList);
+        Collections.sort(expectedList);
+        Assert.assertEquals(expectedList,filtreList);
     }
 }

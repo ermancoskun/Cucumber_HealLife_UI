@@ -731,4 +731,110 @@ public class AdminStepdefinitions {
 
 
 
+    //===========================================================US35==========================================
+    @Given("User goes to the admin page.")
+    public void userGoesToTheAdminPage() {
+        Driver.getDriver().get(ConfigReader.getProperty("adminPageUrl"));
+    }
+
+    @Then("Verify that the URL of the website is correctt.")
+    public void verifyThatTheURLOfTheWebsiteIsCorrectt() {
+        String actualUrl = Driver.getDriver().getCurrentUrl();
+        String expectedUrl = ConfigReader.getProperty("adminPageUrl");
+        Assert.assertEquals("The Url of the home page is correct", expectedUrl, actualUrl);
+    }
+
+    @Then("Verify that the Latest New information is visible.")
+    public void verifyThatTheLatestNewInformationIsVisible() {
+        Driver.getDriver().get(ConfigReader.getProperty("adminPageUrl"));
+       Assert.assertTrue(adminPage.adminloginNews.isDisplayed());
+    }
+
+
+    @Then("Click on the Sign in button")
+    public void clickOnTheSignInButton() {
+        adminPage.adminSignInButton.click();
+    }
+
+    @Then("Login to adminn page  {string} {string}")
+    public void loginToAdminPage(String username, String password) {
+            HealMethods.loginAsAdmin(username,password);
+
+        }
+
+    @Then("It is verified that the admin page has been entered.")
+    public void ıtIsVerifiedThatTheAdminPageHasBeenEntered() {
+        String expectedAdmindUrl = "https://qa.heallifehospital.com/admin/admin/dashboard";
+        String actualAdminUrl = Driver.getDriver().getCurrentUrl();
+        Assert.assertEquals(expectedAdmindUrl, actualAdminUrl);
+        Driver.getDriver().navigate().back();
+        ReusableMethods.bekle(2);
+
+    }
+
+    @And("Verify that the panel cannot be accessed with an invalid password or password")
+    public void verifyThatThePanelCannotBeAccessedWithAnInvalidPasswordOrPassword() {
+        Assert.assertTrue(adminPage.signInButton.isEnabled());
+        Driver.getDriver().navigate().back();
+    }
+
+    @And("enters {string} from examples as username")
+    public void entersFromExamplesAsUsername(String username) {
+        adminPage.adminUsernameBox.sendKeys(username);
+    }
+
+    @And("enters {string} from examples as password")
+    public void entersFromExamplesAsPassword(String password) {
+        adminPage.adminPasswordBox.sendKeys(password);
+    }
+
+    @Then("There should be a forget password link on the login page")
+    public void thereShouldBeAForgetPasswordLinkOnTheLoginPage() {
+       Assert.assertTrue( adminPage.adminForgetPassword.isDisplayed());
+
+
+    }
+
+    @And("Verify that It should redirect to the {string} page.")
+    public void verifyThatItShouldRedirectToThePage(String arg0) {
+        adminPage.adminForgetPassword.click();
+        String expectedForgetPasswordUrl = "https://qa.heallifehospital.com/site/forgotpassword";
+        String actualAdminUrl = Driver.getDriver().getCurrentUrl();
+        Assert.assertEquals(expectedForgetPasswordUrl, actualAdminUrl);
+
+    }
+
+    @And("The user have enter an email in the email box.")
+    public void theUserHaveEnterAnEmailInTheEmailBox() {
+        adminPage.adminForgetPassword.click();
+        adminPage.adminUsernameBox.sendKeys("asd@gmail.com");
+        adminPage.adminSubmitButton.click();
+
+    }
+
+    @Then("Verify that the password has been sent to the e-mail")
+    public void verifyThatThePasswordHasBeenSentToTheEMail() {
+        adminPage.passwordSentYourEmail.isDisplayed();
+
+    }
+
+    @Then("There should be a admin login link on the login page")
+    public void thereShouldBeAAdminLoginLinkOnTheLoginPage() {
+        adminPage.adminForgetPassword.click();
+
+    }
+
+    @Then("Verify that it is returned to the login page")
+    public void verifyThatItIsReturnedToTheLoginPage() {
+        adminPage.adminLogoBox.click();
+        String Url = "https://qa.heallifehospital.com/site/login";
+        String actualAdminUrl = Driver.getDriver().getCurrentUrl();
+        ReusableMethods.bekle(2);
+        Assert.assertEquals(Url, actualAdminUrl);
+
+
+    }
 }
+
+
+

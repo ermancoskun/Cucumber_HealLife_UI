@@ -56,8 +56,8 @@ public class AdminPage extends Base{
     @FindBy(xpath = "(//select[@name='blood_group'])")
     public WebElement bloodGroupDropDown2;
 
-     @FindBy(xpath = "(//div[@class='toast-message'])[1]")
-     public WebElement warningMessage;
+    @FindBy(xpath = "(//div[@class='toast-message'])[1]")
+    public WebElement warningMessage;
 
 
 
@@ -102,6 +102,23 @@ public class AdminPage extends Base{
     @FindBy(xpath = "(//button[@type=\"button\"])[10]")
     public WebElement xIconButton;
 
+    @FindBy(xpath = "(//*[@role=\"row\"]//td)[1]")
+    public WebElement getBillNoConfirmation;
+
+    @FindBy(xpath = "//*[@class=\"btn btn-info addplus-xs btn-sm  add-record mb10\"]")
+    public  WebElement addButtonPathology;
+
+    @FindBy(xpath = "//table[@id=\"tableID\"]//tbody//tr")
+    public List<WebElement> testParamNameList;
+
+    @FindBy(xpath = "//*[@class=\"btn btn-primary btn-sm pathology addtest\"]")
+    public WebElement addPathologyTestButton;
+
+    @FindBy(xpath = "//*[@name=\"test_name\"]")
+    public WebElement testNamePathology;
+
+    @FindBy(xpath = "//input[@id='billno']")
+    public WebElement getBillNo;
 
 
     // adminLoginPage

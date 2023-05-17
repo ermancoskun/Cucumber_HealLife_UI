@@ -128,10 +128,11 @@ Feature: US_038 As an admin I would like to have a page in the dashboard sidebar
                     Issue Blood can be added and a new Blood Issue Bill.
           And Click the Blood Issue button on Billing page
           And test to searcbox
-          Then Click on the " Issue Blood" button
+          When Click on the " Issue Blood" button
           Then Create a New Patient with random datas
+          Then Then Create a New Blood Bill with random datas
 
-    Scenario: TC_25 The number of patients to be displayed in the Blood Issue Billing List
+  Scenario: TC_25 The number of patients to be displayed in the Blood Issue Billing List
                     (100 or all) should be selected.
           And Click the Blood Issue button on Billing page
           And Choose All and 100 options for patient display
@@ -155,3 +156,40 @@ Feature: US_038 As an admin I would like to have a page in the dashboard sidebar
           Then Click the trash icon for delete 1. Bill
           When Click 1. iconButton under the last column for display first patient profile
           Then Verified redirected to Blood Issue Details page
+
+    Scenario: TC_29 Blood Component Issue board in the Single Module Billing window is clicked,
+                    Blood Component Issue Billing List
+          And Click the Blood Component Issue board on Billing Page
+          Then Sees the name of Blood Component Issue Billing List and their contents
+
+    Scenario: TC_30 In order to search easily in the Blood Component Issue List, there must be a SearchTextBox.
+          And Click the Blood Component Issue board on Billing Page
+          Then test to searcbox
+
+    Scenario: TC_31 In the Blood Component Issue List, there should be a transition to the page where a new
+                    Issue Blood can be added,a new Bllod Issue Bill should be added to the Blood Component Issue List
+          And Click the Blood Component Issue board on Billing Page
+          And Click on the " Issue Component" button
+          Then Create a New Patient with random datas
+          Then Create a New Blood Bill with random datas
+
+    Scenario: TC_32 The number of patients to be displayed in the Blood Component Issue List (100 or all) should be selected.
+          And Click the Blood Component Issue board on Billing Page
+          Then Choose All and 100 options for patient display
+
+    Scenario: TC_33 Under the title Balance Amount ($) in the Blood Component Issue List, the relevant billing
+                    (Blood Issue Details) information should be displayed.
+          And Click the Blood Component Issue board on Billing Page
+          And Click 1. iconButton under the last column for display first patient profile
+          Then Verified redirected to Blood Issue Details page
+          Then Edit and delete a Blood records
+
+    Scenario: TC_34 Under the heading Balance Amount($) in the Blood Component Issue List, an additional payment
+                    can be made to the relevant invoice
+          And Click the Blood Component Issue board on Billing Page
+          And Click 1. +plus icon under the last column
+          Then Make or delete additional payments for Bloods
+
+    Scenario: TC_35 Relevant Bill data can be deleted under the title Balance Amount($) in
+                    the Blood Issue Billing List.
+          And Click the Blood Component Issue board on Billing Page

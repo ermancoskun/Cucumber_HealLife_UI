@@ -35,6 +35,7 @@ Feature: As an administrator (admin), I want to have a page where the dataof the
   Scenario: TC_08  On the Generate Bill page, an invoice should be prepared on the relevant patient by selecting the
   patient's name or adding a new patient.
     Given Click the Generate Bill button on Pathology page.
+    And Create a New Patient with random datas
     And Create a bill on the relevant patient
 
 

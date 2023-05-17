@@ -51,15 +51,15 @@ public class HomepageStepdefinitions {//
 
 
 
-    /////////////////////////////////////////////////////////////////////////////////////
+
     @Given("Launch browser")
     public void launchBrowser() {
-
         Driver.getDriver();
 
-       Driver.getDriver();
 
-    }
+
+
+   }
 
     @Then("Go to {string}")
     public void goTo(String url) {
@@ -80,11 +80,11 @@ public class HomepageStepdefinitions {//
     }
 
     @And("Close browser")
-    public void closeBrowser() {
-
-        Driver.closeDriver();
-
+    public void closeBrowser() {/* browser is closed by the hooks class */
        // Driver.closeDriver();
+
+
+
 
     }
 
@@ -98,7 +98,7 @@ public class HomepageStepdefinitions {//
         String actualUrl = Driver.getDriver().getCurrentUrl();
         String expectedUrl = ConfigReader.getProperty(url);
 
-        Assert.assertEquals("The 'Complain' button on the homepage does not redirect to the complain page.", expectedUrl, actualUrl);
+        Assert.assertEquals("Does not redirect to the relevant page",expectedUrl,actualUrl);
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////

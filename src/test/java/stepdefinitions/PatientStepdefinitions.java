@@ -30,9 +30,9 @@ import static utilities.Driver.driver;
 import static utilities.Driver.getDriver;
 
 public class PatientStepdefinitions {
-    PatientPage patientPage=new PatientPage();
-    AdminPage adminPage=new AdminPage();
-    Actions actions=new Actions(Driver.getDriver());
+    PatientPage patientPage = new PatientPage();
+    AdminPage adminPage = new AdminPage();
+    Actions actions = new Actions(Driver.getDriver());
     JavascriptExecutor js = (JavascriptExecutor) Driver.getDriver();
 
 
@@ -42,7 +42,7 @@ public class PatientStepdefinitions {
     }
 
     @Then("Login with {string} and  {string} datas")
-    public void loginWithAndDatas(String username,String password) {
+    public void loginWithAndDatas(String username, String password) {
         HealMethods.loginAsUser(username, password);
     }
 
@@ -50,7 +50,7 @@ public class PatientStepdefinitions {
     @When("Homepage redirect verified")
     public void homepageRedirectVerified() {
 
-    patientPage.DashboardOnHeallifeText.click();
+        patientPage.DashboardOnHeallifeText.click();
         Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains("/patient/dashboard"));
     }
 
@@ -58,22 +58,19 @@ public class PatientStepdefinitions {
     public void userClicksTheFlag() {
         patientPage.homeFlag.click();
         patientPage.homeFlagTurkish.click();
-     //   ReusableMethods.waitForClickablility(patientPage.homeFlagTurkish,2);
+        //   ReusableMethods.waitForClickablility(patientPage.homeFlagTurkish,2);
         ReusableMethods.sleep(3);
-        String expected=patientPage.myAppiontmentsButton.getText();
+        String expected = patientPage.myAppiontmentsButton.getText();
         System.out.println(expected);
         //tıklıyor ama kodlarda randevularım ingilizce gözüküyor
-    //   Assert.assertTrue(expected.equalsIgnoreCase("Randevularım"));
+        //   Assert.assertTrue(expected.equalsIgnoreCase("Randevularım"));
 
     }
 
-   @And("user should be able to on the IPD page")
+    @And("user should be able to on the IPD page")
     public void userShouldBeAbleToOnTheIPDPage() {
         Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains("admin/patient/ipdsearch"));
     }
-
-
-
 
 
     @When("Click on the notifications button")
@@ -89,27 +86,23 @@ public class PatientStepdefinitions {
     }
 
 
-
-
-
     @When("User not see any notifications")
     public void userNotSeeAnyNotifications() {
         Assert.assertTrue(patientPage.notificationsInformation.getText().contains("No Record Found"));
     }
 
 
-
     @When("User  see  Heal Life Hospital & Research Center text.")
     public void userSeeHealLifeHospitalResearchCenterText() {
 
-   Assert.assertTrue(patientPage.DashboardOnHeallifeText.getText().contains("Heal"));
+        Assert.assertTrue(patientPage.DashboardOnHeallifeText.getText().contains("Heal"));
 
     }
 
     @When("Click on  Delete All button")
     public void clickOnDeleteAllButton() {
         ReusableMethods.sleep(2);
-        ReusableMethods.waitForClickablility(patientPage.notificationsDeletebutton,2);
+        ReusableMethods.waitForClickablility(patientPage.notificationsDeletebutton, 2);
         patientPage.notificationsDeletebutton.click();
     }
 
@@ -120,7 +113,7 @@ public class PatientStepdefinitions {
 
     @When("Clik on the dashboard button")
     public void clikOnTheDashboardButton() {
-    patientPage.dashboardButton.click();
+        patientPage.dashboardButton.click();
     }
 
     @When("Click on the My Appointments button")
@@ -180,7 +173,7 @@ public class PatientStepdefinitions {
     @When("Click on the Radiology button")
     public void clickOnTheRadiologyButton() {
         patientPage.radiologyButton.click();
-        
+
     }
 
     @Then("User  be on the Radiology profile page")
@@ -192,7 +185,7 @@ public class PatientStepdefinitions {
 
     @When("Click on the Ambulance button")
     public void clickOnTheAmbulanceButton() {
-        
+
         patientPage.ambulanceButton.click();
     }
 
@@ -258,7 +251,7 @@ public class PatientStepdefinitions {
     @When("User enters card information and completes payment")
     public void userEntersCardInformationAndCompletesPayment() {
         patientPage.payCard();
-Assert.assertEquals(patientPage.SuccestText.getText(),"SUCCESS");
+        Assert.assertEquals(patientPage.SuccestText.getText(), "SUCCESS");
     }
 
     @When("Click on the three lines button and User  see Dashboard navbar close")
@@ -295,12 +288,12 @@ Assert.assertEquals(patientPage.SuccestText.getText(),"SUCCESS");
     public void userCallsInAppointments() {
 
         patientPage.myAppoinmetSeachtext.sendKeys("APPNO435");
-        Assert.assertEquals(patientPage.myAppointmentApointmentno.getText(),"APPNO435");
+        Assert.assertEquals(patientPage.myAppointmentApointmentno.getText(), "APPNO435");
     }
 
     @When("User skip to next page")
     public void userSkipToNextPage() {
-        js.executeScript("arguments[0].scrollIntoView(true)",     patientPage.myAppoinmentsSecondPageButton);
+        js.executeScript("arguments[0].scrollIntoView(true)", patientPage.myAppoinmentsSecondPageButton);
         ReusableMethods.bekle(1);
         patientPage.myAppoinmentsSecondPageButton.click();
         System.out.println(patientPage.myAppointmentspageDetails.getText());
@@ -312,7 +305,7 @@ Assert.assertEquals(patientPage.SuccestText.getText(),"SUCCESS");
     @When("User switches to previous page")
     public void userSwitchesToPreviousPage() {
 
-        js.executeScript("arguments[0].scrollIntoView(true)",patientPage.myAppoinmentsFirstPageButton);
+        js.executeScript("arguments[0].scrollIntoView(true)", patientPage.myAppoinmentsFirstPageButton);
         ReusableMethods.bekle(1);
         patientPage.myAppoinmentsFirstPageButton.click();
         System.out.println(patientPage.myAppointmentspageDetails.getText());
@@ -338,9 +331,8 @@ Assert.assertEquals(patientPage.SuccestText.getText(),"SUCCESS");
     public void clickOnTheLogoutButton() {
         patientPage.profileImage.click();
         patientPage.profileLogoutbutton.click();
-       Assert.assertEquals( Driver.getDriver().getCurrentUrl(),"https://qa.heallifehospital.com/site/userlogin");
+        Assert.assertEquals(Driver.getDriver().getCurrentUrl(), "https://qa.heallifehospital.com/site/userlogin");
     }
-
 
 
     @Given("Navigate to {string}")
@@ -403,10 +395,12 @@ Assert.assertEquals(patientPage.SuccestText.getText(),"SUCCESS");
         patientPage.wievAllBox.click();
 
     }
+
     @Then("The visibility of the amount text is verified")
     public void theVisibilityOfTheAmountTextIsVerified() {
         Assert.assertTrue(patientPage.dateText.isDisplayed());
     }
+
     @Then("close the screen")
     public void closeTheScreen() {
         patientPage.pharmacyCloseButton.click();
@@ -433,8 +427,6 @@ Assert.assertEquals(patientPage.SuccestText.getText(),"SUCCESS");
     }
 
 
-
-
     //}
 
     @Then("the amount paid is entered.")
@@ -444,6 +436,7 @@ Assert.assertEquals(patientPage.SuccestText.getText(),"SUCCESS");
         patientPage.pharmacyPaymenAmount.sendKeys("30");
         patientPage.pharmacyAddButton.click();
     }
+
     @And("Click the add button.")
     public void clickTheAddButton() {
         patientPage.pharmacyAddButton.click();
@@ -454,7 +447,6 @@ Assert.assertEquals(patientPage.SuccestText.getText(),"SUCCESS");
     public void clickThePayWithCard() {
         patientPage.pharmacyPayWithCard.click();
         ReusableMethods.bekle(6);
-
 
 
     }
@@ -518,7 +510,8 @@ Assert.assertEquals(patientPage.SuccestText.getText(),"SUCCESS");
 
     @Given("Launch browser.")
     public void launchBrowser() {
-        Driver.getDriver();}
+        Driver.getDriver();
+    }
 
 /*    @Then("Go to {string}")
     public void goTo(String url) {
@@ -529,6 +522,7 @@ Assert.assertEquals(patientPage.SuccestText.getText(),"SUCCESS");
         HealMethods.loginAsUser("userNameNesibe", "userPasswordNesibe");
 
     }
+
     @Then("Verify  the patient dashboard page is redirected")
     public void patientPageRedirected() {
         Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains("patient"));
@@ -538,8 +532,8 @@ Assert.assertEquals(patientPage.SuccestText.getText(),"SUCCESS");
     @Then("Verify the “OPD” menu title in the dashboard is visible and clickable")
     public void verifyOpdMenuTitleEnabled() {
         String expectedTitle = "OPD";
-        String actualTitle= Driver.getDriver().findElement(By.xpath("//*[@id=sibe-box]/ul/li[3]/a")).getText();
-        Assert.assertTrue( actualTitle.contains(expectedTitle));
+        String actualTitle = Driver.getDriver().findElement(By.xpath("//*[@id=sibe-box]/ul/li[3]/a")).getText();
+        Assert.assertTrue(actualTitle.contains(expectedTitle));
 
     }
 
@@ -615,7 +609,7 @@ Assert.assertEquals(patientPage.SuccestText.getText(),"SUCCESS");
     }
 
     @Then("Verify the accessiblity to the details of the visit and the prescription information under the Actions heading in the Visits")
-    public void prescriptionVisits () {
+    public void prescriptionVisits() {
     }
 
     @Then("Verify the visit details and prescription information must be recorded on the correct patient name.")
@@ -623,6 +617,7 @@ Assert.assertEquals(patientPage.SuccestText.getText(),"SUCCESS");
     }
 
     //========================================= Nesibe [US_023] OPD MENU SONU ==========================================
+
 
 
 /////////////////////////////////////////
@@ -811,6 +806,240 @@ Assert.assertEquals(patientPage.SuccestText.getText(),"SUCCESS");
         patientPage.searchLabInvestigation.sendKeys("asdada");
         ReusableMethods.bekle(3);
     }
+    //==============================================Busra US26=======================================================
+    @Given("Click on the {string} linkkk")
+    public void click_on_the_linkkk(String string) {
+        patientPage.pathologySideBox.click();
+    }
+
+    @And("Verified redirected to Pathology page")
+    public void verifiedRedirectedToPathologyPage() {
+        Assert.assertTrue(patientPage.pathologytTextReportYazisi.isDisplayed());
+
+    }
+
+    @And("Verify that {string} in the Pathology Bill List are displayed")
+    public void verifyThatInThePathologyBillListAreDisplayed(String data) {
+        Assert.assertTrue(PatientPage.baslikListelemeMethod2(data));
+    }
+
+    @Then("Enter the excistingg {string}")
+    public void enterTheExcistingg(String arg0) {
+        patientPage.searchBox.sendKeys("PATHOB100");
+    }
+
+    @And("It is verified that filtering is done by entering the bill number in the Search Boxx.")
+    public void ıtIsVerifiedThatFilteringIsDoneByEnteringTheBillNumberInTheSearchBoxx() {
+        patientPage.pathologytPATHOB100Yazisi.isDisplayed();
+
+    }
+
+    @Then("It is verified that the headings are sorted by clickingg on them.")
+    public void ıtIsVerifiedThatTheHeadingsAreSortedByClickinggOnThem() {
+        Assert.assertTrue(PatientPage.intListSortTest2(1));
+    }
+
+    @Then("The visibility of the amount text is verifiedd")
+    public void theVisibilityOfTheAmountTextIsVerifiedd() {
+        patientPage.pathologyPaymentTextYazisi.isDisplayed();
+
+    }
+
+    @Then("close the screennn")
+    public void closeTheScreennn() {
+        patientPage.pathologyClose.click();
+    }
+
+    @Then("Click the View reports.")
+    public void clickTheViewReports() {
+        patientPage.pharmacyShowButton.click();
+    }
+
+    @Then("Name text \\(ayse.busra.pehlıvan {int}) should visible")
+    public void nameTextAyseBusraPehlıvanShouldVisible(int arg0) {
+        patientPage.pathologyNameText.isDisplayed();
+
+    }
+
+    @Then("close the screennnn")
+    public void closeTheScreennnn() {
+        patientPage.pathologyViewwClose.click();
+    }
+
+    @Then("Click the Pathology pay button.")
+    public void clickThePathologyPayButton() {
+        patientPage.pathologyPayButton.click();
+        ReusableMethods.bekle(3);
+        patientPage.pathologyPaymentAmountBox.clear();
+        ReusableMethods.bekle(2);
+        patientPage.pathologyPaymentAmountBox.sendKeys("30");
+        patientPage.pathologyAddButton.click();
+    }
+
+    @And("Click the pay with cardd.")
+    public void clickThePayWithCardd() {
+        patientPage.pathologyPayWithCard.click();
+        ReusableMethods.bekle(3);
+
+    }
+
+    @Given("e-mail, card number, date and cvc code are enteredd")
+    public void eMailCardNumberDateAndCvcCodeAreEnteredd() {
+        ReusableMethods.bekle(3);
+        Actions actions = new Actions(Driver.getDriver());
+        ReusableMethods.bekle(3);
+        ReusableMethods.bekle(3);
+
+        actions.sendKeys("asd@gmail.com").build().perform();
+        //actions.sendKeys(faker.internet().emailAddress()).perform();
+        actions.sendKeys(Keys.TAB).perform();
+        ReusableMethods.bekle(2);
+        actions.sendKeys("4242 4242").build().perform();
+        ReusableMethods.bekle(2);
+        actions.sendKeys("4242 4242").build().perform();
+        ReusableMethods.bekle(3);
+        ReusableMethods.bekle(3);
+        actions.sendKeys(Keys.TAB).perform();
+        actions.sendKeys("04").perform();
+        ReusableMethods.bekle(3);
+        actions.sendKeys("28").perform();
+        ReusableMethods.bekle(2);
+        actions.sendKeys(Keys.TAB).build().perform();
+        ReusableMethods.bekle(2);
+        actions.sendKeys("123").build().perform();
+        actions.sendKeys(Keys.TAB).perform();
+        ReusableMethods.bekle(2);
+        actions.sendKeys("456").build().perform();
+        ReusableMethods.bekle(2);
+        actions.sendKeys(Keys.TAB).build().perform();
+        ReusableMethods.bekle(2);
+        actions.sendKeys(Keys.ENTER).perform();
+
+        // patientPage.pharmacyPayBox.click();
+        ReusableMethods.bekle(2);
+
+    }
+
+    //=================================================BUSRA US27========================================
+    @Given("Click on the Radiology linkk")
+    public void click_on_the_radiology_linkk() {
+        patientPage.radiologyButtonn.click();
+    }
+
+    @And("Verify that {string} are displayed")
+    public void verifyThatAreDisplayed(String arg0) {
+        patientPage.radioBillNo.isDisplayed();
+    }
+
+    @Then("Enter the excisting Radiology Bill")
+    public void enterTheExcistingRadiologyBill() {
+        patientPage.searchBox.sendKeys("RADIOB73");
+    }
+
+    @And("It is verified that filttering is done by entering the bill number in the Search Box.")
+    public void ıtIsVerifiedThatFiltteringIsDoneByEnteringTheBillNumberInTheSearchBox() {
+        patientPage.radioBillNoText.isDisplayed();
+    }
+
+    @And("Quit the page")
+    public void quitThePage() {
+        Driver.closeDriver();
+    }
+
+    @And("Verify that OPD,OPD, IPD, Pharmacy, Pathology, Radiology, Blood Bank, Ambulance are visible")
+    public void verifyThatOPDOPDIPDPharmacyPathologyRadiologyBloodBankAmbulanceAreVisible() {
+        Assert.assertTrue(patientPage.dashboardOpdText.isDisplayed());
+        Assert.assertTrue(patientPage.dashboardIpdText.isDisplayed());
+        Assert.assertTrue(patientPage.dashboardPharmacyText.isDisplayed());
+        Assert.assertTrue(patientPage.dashboardPathologyText.isDisplayed());
+        Assert.assertTrue(patientPage.dashboardBloodBankText.isDisplayed());
+        Assert.assertTrue(patientPage.dashboardRadiologyText.isDisplayed());
+        Assert.assertTrue(patientPage.dashboardAmbulanceText.isDisplayed());
+    }
+
+    @Then("Verify that OPD, IPD, Blood Bank, Ambulance are clikable")
+    public void verifyThatOPDIPDBloodBankAmbulanceAreClikable() {
+
+        patientPage.dashboardOpdText.click();
+        String expectedUrl = "https://qa.heallifehospital.com/patient/dashboard/profile";
+        String actualUrl = Driver.getDriver().getCurrentUrl();
+        Assert.assertEquals(expectedUrl, actualUrl);
+        Driver.getDriver().navigate().back();
+        ReusableMethods.bekle(2);
+
+        patientPage.dashboardIpdText.click();
+        String expectedIpdUrl = "https://qa.heallifehospital.com/patient/dashboard/ipdprofile";
+        String actualIpdUrl = Driver.getDriver().getCurrentUrl();
+        Assert.assertEquals(expectedIpdUrl, actualIpdUrl);
+        Driver.getDriver().navigate().back();
+        ReusableMethods.bekle(2);
+
+
+        patientPage.dashboardBloodBankText.click();
+        String expectedBloodBankdUrl = "https://qa.heallifehospital.com/patient/dashboard/bloodbank";
+        String actualBloodBankUrl = Driver.getDriver().getCurrentUrl();
+        Assert.assertEquals(expectedBloodBankdUrl, actualBloodBankUrl);
+        Driver.getDriver().navigate().back();
+        ReusableMethods.bekle(2);
+
+
+        patientPage.dashboardAmbulanceText.click();
+        String expectedAmbulancedUrl = "https://qa.heallifehospital.com/patient/dashboard/ambulance";
+        String actualAmbulanceUrl = Driver.getDriver().getCurrentUrl();
+        Assert.assertEquals(expectedAmbulancedUrl, actualAmbulanceUrl);
+        Driver.getDriver().navigate().back();
+        ReusableMethods.bekle(2);
+    }
+
+
+    @Then("Verify that Pharmacy, Pathology, Radiology are clikable")
+    public void verifyThatPharmacyPathologyRadiologyAreClikable() {
+        patientPage.dashboardPharmacyText.click();
+        String expectedPharmacydUrl = "https://qa.heallifehospital.com/patient/dashboard/pharmacybill";
+        String actualPharmacyUrl = Driver.getDriver().getCurrentUrl();
+        Assert.assertEquals(expectedPharmacydUrl, actualPharmacyUrl);
+        Driver.getDriver().navigate().back();
+        ReusableMethods.bekle(2);
+
+        patientPage.dashboardPathologyText.click();
+        String expectedPatalogydUrl = "https://qa.heallifehospital.com/patient/dashboard/pathology";
+        String actualPatalogyUrl = Driver.getDriver().getCurrentUrl();
+        Assert.assertEquals(expectedPatalogydUrl, actualPatalogyUrl);
+        Driver.getDriver().navigate().back();
+        ReusableMethods.bekle(2);
+
+        patientPage.dashboardRadiologyText.click();
+        String expectedRadiologydUrl = "https://qa.heallifehospital.com/patient/dashboard/radiology";
+        String actualRadiologyUrl = Driver.getDriver().getCurrentUrl();
+        Assert.assertEquals(expectedRadiologydUrl, actualRadiologyUrl);
+        Driver.getDriver().navigate().back();
+        ReusableMethods.bekle(2);
+
+    }
+
+    @And("Verify that Medical History Chart is visible")
+    public void verifyThatMedicalHistoryChartIsVisible() {
+       Assert.assertTrue(patientPage.dashboardMedicalHistoryChart.isDisplayed());
+
+    }
+
+    @And("Verify that Top{int}Findings Chart is visible")
+    public void verifyThatTopFindingsChartIsVisible(int arg0) {
+        Assert.assertTrue(patientPage.dashboardTop10FindingsChart.isDisplayed());
+
+    }
+
+    @And("Verify that Top{int}Symptoms Chart is visible")
+    public void verifyThatTopSymptomsChartIsVisible(int arg0) {
+            Assert.assertTrue(patientPage.dashboardTop10symptomChart.isDisplayed());
+    }
+
+    @Given("Click on the Dashboard linkk")
+    public void click_on_the_dashboard_linkk() {
+        patientPage.dashboardLinkk.click();
+
+    }
+
 
 
 
@@ -823,9 +1052,6 @@ Assert.assertEquals(patientPage.SuccestText.getText(),"SUCCESS");
 
 
 }
-
-
-
 
 
 

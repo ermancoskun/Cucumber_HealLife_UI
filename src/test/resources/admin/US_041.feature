@@ -46,6 +46,7 @@ Feature: As an administrator (admin), I would like to have a page in
     Given Click on the Discarged Patient button
     And It should be possible to sort through the titles
 
+
   Scenario: TC_07 In order to search the IPD Discharged Patient List, the page must have a searchBox.
     Given Click on the Discarged Patient button
     And test to searcbox
@@ -111,4 +112,4 @@ Feature: As an administrator (admin), I would like to have a page in
       | Timeline            |
       | Treatment History   |
 
-    
+

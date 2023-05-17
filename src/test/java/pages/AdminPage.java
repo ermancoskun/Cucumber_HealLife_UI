@@ -1,12 +1,13 @@
 package pages;
 
 
+import io.cucumber.java.zh_cn.假如;
 import org.checkerframework.checker.calledmethods.qual.EnsuresCalledMethodsIf;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-
 import utilities.ConfigReader;
-
+import utilities.Driver;
 import java.util.List;
 
 public class AdminPage extends Base{
@@ -52,6 +53,14 @@ public class AdminPage extends Base{
     @FindBy(xpath = "//select[@name='blood_group']")
     public WebElement bloodGroupDropDown;
 
+    @FindBy(xpath = "(//select[@name='blood_group'])")
+    public WebElement bloodGroupDropDown2;
+
+    @FindBy(xpath = "(//div[@class='toast-message'])[1]")
+    public WebElement warningMessage;
+
+
+
     //Admin > Billing > OPD > Add Patient > New Patient
     @FindBy(xpath = "//select[@name='marital_status']")
     public WebElement maritalStatusDropDown;
@@ -63,6 +72,38 @@ public class AdminPage extends Base{
     //Admin > Billing
     @FindBy (xpath = "//p[.='Radiology']")
     public WebElement radiologyButton;
+
+    //Admin > Billing
+    @FindBy (xpath = "//p[.='Blood Issue']")
+    public WebElement bloodIssueButton;
+
+    //Admin > Billing
+    @FindBy (xpath = "//p[.='Blood Component Issue']")
+    public WebElement bloodIssueComponentButton;
+
+    //Admin > Bill >Issueblood / Issuecomponent
+    @FindBy (xpath = "//span[@id='select2-consultant_doctor-container']")
+    public WebElement hospitalDoctorDDM;
+
+    //Admin > Bill >Issueblood / Issuecomponent
+    @FindBy (xpath = "//span[@id='select2-component_blood_group-container']")
+    public WebElement bloodGroupDDM;
+
+    //Admin > Bill >Issueblood / Issuecomponent
+    @FindBy (xpath = "//span[@id='select2-blood_component-container']")
+    public WebElement componentDDM;
+
+    //Admin > Bill >Issueblood / Issuecomponent
+    @FindBy (xpath = "//span[@id='select2-bag_no-xj-container']")
+    public WebElement bagDDM;
+
+    //Admin > Bill >Issueblood / Issuecomponent
+    @FindBy (xpath = "//span[@id='select2-charge_category-container']")
+    public WebElement chargeCathegoryDDM;
+
+    //Admin > Bill >Issueblood / Issuecomponent
+    @FindBy (xpath = "//span[@id='select2-charge_category-container']")
+    public WebElement chargeNameDDM;
 
 
     //Admin > IPD >
@@ -81,8 +122,32 @@ public class AdminPage extends Base{
     @FindBy (xpath = "//*[@id=\"DataTables_Table_0\"]//th")
     public List<WebElement> ipdPatientAndDischargePatientTableHeaders;
 
+    //Admin > Pathology > Generate Bill Button
+    @FindBy(xpath = "//button[@id=\"load1\"]")
+    public WebElement generateBillButton;
 
-    //********************Duygu*************************************//
+    //X icon
+    @FindBy(xpath = "(//button[@type=\"button\"])[10]")
+    public WebElement xIconButton;
+
+    @FindBy(xpath = "(//*[@role=\"row\"]//td)[1]")
+    public WebElement getBillNoConfirmation;
+
+    @FindBy(xpath = "//*[@class=\"btn btn-info addplus-xs btn-sm  add-record mb10\"]")
+    public  WebElement addButtonPathology;
+
+    @FindBy(xpath = "//table[@id=\"tableID\"]//tbody//tr")
+    public List<WebElement> testParamNameList;
+
+    @FindBy(xpath = "//*[@class=\"btn btn-primary btn-sm pathology addtest\"]")
+    public WebElement addPathologyTestButton;
+
+    @FindBy(xpath = "//*[@name=\"test_name\"]")
+    public WebElement testNamePathology;
+
+    @FindBy(xpath = "//input[@id='billno']")
+    public WebElement getBillNo;
+
 
     // adminLoginPage
     @FindBy(xpath = "//input[@id='email']")
@@ -112,7 +177,7 @@ public class AdminPage extends Base{
     @FindBy(xpath = "//a[@role='button']")
     public WebElement dashboardMenuIcon;
 
-    // adminpage > Navbar Heal Life Hospital & Research Center yazisi
+    // adminpage > Navbardaki Heal Life Hospital & Research Center yazisi
     @FindBy(xpath = "//span[@class='sidebar-session']")
     public WebElement healLifeHospitalResearchCenterText;
 
@@ -121,13 +186,32 @@ public class AdminPage extends Base{
 
     @FindBy(xpath = "//div[@class=\"scrtabs-tab-scroll-arrow scrtabs-js-tab-scroll-arrow-right\"]")
     public WebElement scrollRightButton;
+
+    //Admin > Pathology > Add Patient
+    @FindBy (xpath = "//select[@name='test_name_1']")
+    public WebElement testName;
+
+    //Admin > Pathology > Add Patient
+    @FindBy (xpath = "//*[@id=\"reportdate_1\"]")
+    public WebElement reportDate;
+
+    //Admin > Pathology > Add Patient
+    @FindBy (xpath = "//select[@name='test_name_2']")
+    public WebElement testName2;
+
+    //Admin > Pathology > Add Patient
+    @FindBy (xpath = "//select[@name='consultant_doctor']")
+    public WebElement ddmDoctor;
     //********************Duygu*************************************//
     //////////////////////////////////////////////////////////////////
 
 
- ////////////////***********Humeyra******//////////
 
-  //admin>Pharmacy>Bill No
+
+
+    ////////////////***********Humeyra******//////////
+
+    //admin>Pharmacy>Bill No
     @FindBy(xpath = "//*[text()='Bill No']")
     public WebElement pharmacyBillNo;
 
@@ -164,6 +248,7 @@ public class AdminPage extends Base{
     @FindBy(xpath = "//*[text()='Balance Amount ($)']")
     public WebElement pharmacyBalanceAmount;
 
+
     ///////LOGIN METHODU///////
     public void loginAsAdmin (String username,String password){
         emailBox.sendKeys(ConfigReader.getProperty(username));
@@ -171,4 +256,112 @@ public class AdminPage extends Base{
         signInButton.click();
     }
     ///////////////////////////
+
+    // adminpage > Navbardaki "Search By Patient Name" search box'i
+    @FindBy(xpath = "(//input[@name='search_text'])[1]")
+    public WebElement searchByPatientNameLabel;
+
+    // admin/admin/search >> search sayfasinda 2. siradaki hasta ismi
+    @FindBy(xpath = "(//td/a[@class='btn btn-default btn-xs'])[3]")
+    public WebElement checkNameFromPatientList;
+
+    // adminpage > Navbardaki bayrak simgesi
+    @FindBy(xpath = "//button[@data-id='languageSwitcher']")
+    public WebElement flagIcon;
+
+    // adminpage > Navbardaki Turkce dili secenegi
+    @FindBy(xpath = "//*[text()=' Turkish']")
+    public WebElement flagTurkish;
+
+    // adminpage > Navbardaki Ingilizce dili scenegi
+    @FindBy(xpath = "//*[text()=' English']")
+    public WebElement flagEnglish;
+
+    // adminpage > Navbardaki Turk bayragi scenegi
+    @FindBy(xpath = "//*[text()='Randevu']")
+    public WebElement randevuMenu;
+
+    // adminpage > Navbardaki Yatak simgesi
+    @FindBy(xpath = "//a[@id='beddata']")
+    public WebElement bedIcon;
+
+    // adminpage > Navbardaki bildirim simgesi
+    @FindBy(xpath = "//i[@class='fa fa-bell-o']")
+    public WebElement notificationIcon;
+
+    // adminpage > Navbardaki bildirim simgesi uzerindeki sayi
+    @FindBy(xpath = "//span[@class='label label-warning']")
+    public WebElement numberOfNotification;
+
+    // admin/systemnotification > Bildirim sayfasindaki Type basligi
+    @FindBy(xpath = "//div[text()='Type']")
+    public WebElement TypeHeader;
+
+    // admin/systemnotification > Bildirim sayfasindaki Subject basligi
+    @FindBy(xpath = "//div[text()='Subject']")
+    public WebElement SubjectHeader;
+
+    // admin/systemnotification > Bildirim sayfasindaki Date basligi
+    @FindBy(xpath = "//div[text()='Date']")
+    public WebElement DateHeader;
+
+    // admin/systemnotification > Bildirim sayfasindaki Okunmamis birinci siradaki bildirim
+    @FindBy(xpath = "(//div[@class='notifymiddle noteDM10'])[1]")
+    public WebElement aNotificationOnNotificationPage;
+    public WebElement getNotificationOnNotificationPage(int notificationIndex){
+        WebElement notification = Driver.getDriver().findElement(By.xpath("(//div[@class='notifymiddle noteDM10'])["+notificationIndex+"]"));
+        return notification;
+    }
+
+    // admin/systemnotification > Bildirim sayfasindaki bildirim detayi
+    @FindBy(xpath = "(//div[@class='note-content'])[1]")
+    public WebElement notificationDetailOnNotificationPage;
+    public WebElement getNotificationDetailOnNotificationPage(int notificationDetailIndex){
+        WebElement notificationDetail = Driver.getDriver().findElement(By.xpath("(//div[@class='note-content'])["+notificationDetailIndex+"]"));
+        return notificationDetail;
+    }
+
+    // admin/systemnotification > Bildirim sayfasindaki Delete All butonu
+    @FindBy(xpath = "//button[text()=' Delete All']")
+    public WebElement deleteAllButtonOnNotificationPage;
+
+    // admin/systemnotification > DeleteAll butonuna bastıktan sonra tum bildirimler silinince cıkan yazı.
+    @FindBy(xpath = "//*[text()='No Record Found']")
+    public WebElement noRecordFoundTexi;
+
+    // adminpage > Navbardaki mesaj simgesi
+    @FindBy(xpath = "//a[@data-original-title='Chat']")
+    public WebElement chatIconu;
+
+    // admin/chat >> Chat sayfası chat sistem penceresi
+    @FindBy(xpath = "//div[@id='frame']")
+    public WebElement chatSystemWindow;
+
+    // admin/chat >> Chat sayfasındaki iletişim kurulan kisiler listesi
+    @FindBy(xpath = "(//p[@class='name'])[1]")
+    public WebElement contactedFirstPersonOnChatPage;
+
+    // admin/chat >> Chat sayfasındaki kisi ekleme butonu (+)
+    @FindBy(xpath = "//button[@id='addcontact']")
+    public WebElement addContactButtonOnChatPage;
+
+    // admin/chat >> Chat sayfasındaki Add Contact frame icerisindeki search box'ı
+    @FindBy(xpath = "(//input[@type='text'])[4]")
+    public WebElement addContactSearchLabel;
+
+    // admin/chat >> Chat sayfasındaki Add Contact frame icerisindeki isim yazınca cıkan ilk kisi
+    @FindBy(xpath = "(//span[@class='name'])[1]")
+    public WebElement addContactFirstPerson;
+
+    // admin/chat >> Chat sayfasındaki Add Contact frame icerisindeki +Add butonu
+    @FindBy(xpath = "(//button[@type='submit'])[3]")
+    public WebElement addContactSubmitButton;
+
+
+
+
+
+
+
+
 }

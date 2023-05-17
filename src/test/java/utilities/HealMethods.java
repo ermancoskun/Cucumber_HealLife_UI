@@ -142,10 +142,16 @@ public class HealMethods {
         Assert.assertTrue(filter.isDisplayed());
         filter.click();
         ReusableMethods.bekle(3);
+        WebElement alttakiMetin=Driver.getDriver().findElement(By.xpath("//div[@class='dataTables_info']"));
+        String text=alttakiMetin.getText();
+        int start = text.indexOf(" to ") + 4; // " to " ifadesinin sonrasındaki değerin başlangıç indeksini buluyoruz
+        int end = text.indexOf(" ", start); // Başlangıçtan sonraki ilk boşluğa kadar olan kısmı alıyoruz
+        String numberString1 = text.substring(start, end); // Başlangıçtan sonraki kısmı alıyoruz
+        int number1 = Integer.parseInt(numberString1);
 
         // Filtrelenmiş liste oluşturma
         List<String> filtreList = new ArrayList<>();
-        for (int i = filtreKacinciSirada; i < toplamSutunSayisi * 10; i = (i + toplamSutunSayisi)) {
+        for (int i = filtreKacinciSirada; i < toplamSutunSayisi * number1; i = (i + toplamSutunSayisi)) {
             WebElement hucreElement = Driver.getDriver().findElement(By.xpath("(//td)[" + i + "]"));
             filtreList.add(hucreElement.getText());
         }

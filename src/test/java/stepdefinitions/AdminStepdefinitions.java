@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.Select;
 import pages.AdminPage;
 import utilities.*;
 import utilities.Driver;
@@ -23,6 +24,10 @@ public class AdminStepdefinitions {
     Actions actions=new Actions(Driver.getDriver());
     static String numberOfNotification1;
     static String numberOfNotification2;
+    Select select;
+    static String firstValue;
+    static String secondValue;
+
     @Given("Goes to Admin login page")
     public void goes_to_admin_login_page() {
         // intentionally left blank
@@ -833,6 +838,229 @@ public class AdminStepdefinitions {
         Assert.assertEquals(Url, actualAdminUrl);
 
 
+    }
+
+    @And("Admin Login sayfasında gecerli username  ve password girer")
+    public void adminLoginSayfasındaGecerliUsernameVePasswordGirer() {
+        AdminPage.adminLogin("yusuf.kombe.admin@heallifehospital.com","heallife123");
+    }
+
+    @Given("Dashboardda Appointment sekmesine tiklanir")
+    public void dashboarddaAppointmentSekmesineTiklanir() {
+        adminPage.dashboardAppointmentButton.click();
+    }
+
+
+    @And("URl'in appointment icerdigi  dogrulanir.")
+    public void urlInAppointmentIcerdigiDogrulanir() {
+        String actualTitle= Driver.getDriver().getCurrentUrl();
+        Assert.assertTrue(actualTitle.contains("appointment"));
+    }
+
+    @And("Logout admin ile sayfa kapatilir")
+    public void logoutAdminIleSayfaKapatilir() {
+        adminPage.adminProfilButton.click();
+        adminPage.adminLogoutButton.click();
+        ReusableMethods.sleep(2);
+        //Driver.quitDriver();
+
+    }
+
+    @Then("Detailsde {string} oldugu dogrulanir")
+    public void detailsdeOlduguDogrulanir(String data) {
+        Assert.assertTrue(adminPage.baslikListelemeMethod(1,data));
+    }
+
+    @Then("Appointment No ya gore listelendigini kontrol eder")
+    public void appointmentNoYaGoreListelendiginiKontrolEder() {
+        Assert.assertTrue(adminPage.intListSortTest(2));
+    }
+
+
+    @And("arama sonuclarin dogru goruntulendigi test edilir.")
+    public void aramaSonuclarinDogruGoruntulendigiTestEdilir() {
+        Assert.assertTrue(adminPage.appointmentSearchResultNameColumn.getText().contains("yusuf"));
+    }
+
+    @Then("Appointment Details sayfasinda search box tiklanir ve {string} datasi gonderilir")
+    public void appointmentDetailsSayfasindaSearchBoxTiklanirVeDatasiGonderilir(String data) {
+        adminPage.appointmentSearchBoxButton.sendKeys(data);
+    }
+
+    @Then("Status sekmesi altinda show butonuna tiklanir")
+    public void statusSekmesiAltindaShowButonunaTiklanir() {
+
+        WebElement element = Driver.getDriver().findElement(By.xpath("//*[@id=\"DataTables_Table_0\"]/tbody/tr[3]/td[1]/div/a[1]/i"));
+
+        Actions actions = new Actions(Driver.getDriver());
+        actions.moveToElement(element).perform();
+
+        element.click();
+
+
+
+    }
+
+    @Then("Doctor Wise butonuna tiklanir")
+    public void doctorWiseButonunaTiklanir() {
+        adminPage.doctorWiseButton.click();
+
+    }
+
+
+
+    @Then("Doctor Wise butonuna tiklanir ve Doctor hanesinden {string} secillir")
+    public void doctorWiseButonunaTiklanirVeDoctorHanesindenSecillir(String data) {
+        adminPage.doctorWiseButton.click();
+        ReusableMethods.sleep(3);
+        select= new Select(adminPage.doctorWiseSelectDropDown);
+        select.selectByValue("39");
+
+    }
+
+    @And("Date hanesine {string} tarihi girilir")
+    public void dateHanesineTarihiGirilir(String data) {
+        adminPage.doctorWiseDateSelectLabel.sendKeys(data+Keys.TAB);
+    }
+
+    @And("Doctor Wise da Search butonuna tiklanir")
+    public void doctorWiseDaSearchButonunaTiklanir() {
+        adminPage.doctorWiseSearchButton.click();
+    }
+
+    @And("Sonuclarin goruntulendigi dogrulanir")
+    public void sonuclarinGoruntulendigiDogrulanir() {
+        Assert.assertTrue(adminPage.doctorWiseResultRow.isDisplayed());
+    }
+
+    @And("Acilan sayfanin urlinde {string} bulundugu dogrulanir")
+    public void acilanSayfaninUrlindeBulunduguDogrulanir(String data) {
+        Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains(data));
+    }
+
+    @Then("Appointment sayfasinda Queue sekmesine tiklanir")
+    public void appointmentSayfasindaQueueSekmesineTiklanir() {
+        adminPage.doctorWiseQueueButton.click();
+    }
+
+    @And("Sayfa URLinin {string} icerdigi dogrulanir")
+    public void sayfaURLininIcerdigiDogrulanir(String arg0) {
+        Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains(arg0));
+    }
+
+    @And("Patient Queue sayfasinda doktor hanesine {string} girilir")
+    public void patientQueueSayfasindaDoktorHanesineGirilir(String data) {
+        select= new Select(adminPage.doctorWiseSelectDropDown);
+        select.selectByValue("39");
+    }
+
+    @And("Patient Queue sayfasinda shift hanesine {string} girilir")
+    public void patientQueueSayfasindaShiftHanesineGirilir(String data) {
+        select=new Select(adminPage.queueShiftSelectLabel);
+        select.selectByVisibleText(data);
+        actions.sendKeys(Keys.TAB).perform();
+    }
+
+    @And("Patient Queue sayfasinda date hanesine {string} tarihi girilir")
+    public void patientQueueSayfasindaDateHanesineTarihiGirilir(String data) {
+        adminPage.doctorWiseDateSelectLabel.sendKeys(data+Keys.TAB);
+
+    }
+
+
+
+    @Then("Patient Queue sayfasinda search butonuna basilir")
+    public void patientQueueSayfasindaSearchButonunaBasilir() {
+        adminPage.doctorWiseSearchButton.click();
+    }
+
+
+    @And("Patient Queue sayfasinda slota giris yapilir")
+    public void patientQueueSayfasindaSlotaGirisYapilir() {
+        select=new Select(adminPage.queueSlotLabel);
+        select.selectByIndex(1);
+
+
+    }
+
+    @Then("Gerekli url 'yi girer")
+    public void gerekli_url_yi_girer() {
+        Driver.getDriver().get(ConfigReader.getProperty("adminUrl"));
+        ReusableMethods.sleep(2);
+
+    }
+
+    @And("{int} saniye beklenir")
+    public void saniyeBeklenir(int saniye) {
+
+        ReusableMethods.sleep(saniye);
+    }
+
+    @And("Acilan sayfanin appointment detaylarini icerdigi dogrulanir")
+    public void acilanSayfaninAppointmentDetaylariniIcerdigiDogrulanir() {
+
+        WebElement element = Driver.getDriver().findElement(By.xpath("//*[@id=\"viewModal\"]/div/div/div[2]/div/div"));
+
+        Assert.assertTrue(element.isDisplayed());
+
+        Driver.getDriver().findElement(By.xpath("//*[@id=\"viewModal\"]/div/div/div[1]/button")).click();
+    }
+
+    @Given("Open browser and go to {string}")
+    public void openBrowserAndGoTo(String url) {
+
+        Driver.getDriver().get(ConfigReader.getProperty(url));
+    }
+
+
+    @Then("Click on Sign In")
+    public void click_on_sign_in() {
+        adminPage.signinButton.click();
+
+    }
+    @Then("Enter {string} into Search Box")
+    public void enter_into_search_box(String data) {
+
+        adminPage.searchBox.sendKeys(data);
+    }
+    @Then("Click on Dashboard")
+    public void click_on_dashboard() {
+        firstValue= adminPage.searchBox.getAttribute("autocomplete");
+        adminPage.dashboardButton.click();
+        secondValue=adminPage.searchBox.getAttribute("autocomplete");
+
+    }
+    @Then("Click on User Image")
+    public void click_on_user_image() {
+        ReusableMethods.bekle(1);
+        adminPage.profilImageButton.click();
+
+    }
+    @Then("Click on Logout")
+    public void click_on_logout() {
+        ReusableMethods.bekle(1);
+        adminPage.logoutButton.click();
+
+
+    }
+
+
+    @Given("It is verified that there are page links in the Dashboard sidebar {string}")
+    public void ıtIsVerifiedThatThereArePageLinksInTheDashboardSidebar(String data) {
+
+
+    }
+
+    @Then("it is verify that {string} is not written in the searchbox")
+    public void itIsVerifyThatIsNotWrittenInTheSearchbox(String data) {
+
+        Assert.assertFalse(firstValue.equals(secondValue));
+    }
+
+    @Given("It is verified that there are page links in the Dashboard sidebar")
+    public void ıtIsVerifiedThatThereArePageLinksInTheDashboardSidebar(List<String> list) {
+        System.out.println(list);
+        Assert.assertTrue(ReusableMethods.dashboardTitleListingMethod(list));
     }
 }
 

@@ -668,6 +668,96 @@ public class HomepageStepdefinitions {//
 
     }
 
+
+    @Given("User goes to {string}")
+    public void userGoesTo(String url) {
+        Driver.getDriver().get(url);
+    }
+
+    @Then("Testing that the Contact Us button is visible")
+    public void testingThatTheContactUsButtonIsVisible() {
+        Assert.assertTrue(homepage.navbarContactUs.isDisplayed());
+    }
+
+
+    @Then("Browser is closed")
+    public void browser_is_closed() {
+        //Driver.quitDriver();
+
+    }
+
+    @Then("User clicks contact us button")
+    public void userClicksContactUsButton() {
+        homepage.navbarContactUs.click();
+    }
+
+    @Given("User enters the text {string} in the Name text box")
+    public void userEntersTheTextInTheNameTextBox(String data) {
+        homepage.contactUsName.sendKeys(data);
+    }
+
+    @And("User enters the text {string} in the Email text box")
+    public void userEntersTheTextInTheEmailTextBox(String data) {
+        homepage.contactUsEmail.sendKeys(data);
+    }
+
+    @And("User enters the text {string} in the Subject text box")
+    public void userEntersTheTextInTheSubjectTextBox(String data) {
+        homepage.contactUsSubject.sendKeys(data);
+    }
+
+    @And("User enters the text {string} in the Description text box")
+    public void userEntersTheTextInTheDescriptionTextBox(String data) {
+        homepage.contactUsDescription.sendKeys(data);
+    }
+
+    @And("User is click on the submit button")
+    public void userIsClickOnTheSubmitButton() {
+        homepage.contactUsSubmitButton.click();
+    }
+
+    @And("Test that the form has been submitted successfully")
+    public void testThatTheFormHasBeenSubmittedSuccessfully() {
+        Assert.assertTrue(homepage.successfullyText.isDisplayed());
+    }
+
+    @Given("User is scroll to map")
+    public void userIsScrollToMap() {
+        ReusableMethods.scrollToElement(homepage.contactusMap);
+    }
+
+    @And("Harita kaydırılır")
+    public void haritaKaydırılır() {
+        Driver.getDriver().switchTo().frame(homepage.contactusMap);
+
+        Actions actions = new Actions(Driver.getDriver());
+        ReusableMethods.bekle(3);
+        actions.keyDown(Keys.ARROW_DOWN).build().perform();
+        ReusableMethods.bekle(4);
+
+    }
+
+
+    @Then("Test that the Name text box is visible")
+    public void testThatTheNameTextBoxIsVisible() {
+        Assert.assertTrue(homepage.contactUsName.isDisplayed());
+    }
+
+    @Given("Test that the Email text box is visible")
+    public void testThatTheEmailTextBoxIsVisible() {
+        Assert.assertTrue(homepage.contactUsEmail.isDisplayed());
+    }
+
+    @And("Test that the Subject text box is visible")
+    public void testThatTheSubjectTextBoxIsVisible() {
+        Assert.assertTrue(homepage.contactUsSubject.isDisplayed());
+    }
+
+    @And("Test that the Description text box is visible")
+    public void testThatTheDescriptionTextBoxIsVisible() {
+        Assert.assertTrue(homepage.contactUsDescription.isDisplayed());
+    }
+
     @Then("Click the Cardiologist button")
     public void clickTheCardiologistButton() {
         homepage.cardiologist.click();

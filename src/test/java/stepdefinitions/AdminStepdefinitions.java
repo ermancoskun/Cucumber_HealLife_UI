@@ -100,6 +100,21 @@ public class AdminStepdefinitions {
         HealMethods.makeFilterTest("Donor Name",7,11);
         HealMethods.makeFilterTest("Bags",8,11);
     }
+    @Then("Sees the name of Blood Component Issue Billing List and their contents")
+    public void seesTheNameOfBloodComponentIssueBillingListAndTheirContents() {
+        HealMethods.makeFilterTest("Bill No",1,12);
+        HealMethods.makeFilterTest("Case ID / Patient ID",2,12);
+        HealMethods.makeFilterTest("Issue Date",3,12);
+        HealMethods.makeFilterTest("Received To",4,12);
+        HealMethods.makeFilterTest("Blood Group",5,12);
+        HealMethods.makeFilterTest("Component",6,12);
+        HealMethods.makeFilterTest("Gender",7,12);
+        HealMethods.makeFilterTest("Donor Name",8,12);
+        HealMethods.makeFilterTest("Bags",9,12);
+        HealMethods.makeFilterTest("Amount ($)",10,12);
+        HealMethods.makeFilterTest("Paid Amount ($)",11,12);
+
+    }
     @And("Click the Radiology button on Billing page")
     public void clickTheRadiologyButtonOnBillingPage () {
         adminPage.radiologyButton.click();
@@ -126,7 +141,8 @@ public class AdminStepdefinitions {
     }
     @Then("Verified redirected to Patent Profile page")
     public void verifiedRedirectedToPatentProfilePage() {
-        Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains("patient_profile"));
+        Assert.assertTrue("Not redirected the patient profile",
+                Driver.getDriver().getCurrentUrl().contains("patient_profile"));
     }
 
     @Then("Verified redirected to Bill Details page")
@@ -171,6 +187,10 @@ public class AdminStepdefinitions {
     public void clickTheBloodIssueButtonOnBillingPage() {
         adminPage.bloodIssueButton.click();
     }
+    @And("Click the Blood Component Issue board on Billing Page")
+    public void clickTheBloodComponentIssueBoardOnBillingPage() {
+        adminPage.bloodIssueComponentButton.click();
+    }
 
     @And("Click {int}. iconButton under the last column for display first patient profile")
     public void clickIconButtonUnderTheLastColumnForDisplayFirstPatientProfile ( int sira){
@@ -206,7 +226,11 @@ public class AdminStepdefinitions {
     }
     @Then("Edit and delete a Blood records")
     public void editAndDeleteABloodRecords() {
-        JSUtilities.clickWithJS(Driver.getDriver(),Driver.getDriver().findElement(By.xpath("//a[@class='edit_blood_issue']")));
+        try {
+            JSUtilities.clickWithJS(Driver.getDriver(),Driver.getDriver().findElement(By.xpath("//a[@class='edit_blood_issue']")));
+        } catch (Exception e) {
+            JSUtilities.clickWithJS(Driver.getDriver(),Driver.getDriver().findElement(By.xpath("//a[@class='edit_component_issue']")));
+        }
         HealMethods.createNewPatient();
         JSUtilities.clickWithJS(Driver.getDriver(),Driver.getDriver().findElement(By.xpath("//input[@id='dates_of_issue']")));
         JSUtilities.clickWithJS(Driver.getDriver(),Driver.getDriver().findElement(By.xpath("//button[@id='formaddbtn']")));
@@ -222,6 +246,10 @@ public class AdminStepdefinitions {
     @Then("Create a New Bill with random datas")
     public void createANewBillWithRandomDatas() throws IOException {
         HealMethods.generateBillInfo();
+    }
+    @Then("Create a New Blood Bill with random datas")
+    public void createANewBloodBillWithRandomDatas() throws IOException {
+        HealMethods.generateBillInfoForBloods();
     }
 
     @Given("Click on the Add Patient button in IPD page")
@@ -700,5 +728,7 @@ public class AdminStepdefinitions {
         String expectedContact= ConfigReader.getProperty("contactName");
         Assert.assertTrue("Added person is not visible",actualContact.contains(expectedContact));
     }
+
+
 
 }

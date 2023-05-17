@@ -122,7 +122,7 @@ Feature: US_038 As an admin I would like to have a page in the dashboard sidebar
     Scenario: TC_23 Blood Issue Billing List (under the headings) should be displayed.
           And Click the Blood Issue button on Billing page
           Then Sees the name of Blood Issue Billing List and their contents
-  @US038
+
     Scenario: TC_24 In order to search easily in the Blood Issue Billing List, there must be a SearchTextBox.
                     In the Blood Issue Billing List, there should be a transition to the page where a new
                     Issue Blood can be added and a new Blood Issue Bill.
@@ -130,7 +130,7 @@ Feature: US_038 As an admin I would like to have a page in the dashboard sidebar
           And test to searcbox
           When Click on the " Issue Blood" button
           Then Create a New Patient with random datas
-          Then Then Create a New Blood Bill with random datas
+          Then Create a New Blood Bill with random datas
 
   Scenario: TC_25 The number of patients to be displayed in the Blood Issue Billing List
                     (100 or all) should be selected.
@@ -156,7 +156,7 @@ Feature: US_038 As an admin I would like to have a page in the dashboard sidebar
           Then Click the trash icon for delete 1. Bill
           When Click 1. iconButton under the last column for display first patient profile
           Then Verified redirected to Blood Issue Details page
-
+  @US038
     Scenario: TC_29 Blood Component Issue board in the Single Module Billing window is clicked,
                     Blood Component Issue Billing List
           And Click the Blood Component Issue board on Billing Page
@@ -191,5 +191,12 @@ Feature: US_038 As an admin I would like to have a page in the dashboard sidebar
           Then Make or delete additional payments for Bloods
 
     Scenario: TC_35 Relevant Bill data can be deleted under the title Balance Amount($) in
-                    the Blood Issue Billing List.
+                    the Blood Component Issue Billing List.
           And Click the Blood Component Issue board on Billing Page
+          Then Click the trash icon for delete 1. Bill
+
+    Scenario: TC_36  When the names under Received To in the Blood Component Issue Billing List are clicked, the information
+                     of the relevant patient (detail profile) should be displayed
+          And Click the Blood Component Issue board on Billing Page
+          And Click first name for display patient profile under the Patient Name
+          Then Verified redirected to Patent Profile page

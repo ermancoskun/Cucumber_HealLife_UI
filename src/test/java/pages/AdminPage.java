@@ -8,6 +8,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import utilities.ConfigReader;
 import utilities.Driver;
+import utilities.HealMethods;
+
 import java.util.List;
 
 public class AdminPage extends Base{
@@ -53,6 +55,14 @@ public class AdminPage extends Base{
     @FindBy(xpath = "//select[@name='blood_group']")
     public WebElement bloodGroupDropDown;
 
+    @FindBy(xpath = "(//select[@name='blood_group'])")
+    public WebElement bloodGroupDropDown2;
+
+     @FindBy(xpath = "(//div[@class='toast-message'])[1]")
+     public WebElement warningMessage;
+
+
+
     //Admin > Billing > OPD > Add Patient > New Patient
     @FindBy(xpath = "//select[@name='marital_status']")
     public WebElement maritalStatusDropDown;
@@ -64,6 +74,10 @@ public class AdminPage extends Base{
     //Admin > Billing
     @FindBy (xpath = "//p[.='Radiology']")
     public WebElement radiologyButton;
+
+    //Admin > Billing
+    @FindBy (xpath = "//p[.='Blood Issue']")
+    public WebElement bloodIssueButton;
 
 
     //Admin > IPD >
@@ -129,6 +143,25 @@ public class AdminPage extends Base{
 
     @FindBy(xpath = "//div[@class=\"scrtabs-tab-scroll-arrow scrtabs-js-tab-scroll-arrow-right\"]")
     public WebElement scrollRightButton;
+
+    //Admin > Pathology > Add Patient
+    @FindBy (xpath = "//select[@name='test_name_1']")
+    public WebElement testName;
+
+    //Admin > Pathology > Add Patient
+    @FindBy (xpath = "//*[@id=\"reportdate_1\"]")
+    public WebElement reportDate;
+
+    //Admin > Pathology > Add Patient
+    @FindBy (xpath = "//select[@name='test_name_2']")
+    public WebElement testName2;
+
+    //Admin > Pathology > Add Patient
+    @FindBy (xpath = "//select[@name='consultant_doctor']")
+    public WebElement ddmDoctor;
+    //********************Duygu*************************************//
+    //////////////////////////////////////////////////////////////////
+
 
 
 
@@ -280,6 +313,40 @@ public class AdminPage extends Base{
     // admin/chat >> Chat sayfasındaki Add Contact frame icerisindeki +Add butonu
     @FindBy(xpath = "(//button[@type='submit'])[3]")
     public WebElement addContactSubmitButton;
+
+    //===========================================================================================
+
+    @FindBy(xpath = "//h3[text()='What\"s new in Heal Life Hospital & Research Center']")
+    public WebElement adminloginNews;
+
+    @FindBy(xpath = "//button[@type='submit']")
+    public WebElement adminSignInButton;
+
+    @FindBy(xpath = "//input[@type='text']")
+    public WebElement adminUsernameBox;
+
+    @FindBy(xpath = "//input[@type='password']")
+    public WebElement adminPasswordBox;
+
+    @FindBy(xpath = "//a[@class='forgot']")
+    public WebElement adminForgetPassword;
+
+    @FindBy(xpath = "//button[@type='submit']")
+    public WebElement adminSubmitButton;
+
+
+    @FindBy(xpath = "//div[text()='Your password has been sent to your e-mail address.']")
+    public WebElement passwordSentYourEmail;
+
+    @FindBy(xpath = "(//i[@class='fa fa-key'])[2]")
+    public WebElement adminLogoBox;
+
+
+
+
+
+
+
 
 
 

@@ -14,6 +14,8 @@ import org.junit.Assert;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.interactions.Actions;
 import java.util.List;
+
+import pages.AdminPage;
 import pages.HomePage;
 import utilities.ConfigReader;
 import utilities.Driver;
@@ -205,6 +207,7 @@ public class HomepageStepdefinitions {//
 
 
 
+
     //============================================ Nesibe [US_005] Feauture Boards =====================================
 
     @Given("User goes to home page")
@@ -225,6 +228,7 @@ public class HomepageStepdefinitions {//
         String actualBoard = homepage.feautureServicesBoard.getText();
         Assert.assertTrue(actualBoard.contains(expectedBoard));
         ReusableMethods.bekle(5);
+
     }
 
 

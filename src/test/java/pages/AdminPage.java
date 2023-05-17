@@ -58,8 +58,8 @@ public class AdminPage extends Base{
     @FindBy(xpath = "(//select[@name='blood_group'])")
     public WebElement bloodGroupDropDown2;
 
-     @FindBy(xpath = "(//div[@class='toast-message'])[1]")
-     public WebElement warningMessage;
+    @FindBy(xpath = "(//div[@class='toast-message'])[1]")
+    public WebElement warningMessage;
 
 
 
@@ -78,6 +78,34 @@ public class AdminPage extends Base{
     //Admin > Billing
     @FindBy (xpath = "//p[.='Blood Issue']")
     public WebElement bloodIssueButton;
+
+    //Admin > Billing
+    @FindBy (xpath = "//p[.='Blood Component Issue']")
+    public WebElement bloodIssueComponentButton;
+
+    //Admin > Bill >Issueblood / Issuecomponent
+    @FindBy (xpath = "//span[@id='select2-consultant_doctor-container']")
+    public WebElement hospitalDoctorDDM;
+
+    //Admin > Bill >Issueblood / Issuecomponent
+    @FindBy (xpath = "//span[@id='select2-component_blood_group-container']")
+    public WebElement bloodGroupDDM;
+
+    //Admin > Bill >Issueblood / Issuecomponent
+    @FindBy (xpath = "//span[@id='select2-blood_component-container']")
+    public WebElement componentDDM;
+
+    //Admin > Bill >Issueblood / Issuecomponent
+    @FindBy (xpath = "//span[@id='select2-bag_no-xj-container']")
+    public WebElement bagDDM;
+
+    //Admin > Bill >Issueblood / Issuecomponent
+    @FindBy (xpath = "//span[@id='select2-charge_category-container']")
+    public WebElement chargeCathegoryDDM;
+
+    //Admin > Bill >Issueblood / Issuecomponent
+    @FindBy (xpath = "//span[@id='select2-charge_category-container']")
+    public WebElement chargeNameDDM;
 
 
     //Admin > IPD >
@@ -104,6 +132,23 @@ public class AdminPage extends Base{
     @FindBy(xpath = "(//button[@type=\"button\"])[10]")
     public WebElement xIconButton;
 
+    @FindBy(xpath = "(//*[@role=\"row\"]//td)[1]")
+    public WebElement getBillNoConfirmation;
+
+    @FindBy(xpath = "//*[@class=\"btn btn-info addplus-xs btn-sm  add-record mb10\"]")
+    public  WebElement addButtonPathology;
+
+    @FindBy(xpath = "//table[@id=\"tableID\"]//tbody//tr")
+    public List<WebElement> testParamNameList;
+
+    @FindBy(xpath = "//*[@class=\"btn btn-primary btn-sm pathology addtest\"]")
+    public WebElement addPathologyTestButton;
+
+    @FindBy(xpath = "//*[@name=\"test_name\"]")
+    public WebElement testNamePathology;
+
+    @FindBy(xpath = "//input[@id='billno']")
+    public WebElement getBillNo;
 
 
     // adminLoginPage

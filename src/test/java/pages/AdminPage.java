@@ -8,6 +8,8 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import utilities.ConfigReader;
 import utilities.Driver;
+import utilities.HealMethods;
+
 import java.util.List;
 
 public class AdminPage extends Base{
@@ -356,6 +358,40 @@ public class AdminPage extends Base{
     // admin/chat >> Chat sayfasındaki Add Contact frame icerisindeki +Add butonu
     @FindBy(xpath = "(//button[@type='submit'])[3]")
     public WebElement addContactSubmitButton;
+
+    //===========================================================================================
+
+    @FindBy(xpath = "//h3[text()='What\"s new in Heal Life Hospital & Research Center']")
+    public WebElement adminloginNews;
+
+    @FindBy(xpath = "//button[@type='submit']")
+    public WebElement adminSignInButton;
+
+    @FindBy(xpath = "//input[@type='text']")
+    public WebElement adminUsernameBox;
+
+    @FindBy(xpath = "//input[@type='password']")
+    public WebElement adminPasswordBox;
+
+    @FindBy(xpath = "//a[@class='forgot']")
+    public WebElement adminForgetPassword;
+
+    @FindBy(xpath = "//button[@type='submit']")
+    public WebElement adminSubmitButton;
+
+
+    @FindBy(xpath = "//div[text()='Your password has been sent to your e-mail address.']")
+    public WebElement passwordSentYourEmail;
+
+    @FindBy(xpath = "(//i[@class='fa fa-key'])[2]")
+    public WebElement adminLogoBox;
+
+
+
+
+
+
+
 
 
 

@@ -1,16 +1,65 @@
 package pages;
 
 
+
+
+
+
+
+import org.bouncycastle.jcajce.provider.asymmetric.X509;
+
+
+import org.junit.Assert;
+
 import org.openqa.selenium.By;
+
 import org.openqa.selenium.WebElement;
+
+import com.github.javafaker.Faker;
+import org.junit.Assert;
+import org.junit.Test;
+import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
+
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import utilities.ConfigReader;
 import utilities.Driver;
 
 import java.util.List;
 
+import utilities.ReusableMethods;
+
+
+import javax.swing.*;
+import java.text.SimpleDateFormat;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+
+
+import java.util.ArrayList;
+import java.util.Collections;
+
+
+import java.util.List;
+
+import java.util.concurrent.TimeUnit;
+
+
+import static utilities.Driver.driver;
+
+
 
 public class PatientPage extends Base {
+
+    Faker faker = new Faker();
+    Actions actions = new Actions(Driver.getDriver());
+
     // Userlogin >
     @FindBy(xpath = "//a[text()='Login']")
     public WebElement entryLoginbutton;
@@ -28,6 +77,9 @@ public class PatientPage extends Base {
     @FindBy(xpath = "//a[@role='button']")
     public WebElement homeThreeDots;
 
+    @FindBy(xpath = "//body[@class='skin-blue fixed sidebar-mini vsc-initialized']")
+    public WebElement thredotstrue;
+
     //HomePatientpageFlag
     @FindBy(xpath = "(//button[@type='button'])")
     public WebElement homeFlag;
@@ -42,8 +94,12 @@ public class PatientPage extends Base {
 
     @FindBy(xpath = "//i[@class='fa fa-bell-o']")
     public WebElement notifications;
-    @FindBy(xpath = "//button[@autocomplete='off']")
+    @FindBy(xpath = "//h3[@class=\"box-title titlefix\"]")
+    public WebElement notificationsboard;
+    @FindBy(xpath = "//button[@class='btn btn-primary btn-sm checkbox-toggle delete_all']")
     public WebElement notificationsDeletebutton;
+    @FindBy(xpath = "//*[text()='No Record Found']")
+    public WebElement notificationsInformation;
 
     //PatientHome page Profile_İmage
     @FindBy(xpath = "//img[@class='topuser-image']")
@@ -76,7 +132,7 @@ public class PatientPage extends Base {
 
     //Paitientpage_Dashborad_ON_Heallife_Textfield
 
-    @FindBy(xpath = "//span[@class='logo-mini']")
+    @FindBy(xpath = "//span[@class='sidebar-session']")
     public WebElement DashboardOnHeallifeText;
 
 
@@ -84,9 +140,8 @@ public class PatientPage extends Base {
     public WebElement dashboardButton;
 
 
+    @FindBy(xpath = "//i[@class='fas fa-hospital-alt']")
 
-
-    @FindBy(xpath = "//span[text()='My Appointments']")
     public WebElement myAppiontmentsButton;
     @FindBy(xpath = "//span[text()=' OPD']")
     public WebElement opdButton;
@@ -148,7 +203,7 @@ public class PatientPage extends Base {
     @FindBy(xpath = "(//option[@value='1'])[3]")
     public WebElement addAppointmentpriorityNormal;
 
-    @FindBy(xpath = "//textarea[@name='message']")
+    @FindBy(xpath = "//textarea[@id='message']")
     public WebElement addAppointmentsmessageText;
 
     @FindBy(xpath = "//span[@id='slot_0']")
@@ -197,6 +252,7 @@ public class PatientPage extends Base {
     //MypAppoinmetSeachtext
     @FindBy(xpath = "//input[@type='search']")
     public WebElement myAppoinmetSeachtext;
+
     @FindBy(xpath = "//tr[@class='odd']/td[1]")
     public WebElement myAppointmentApointmentno;
     //MyAppoinments NextPage
@@ -205,15 +261,21 @@ public class PatientPage extends Base {
     @FindBy(xpath = "//*[text()='']")
     public WebElement myAppoinmentsFirstPageButton;
 
-    @FindBy(xpath = "//*[text()='Records: 1 to 10 of 12']")
-    public WebElement myAppointmentsFirstpageDetails;
+    @FindBy(xpath = "//*[@id='DataTables_Table_0_info']")
+    public WebElement myAppointmentspageDetails;
 
     @FindBy(xpath = "//*[text()='Records: 11 to 12 of 12']")
     public WebElement myAppointmentsSecondspageDetails;
-
+    @FindBy(xpath = "//ul[@class='list-group list-group-unbordered']\n")
+    public WebElement myInformations;
+    @FindBy(xpath = "//*[text()='Amount']")
+    public WebElement showDetailtext;
+    @FindBy(xpath = "//*[text()='Success']")
+    public WebElement SuccestText;
 
 
     public static void checkHeaderExistence(WebElement element) {
+
         String[] headerNames = {"Patient Id", "Gender", "Marital Status", "Phone", "Email", "Address", "Age", "Guardian Name", "Username", "Password"};
 
         for (String headerName : headerNames) {
@@ -226,7 +288,7 @@ public class PatientPage extends Base {
         }
     }
 
-    public boolean checkTableHeadersExist(WebElement table) {
+    public static boolean checkTableHeadersExist(WebElement table) {
         List<WebElement> headers = table.findElements(By.tagName("th"));
         String[] expectedHeaders = {"Appointment No", "Appointment Date", "Priority", "Specialist", "Doctor", "Status", "Message", "Action"};
 
@@ -243,7 +305,7 @@ public class PatientPage extends Base {
         return true;
     }
 
-    public void userLogin(){
+    public void userLogin() {
         Driver.getDriver().get(ConfigReader.getProperty("url"));
         entryLoginbutton.click();
         entryEmailText.sendKeys(ConfigReader.getProperty("usernameAysenuriye"));
@@ -251,40 +313,700 @@ public class PatientPage extends Base {
         Entry_SubmitButton.click();
 
 
-
     }
 
 
-
-
-
-
-
-
-
-    public void myAppointmentsAddAppointment(){
-        userLogin();
+    public void myAppointmentsAddAppointment() {
+        PatientPage patientPage = new PatientPage();
         myAppiontmentsButton.click();
         addAppointmentsButton.click();
+        ReusableMethods.bekle(1);
         addAppointmentDatetext.click();
+        ReusableMethods.bekle(1);
+/*
+        Date currentDate = new Date();
+        Date randomDate = faker.date().future(25, TimeUnit.DAYS, currentDate);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        String formattedDate = dateFormat.format(randomDate);
+        actions.sendKeys(addAppointmentDatetext, formattedDate).build().perform();
+
+ */
+       /* Date currentDate = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(currentDate);
+        calendar.add(Calendar.DATE, 1); // bir sonraki güne ilerleyin
+
+        Date randomDate = faker.date().between(calendar.getTime(), new Date(calendar.getTimeInMillis() + TimeUnit.DAYS.toMillis(24))); // 25 gün sonrasına kadar rastgele bir tarih seçin
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        String formattedDate = dateFormat.format(randomDate);
+        actions.sendKeys(addAppointmentDatetext, formattedDate).build().perform();
+
+        */
+        Date currentDate = new Date();
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(currentDate);
+        calendar.add(Calendar.MONTH, 11); // 3 ay ileriye ilerleyin
+
+        Date randomDate = faker.date().between(calendar.getTime(), new Date(calendar.getTimeInMillis() + TimeUnit.DAYS.toMillis(90))); // 90 gün sonrasına kadar rastgele bir tarih seçin
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        String formattedDate = dateFormat.format(randomDate);
+        actions.sendKeys(addAppointmentDatetext, formattedDate).build().perform();
         addAppointmentDateoptionsMay27.click();
+        ReusableMethods.bekle(1);
+
         addAppointmentSpecialistButton.click();
+        ReusableMethods.bekle(1);
         addAppointmentSpecialistValue.click();
+        ReusableMethods.bekle(1);
         addAppointmentsDoctorbutton.click();
+        ReusableMethods.bekle(1);
         addAppointmentdoctorAysenuriye.click();
-        addAppointmentsShiftButton.click();
-        addAppointmentsshiftEvening.click();
-        addAppointmentsslotButton.click();
-        addAppointmentsSlot04PM.click();
-        addAppointmentsmessageText.sendKeys("HASTAA");
+        ReusableMethods.bekle(1);
+
+        Select select = new Select(addAppointmentsShiftButton);
+        select.selectByIndex(1);
+        ReusableMethods.bekle(2);
+        select = new Select(addAppointmentsslotButton);
+        select.selectByVisibleText("04:00 PM - 05:00 PM");
+
+
+        addAppointmentsmessageText.click();
+        addAppointmentsmessageText.sendKeys(faker.medical().diseaseName());
+        ReusableMethods.bekle(1);
         addAppointmentsslot04.click();
-        addAppointmentsSaveButton.click();
+
+        try {
+            // Alerti kontrol etmek için switchTo() ve alert() metodlarını kullanın
+            Alert alert = driver.switchTo().alert();
+
+            // Alert mevcutsa kabul et (OK düğmesine tıkla)
+            alert.accept();
+
+            // Web Element A'ya tıkla
+            addAppointmentsslot0450.click();
+            addAppointmentsSaveButton.click();
+        } catch (NoAlertPresentException e) {
+            // Alert mevcut değilse Web Element B'ye tıkla
+            addAppointmentsSaveButton.click();
+        }
 
 
     }
 
+    public void payCard() {
+        PatientPage patientPage = new PatientPage();
+        myAppiontmentsPaybutton.click();
+        myAppointmentsPaywithCardbutton.click();
+        ReusableMethods.bekle(2);
+
+        actions.sendKeys(faker.internet().emailAddress()).perform();
+        actions.sendKeys(Keys.TAB).perform();
+        actions.sendKeys("4242 4242 4242 4242").perform();
+        actions.sendKeys(Keys.TAB).perform();
+
+        //myAppointmentsCardnumberText.sendKeys(");
+        actions.sendKeys("0727").perform();
+        actions.sendKeys(Keys.TAB).perform();
+        actions.sendKeys("571").perform();
+        actions.sendKeys(Keys.TAB).perform();
+        actions.sendKeys("27200").perform();
+        actions.sendKeys(Keys.TAB).perform();
+        actions.sendKeys(Keys.ENTER).perform();
+
+
+
+       /* WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.elementToBeClickable(myAppoinmentsSecondPaybutton)).click();
+*/
+
+     /*   JavascriptExecutor executor = (JavascriptExecutor) driver;
+        executor.executeScript("arguments[0].click();", myAppoinmentsSecondPaybutton);
+
+
+      */
+
+
+    }
+
+    public void testStatusChangeMessage() {
+        // Assume that the language has been changed successfully
+        String message = "Status Change Successfully";
+
+
+        // Get the message element from the page
+        String pageSource = driver.getPageSource();
+        Assert.assertTrue(pageSource.contains(message));
+    }
+    //Pharmacy page=============================================//=======================
+
+    @FindBy(xpath = "//h3[@class='box-title titlefix']")
+    public WebElement pharmacyBillText;
+
+
+    @FindBy(xpath = "//span[text()=' Pharmacy']")
+    public WebElement pharmacySideBox;
+
+    @FindBy(xpath = "//input[@type='search']")
+    public WebElement searchBox;
+
+    @FindBy(xpath = "//td[text()='PHARMAB43']")
+    public WebElement pharmacyText;
+
+    @FindBy(xpath = "(//i[@class='fa fa-money'])[1]")
+    public WebElement wievAllBox;
+
+    @FindBy(xpath = "(//th[text()='Date'])[1]")
+    public WebElement dateText;
+
+    @FindBy(xpath = "(//button[@class='close'])[3]")
+    public WebElement pharmacyCloseButton;
+
+    @FindBy(xpath = "(//i[@class='fa fa-reorder'])[1]")
+    public WebElement pharmacyShowButton;
+
+    @FindBy(xpath = "//td[text()='ayse.busra.pehlivan (338)']")
+    public WebElement pharmacyNameText;
+
+    @FindBy(xpath = "(//button[@class='btn btn-primary btn-xs'])[6]")
+    public WebElement pharmacyPayButton;
+
+    @FindBy(xpath = "//input[@type='text']")
+    public WebElement pharmacyPaymenAmount;
+
+    @FindBy(xpath = "//button[@id='pay_button']")
+    public WebElement pharmacyAddButton;
+
+    @FindBy(xpath = "//span[text()='Pay with Card']")
+    public WebElement pharmacyPayWithCard;
+
+    @FindBy(xpath = "(//input[@class='control'])[1]")
+    public WebElement pharmacyEmailBox;
+
+    @FindBy(xpath = "//input[@id='card_number']")
+    public WebElement pharmacyCardNumberBox;
+
+
+    @FindBy(xpath = "//i[@class='fa fa-check']")
+    public WebElement pharmacySuccesfulText;
+
+
+    @FindBy(xpath = "(//button[@class='close'])[2]")
+    public WebElement pharmacyClose;
+
+    @FindBy(xpath = "//td[text()='Payment']")
+    public WebElement pathologyPaymentTextYazisi;
+
+
+    @FindBy(xpath = "(//button[@class='close'])[6]")
+    public WebElement pathologyClose;
+
+
+    @FindBy(xpath = "//td[text()='ayse.busra.pehlivan (338)']")
+    public WebElement pathologyNameText;
+
+
+    @FindBy(xpath = "(//button[@type='button'])[9]")
+    public WebElement pathologyViewwClose;
+
+    @FindBy(xpath = "(//button[@type='button'])[2]")
+    public WebElement pathologyPayButton;
+
+
+    @FindBy(xpath = "//input[@id='amount_total_paid']")
+    public WebElement pathologyPaymentAmountBox;
+
+    @FindBy(xpath = "//button[@id='pay_button']")
+    public WebElement pathologyAddButton;
+
+    @FindBy(xpath = "//span[text()='Pay with Card']")
+    public WebElement pathologyPayWithCard;
+    //=======================================================================================================
+
+    @FindBy(xpath = "//span[text()=' Radiology']")
+    public WebElement radiologyButtonn;
+
+    @FindBy(xpath = "//td[text()='RADIOB73']")
+    public WebElement radioBillNo;
+
+    @FindBy(xpath = "//td[text()='RADIOB73']")
+    public WebElement radioBillNoText;
+
+    public static boolean baslikListelemeMethod(String data) {
+        List<WebElement> actualList = Driver.getDriver().findElements(By.xpath("//*[@id=\"DataTables_Table_0\"]/thead/tr[1]//th"));
+        List<String> baslikListesiActual = new ArrayList<>();
+        for (WebElement each : actualList
+        ) {
+            baslikListesiActual.add(each.getText());
+        }
+        System.out.println(baslikListesiActual);
+        String[] liste = data.split(", ");
+
+
+        System.out.println(Arrays.toString(liste));
+        int count = 0;
+
+
+        for (int i = 0; i < liste.length; i++) {
+            for (int j = 0; j < baslikListesiActual.size(); j++) {
+                if (baslikListesiActual.get(j).equals(liste[i])) {
+                    count++;
+                }
+            }
+        }
+        if (count == liste.length) {
+            return true;
+        }
+
+
+        return false;
+    }
+
+    public static boolean intListSortTest(int sutunNo) {
+
+
+        WebElement baslik = Driver.getDriver().findElement(By.xpath("//*[@id=\"DataTables_Table_0\"]/thead/tr/th[" + sutunNo + "]"));
+
+        baslik.click();
+        ReusableMethods.bekle(3);
+        List<WebElement> ActualList = Driver.getDriver().findElements(By.xpath("//*[@id=\"DataTables_Table_0\"]/tbody/tr/td[" + sutunNo + "]"));
+
+        List<String> ActualStringList = new ArrayList<>();
+        for (WebElement each : ActualList
+        ) {
+            ActualStringList.add(each.getText().replaceAll("[^\\d]", ""));
+        }
+        System.out.println(ActualStringList);
+
+
+
+        List<String> ExpectedList = new ArrayList<>(ActualStringList);
+        Collections.sort(ExpectedList);
+        if (ActualStringList.equals(ExpectedList)) {
+            return true;
+        }
+        return false;
+
+    }
+
+    @FindBy(xpath = "//span[text()=' Pathology']")
+    public WebElement pathologySideBox;
+
+    @FindBy(xpath = "//h3[text()='Pathology Test Reports']")
+    public WebElement pathologytTextReportYazisi;
+
+    @FindBy(xpath = "//td[text()='PATHOB100']")
+    public WebElement pathologytPATHOB100Yazisi;
+
+    //=========================================US30===============================
+    @FindBy(xpath = "//span[text()='OPD']")
+    public WebElement dashboardOpdText;
+
+    @FindBy(xpath = "//span[text()='IPD']")
+    public WebElement dashboardIpdText;
+
+
+    @FindBy(xpath = "//span[text()='Pharmacy']")
+    public WebElement dashboardPharmacyText;
+
+    @FindBy(xpath = "//span[text()='Pathology']")
+    public WebElement dashboardPathologyText;
+
+    @FindBy(xpath = "//span[text()='Radiology']")
+    public WebElement dashboardRadiologyText;
+
+    @FindBy(xpath = "//span[text()='Blood Bank']")
+    public WebElement dashboardBloodBankText;
+
+    @FindBy(xpath = "//span[text()='Ambulance']")
+    public WebElement dashboardAmbulanceText;
+
+
+
+    @FindBy(xpath = "//canvas[@id='finding-bar-chart']")
+    public WebElement dashboardTop10FindingsChart;
+
+
+    @FindBy(xpath = "//canvas[@id='symptom-bar-chart']")
+    public WebElement dashboardTop10symptomChart;
+
+    @FindBy(xpath = "//canvas[@id='medical-history-chart']")
+    public WebElement dashboardMedicalHistoryChart;
+
+    @FindBy(xpath = "//span[text()=' Dashboard']")
+    public WebElement dashboardLinkk;
+
+
+
+
+
+
+
+    public static boolean baslikListelemeMethod2(String data) {
+        List<WebElement> actualList = Driver.getDriver().findElements(By.xpath("//*[@id=\"testreport\"]/thead/tr/th"));
+        List<String> baslikListesiActual = new ArrayList<>();
+        for (WebElement each : actualList
+        ) {
+            baslikListesiActual.add(each.getText());
+        }
+        System.out.println(baslikListesiActual);
+        String[] liste = data.split(", ");
+
+        System.out.println(Arrays.toString(liste));
+        int count = 0;
+        for (int i = 0; i < liste.length; i++) {
+            for (int j = 0; j < baslikListesiActual.size(); j++) {
+                if (baslikListesiActual.get(j).equals(liste[i])) {
+                    count++;
+                }
+            }
+        }
+        if (count == liste.length) {
+            return true;
+        }
+        return false;
+    }
+    public static boolean TarihListSiralamaTesti(int sutunNo) {
+        Select select = new Select(Driver.getDriver().findElement(By.xpath("//select[@name='DataTables_Table_0_length']")));
+        ReusableMethods.bekle(3);
+        select.selectByVisibleText("All");
+        ReusableMethods.bekle(3);
+        WebElement baslik = Driver.getDriver().findElement(By.xpath("//*[@id=\"DataTables_Table_0\"]/thead/tr[1]//th[" + sutunNo + "]"));
+        baslik.click();
+        ReusableMethods.bekle(3);
+        List<WebElement> ActualList = Driver.getDriver().findElements(By.xpath("//*[@id=\"DataTables_Table_0\"]/tbody/tr/td[" + sutunNo + "]"));
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm a", Locale.ENGLISH);
+
+        List<LocalDateTime> tarihler=new ArrayList<>();
+        for (WebElement each:ActualList
+        ) {
+            String data=each.getText();
+            LocalDateTime dateTime = LocalDateTime.parse(data, formatter);
+            tarihler.add(dateTime);
+        }
+        int sayi=0;
+        for (int i = 0; i <tarihler.size()-1 ; i++) {
+            sayi=tarihler.get(i).compareTo(tarihler.get(i+1));
+            if (sayi>0){
+                return false;
+            }
+        }
+        return true;
+    }
+
+
+    public static boolean intListSortTest2 ( int sutunNo){
+        WebElement baslik = Driver.getDriver().findElement(By.xpath("(//th[@class='sorting'])[" + sutunNo + "]"));
+        baslik.click();
+        ReusableMethods.bekle(3);
+        List<WebElement> ActualList = Driver.getDriver().findElements(By.xpath("(//th[@class='sorting'])[\" + sutunNo + \"]"));
+
+        List<String> ActualStringList = new ArrayList<>();
+        for (WebElement each : ActualList
+        ) {
+            ActualStringList.add(each.getText().replaceAll("[^\\d]", ""));
+        }
+        System.out.println(ActualStringList);
+
+
+
+        List<String> ExpectedList = new ArrayList<>(ActualStringList);
+        Collections.sort(ExpectedList);
+        if (ActualStringList.equals(ExpectedList)) {
+            return true;
+        }
+        return false;
+
+    }
+
+    //============================================ Nesibe [US_023] OPD MENU ============================================
+
+    @FindBy(xpath = "//*[@id=sibe-box]/ul/li[3]/a")
+    public WebElement opdMenu;
+
+    @FindBy(xpath = "//*[text()=' Overview']")
+    public WebElement overview;
+
+    @FindBy(xpath = "//*[text()=' Visits']")
+    public WebElement visits;
+
+    @FindBy(xpath = "//*[text()=' Lab Investigation']")
+    public WebElement labInvestigation;
+
+    @FindBy(xpath = "//*[text()=' Treatment History']")
+    public WebElement treatmentHistory;
+
+    @FindBy(xpath = "//*[text()=' Timeline']")
+    public WebElement timeline;
+
+    @FindBy(xpath = "//*[text()='Gender']")
+    public WebElement gender;
+
+    @FindBy(xpath = "//*[text()='Age']")
+    public WebElement age;
+
+    @FindBy(xpath = "//*[text()='Guardian Name']")
+    public WebElement guardianName;
+
+    @FindBy(xpath = "//*[text()='Phone']")
+    public WebElement phone;
+
+    @FindBy(xpath = "//*[text()='Visit Details']")
+    public WebElement sumVisitDetails;
+
+    @FindBy(xpath = "(//*[text()='Lab Investigation'])[1]")
+    public WebElement sumlabInvestigation;
+
+    @FindBy(xpath = "(//input[@type='search'])[2]")
+    public WebElement searchLabInvestigation;
+
+    @FindBy(xpath = "(//*[text()='Treatment History'])[1]")
+    public WebElement sumTreatmentHistory;
+
+    @FindBy(xpath = "(//*[text()='Timeline'])[1]")
+    public WebElement sumTimeline;
+
+    @FindBy(xpath = "(//*[text()='Consultant Doctor'])[1]")
+    public WebElement consultantDoctor;
+
+    @FindBy(xpath = "(//*[@class='sorting'])[1]")
+    public WebElement opdNo;
+
+    @FindBy(xpath = "(//*[@class='sorting'])[2]")
+    public WebElement caseId;
+
+    @FindBy(xpath = "(//*[@class='sorting'])[3]")
+    public WebElement appointmentDate;
+
+    @FindBy(xpath = "(//*[@class='sorting'])[4]")
+    public WebElement consultant;
+
+    @FindBy(xpath = "(//*[@class='sorting'])[5]")
+    public WebElement referance;
+
+    @FindBy(xpath = "(//input[@type='search'])[1]")
+    public WebElement searchVisit;
+
+    @FindBy(xpath = "//*[text()='Test Name']")
+    public WebElement testName;
+
+    @FindBy(xpath = "(//*[text()='Case ID / Patient ID'])[3]")
+    public WebElement caseId2;
+
+    @FindBy(xpath = "//*[text()='Lab']")
+    public WebElement lab;
+
+    @FindBy(xpath = "//*[text()='Sample Collected']")
+    public WebElement sampleCollected;
+
+    @FindBy(xpath = "//*[text()='Expected Date']")
+    public WebElement expectedData;
+
+    @FindBy(xpath = "(//*[text()='Approved By'])")
+    public WebElement approvedBy;
+
+    @FindBy(xpath = "(//*[text()='Appointment Date'])[3]")
+    public WebElement appointmentDate2;
+
+    @FindBy(xpath = "(//*[text()='Symptoms'])")
+    public WebElement symptoms;
+
+    @FindBy(xpath = "(//input[@type='search'])[3]")
+    public WebElement searchTreatment;
+
+    @FindBy(xpath = "(//*[text()='Action'])[1]")
+    public WebElement actionVisit;
+
+    @FindBy(xpath = "((//*[text()='Action'])[2]")
+    public WebElement actionLabInvestigation;
+
+    @FindBy(xpath = "(//*[text()='Action'])[3]")
+    public WebElement actionTreatmentHistory;
+
+    //============================================ Nesibe [US_023] OPD MENU SONU =======================================
+
+    @FindBy(xpath = "//input[@id='password']")
+    public WebElement PasswordBox;
+    @FindBy (xpath = "//button[@type='submit']")
+    public WebElement SigninButton;
+
+    @FindBy (xpath = "(//h3[@class='text-uppercase bolds mt0 ptt10 pull-left font14'])[1]")
+    public WebElement IPDName;
+
+
+    public void loginAspatient(String username, String password) {
+        entryEmailText.sendKeys(ConfigReader.getProperty(username));
+        PasswordBox.sendKeys(ConfigReader.getProperty(password));
+        SigninButton.click();
+
+
+
+
+
+
+    }
+
+   // IPD
+    @FindBy(xpath = "//i[@class='fa fa-th']")
+    public WebElement OverviewTab;
+
+    // IPD -> Overview
+    @FindBy(xpath = "(//i[@class='fa fa-reorder'])[1]")
+    public WebElement ProfileButton;
+
+    //IPD ->Overview->ProfileButton
+    @FindBy (xpath = "(//h4[@class='modal-title'])[2]")
+    public WebElement PatientDetailsTitle;
+
+
+    // IPD
+    @FindBy(xpath ="(//i[@class='far fa-calendar-check'])[1]")
+    public WebElement MeditacionTab;
+
+    // IPD
+    @FindBy (xpath = "(//i[@class='far fa-calendar-check'])[2]")
+    public WebElement PrescriptionTab;
+
+    //IPD
+    @FindBy (xpath = "//i[@class='fas fa-cut']")
+    public WebElement OperationTab;
+
+    //IPD
+    @FindBy(xpath = "//i[@class='fas fa-donate']")
+    public WebElement ChargesTab;
+
+    //IPD
+    @FindBy(xpath = "(//i[@class='fas fa-hand-holding-usd'])[1]")
+    public WebElement PaymentTab;
+
+    //IPD
+    @FindBy (xpath = "(//i[@class='fa fa-video-camera'])[2]")
+    public WebElement LiveConsulationTab;
+
+    //IPD
+    @FindBy (xpath = "//i[@class='fas fa-sticky-note']")
+    public WebElement NurseNotesTab;
+
+    //IPD
+    @FindBy (xpath ="//span[@class='fa fa-chevron-right']" )
+    public WebElement RightArrowKey;
+
+    //IPD
+    @FindBy (xpath = "(//i[@class='far fa-calendar-check'])[3]")
+    public WebElement Timeline;
+
+
+    //IPD
+    @FindBy(xpath = "(//i[@class='fas fa-hand-holding-usd'])[2]")
+    public WebElement TreatmentHistory;
+
+
+    //IPD
+    @FindBy (xpath = "(//i[@class='fas fa-procedures'])[2]")
+    public WebElement BedHistory;
+
+
+    //IPD
+    @FindBy(xpath = "(//i[@class='fas fa-file-prescription'])[1]")
+    public WebElement ConsultantRegister;
+
+    //IPD->Overivew
+    @FindBy (xpath = "(//td[@class='bolds'])[1]")
+    public WebElement GenderText;
+
+    //IPD->Overivew
+    @FindBy (xpath = "(//td[@class='bolds'])[2]")
+    public WebElement AgeText;
+
+    //IPD->Overivew
+    @FindBy (xpath = "//td[@class='bolds'])[3]")
+    public WebElement GuardianNameText;
+
+    //IPD->Overivew
+    @FindBy (xpath = "//td[@class='bolds'])[3]")
+    public WebElement PhoneText;
+
+    //IPD->Overivew
+    @FindBy(xpath = "//div[@class='col-lg-9 col-md-8 col-sm-12']")
+    public WebElement summarypartText;
+
+    //IPD->Meditacion
+    @FindBy (xpath = "//th[@class='hard_left']")
+    public WebElement MeditacionDateText;
+
+    //IPD->Meditacion
+    @FindBy (xpath = "//th[@class='next_left']")
+    public WebElement 	MedicineNameText;
+
+    //IPD->Meditacion
+    @FindBy (xpath = "//th[@class='sticky-col']")
+    public WebElement Dose1Text;
+
+    //IPD->Meditacion
+    @FindBy (xpath = "//div[@class='table_inner']")
+    public WebElement TitleText;
+
+  // IPD->Prescription
+    @FindBy (xpath = "(//th[@class='sorting'])[9]")
+    public WebElement PrescriptionNo;
+
+// IPD -> Prescription
+    @FindBy (xpath = "(//th[@class='sorting'])[10]")
+    public WebElement PrescriptionDate;
+
+    @FindBy (xpath = "//th[@class='sorting_desc']")
+    public WebElement PrescriptionFinding;
+
+    @FindBy (xpath = "//*[@class='tab-content']")
+    public WebElement IPDTitle;
+
+    public void TitleAssertion(String elementText){
+
+        WebElement webElement =Driver.getDriver().findElement(By.xpath("//a[text()=' "+elementText+"']"));
+        webElement.click();
+        ReusableMethods.bekle(3);
+        Assert.assertTrue(IPDTitle.isDisplayed());
+
+
+    }
+
+    //IPD->Prescription
+    @FindBy (xpath = "(//input[@type='search'])[3]")
+    public WebElement PrescriptionSearchBox;
+
+    @FindBy(xpath = "(//div[@class='dataTables_info'])[3]")
+    public WebElement searchresulttext;
+
+    @FindBy(xpath = "(//i[@class='fas fa-file-prescription'])[2]")
+    public WebElement PrescriptionActionsButton;
+
+    @FindBy (xpath = "(//table[@class='printablea4'])[1]")
+    public WebElement ActionsPrescriptionNo;
+
+
+
+    //IPD->ConsultantRegister
+    @FindBy (xpath = "(//input[@type='search'])[1]")
+    public WebElement  ConsultantRegisterSearchBox;
+
+    @FindBy  (xpath = "(//div[@class='dataTables_info'])[1]")
+    public WebElement ConsultantRegisterSearcResult;
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

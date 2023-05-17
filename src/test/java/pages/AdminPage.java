@@ -6,10 +6,14 @@ import org.checkerframework.checker.calledmethods.qual.EnsuresCalledMethodsIf;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.ui.Select;
 import utilities.ConfigReader;
 import utilities.Driver;
 import utilities.HealMethods;
+import utilities.ReusableMethods;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class AdminPage extends Base{
@@ -388,7 +392,130 @@ public class AdminPage extends Base{
 
 
 
+    public  static  void adminLogin(String username,String password){
+        WebElement usernameLocate= Driver.getDriver().findElement(By.xpath("//input[@type='text']"));
+        usernameLocate.sendKeys(username);
+        WebElement passwordLocate=Driver.getDriver().findElement(By.xpath("//input[@class='form-password form-control']"));
+        passwordLocate.sendKeys(password);
+        WebElement loginButton=Driver.getDriver().findElement(By.xpath("//button[@type='submit']"));
+        loginButton.click();
+    }
 
+
+    //Admin > Dashboard > Appointment Sekme
+    @FindBy (xpath = "(//li[@class='treeview '])[2]")
+    public WebElement dashboardAppointmentButton;
+    //Admin > Profil Button
+    @FindBy (xpath = "//a[@class='dropdown-toggle']")
+    public WebElement adminProfilButton;
+    //Admin > Profil > Logout Button
+    @FindBy (xpath = "//a[@class='pull-right']")
+    public WebElement adminLogoutButton;
+    public boolean baslikListelemeMethod(int no, String data) {
+        List<WebElement> actualList = Driver.getDriver().findElements(By.xpath("(//tr[@role='row'])["+no+"]"));
+        List<String> baslikListesiActual = new ArrayList<>();
+        for (WebElement each : actualList
+        ) {
+            baslikListesiActual.add(each.getText());
+        }
+        System.out.println(baslikListesiActual);
+        String[] liste = data.split(", ");
+        int count = 0;
+        System.out.println(Arrays.toString(liste));
+        for (int i = 0; i < liste.length; i++) {
+            for (int j = 0; j < baslikListesiActual.size(); j++) {
+                if (baslikListesiActual.get(j).contains(liste[i])) {
+                    count++;
+                }
+            }
+        }
+        if (count == liste.length) {
+            return true;
+        }
+        return false;
+    }
+    public boolean intListSortTest(int sutunNo) {
+        Select select=new Select(Driver.getDriver().findElement(By.xpath("//select[@name='DataTables_Table_0_length']")));
+        ReusableMethods.sleep(3);
+        select.selectByVisibleText("All");
+        ReusableMethods.sleep(3);
+        WebElement baslik = Driver.getDriver().findElement(By.xpath("//tr//th["+ sutunNo +"]"));
+        baslik.click();
+        ReusableMethods.sleep(3);
+        List<WebElement> ActualList = Driver.getDriver().findElements(By.xpath("//tr//td[2]"));
+        List<Integer> ActualStringList = new ArrayList<>();
+        for (int i = 0; i < 100; i++) {
+            if (!ActualList.get(i).getText().isEmpty()) {
+                String data = ActualList.get(i).getText().replaceAll("[^0-9]", "");
+                ActualStringList.add(Integer.valueOf(data));
+            }
+        }
+
+
+        int sayi=0;
+        for (int i = 1; i <ActualStringList.size() ; i++) {
+            int ilkVeri= ActualStringList.get(sayi);
+            if (ilkVeri>ActualStringList.get(i)){
+                return false;
+            }
+            sayi++;
+        }
+
+        return true;
+
+    }
+
+    //Admin > Appointment > Search Box Button
+    @FindBy(xpath = "//input[@type='search']")
+    public WebElement appointmentSearchBoxButton;
+    //Admin > Appointment search Result Patient Name
+    @FindBy (xpath = "(//tbody//tr//td[1])[1]")
+    public WebElement appointmentSearchResultNameColumn;
+    //Admin > appointment > Doctor Wise Button;
+    @FindBy (xpath = "(//a[@class='btn btn-primary btn-sm'])[1]")
+    public WebElement doctorWiseButton;
+    //Admin > Appointment > DoctorWIse> Doctor Select
+    @FindBy (xpath = "//select[@name='doctor']")
+    public WebElement doctorWiseSelectDropDown;
+    //Admin > Appointment >DoctorWise > Date Select
+    @FindBy(xpath = "(//input[@type='text'])[3]")
+    public WebElement doctorWiseDateSelectLabel;
+    //Admin > Appointment > DoctorWise > Search Button
+    @FindBy (xpath = "(//button[@type='submit'])[3]")
+    public WebElement  doctorWiseSearchButton;
+    //Admin > Appointment > DoctorWise > Result Row
+    @FindBy (xpath = "//tbody")
+    public WebElement doctorWiseResultRow;
+    //Admin > Appointment > DoctorWise > Queue Button
+    @FindBy(xpath = "(//a[@class='btn btn-primary btn-sm'])[2]")
+    public WebElement doctorWiseQueueButton;
+    //Admin > Appointment > Queue> Shift Select
+    @FindBy (xpath = "//select[@name='global_shift']")
+    public WebElement queueShiftSelectLabel;
+    //Admin > Appointment > Queue > Slot Select
+    @FindBy (xpath = "//select[@name='slot']")
+    public WebElement queueSlotLabel;
+
+
+    //Admin-->Login
+    @FindBy(xpath = "//button[normalize-space()='Sign In']")
+    public WebElement signinButton;
+
+    //Admin-->Dashboard
+    @FindBy(xpath = "//input[@class='form-control search-form search-form3']")
+    public WebElement searchBox;
+
+    //Admin-->Dashboard
+    @FindBy(xpath = "//span[normalize-space()='Dashboard']")
+    public WebElement dashboardButton;
+
+    //Admin-->Admin
+    @FindBy(xpath = "//img[@class='topuser-image']")
+    public WebElement profilImageButton;
+
+    //Admin-->Profil Image-->Logout
+    @FindBy(xpath = "//a[normalize-space()='Logout']")
+    public WebElement logoutButton;
 
 
 

@@ -143,5 +143,29 @@ public class HomePage extends Base {
     @FindBy(xpath = "//*[text()='Contact Us']")
     public WebElement bottomContactUsLink;
 
+    @FindBy (xpath = "//div[@id='navbar-collapse-3']//a[text()='Contact Us']")
+    public WebElement navbarContactUs;
+
+    @FindBy (xpath = "//input[@name='name']")
+    public WebElement contactUsName;
+
+    @FindBy (xpath = "//input[@name='email']")
+    public WebElement contactUsEmail;
+
+    @FindBy (xpath = "//input[@name='subject']")
+    public WebElement contactUsSubject;
+
+    @FindBy (xpath = "//textarea[@name='description']")
+    public WebElement contactUsDescription;
+
+    @FindBy (xpath = "//input[@name='submit']")
+    public WebElement contactUsSubmitButton;
+
+    @FindBy (xpath = "//div[@class='alert alert-success']")
+    public WebElement successfullyText;
+
+    @FindBy (xpath = "//iframe[@style='border:0']")
+    public WebElement contactusMap;
+
 }
 

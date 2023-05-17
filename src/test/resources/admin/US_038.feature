@@ -81,7 +81,7 @@ Feature: US_038 As an admin I would like to have a page in the dashboard sidebar
           And Click the Pathology button on Billing page
           And Click first name for display patient profile under the Patient Name
           Then Verified redirected to Patent Profile page
-
+  @US038
     Scenario: TC_16 Radiology Billing Lists headings on the page that opens when you click on the Radiology board
           And Click the Radiology button on Billing page
           Then Sees the name of Radiology Billing List and their contents
@@ -156,7 +156,7 @@ Feature: US_038 As an admin I would like to have a page in the dashboard sidebar
           Then Click the trash icon for delete 1. Bill
           When Click 1. iconButton under the last column for display first patient profile
           Then Verified redirected to Blood Issue Details page
-  @US038
+
     Scenario: TC_29 Blood Component Issue board in the Single Module Billing window is clicked,
                     Blood Component Issue Billing List
           And Click the Blood Component Issue board on Billing Page

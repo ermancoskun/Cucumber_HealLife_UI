@@ -77,6 +77,34 @@ public class AdminPage extends Base{
     @FindBy (xpath = "//p[.='Blood Issue']")
     public WebElement bloodIssueButton;
 
+    //Admin > Billing
+    @FindBy (xpath = "//p[.='Blood Component Issue']")
+    public WebElement bloodIssueComponentButton;
+
+    //Admin > Bill >Issueblood / Issuecomponent
+    @FindBy (xpath = "//span[@id='select2-consultant_doctor-container']")
+    public WebElement hospitalDoctorDDM;
+
+    //Admin > Bill >Issueblood / Issuecomponent
+    @FindBy (xpath = "//span[@id='select2-component_blood_group-container']")
+    public WebElement bloodGroupDDM;
+
+    //Admin > Bill >Issueblood / Issuecomponent
+    @FindBy (xpath = "//span[@id='select2-blood_component-container']")
+    public WebElement componentDDM;
+
+    //Admin > Bill >Issueblood / Issuecomponent
+    @FindBy (xpath = "//span[@id='select2-bag_no-xj-container']")
+    public WebElement bagDDM;
+
+    //Admin > Bill >Issueblood / Issuecomponent
+    @FindBy (xpath = "//span[@id='select2-charge_category-container']")
+    public WebElement chargeCathegoryDDM;
+
+    //Admin > Bill >Issueblood / Issuecomponent
+    @FindBy (xpath = "//span[@id='select2-charge_category-container']")
+    public WebElement chargeNameDDM;
+
 
     //Admin > IPD >
     @FindBy(id = "addp")

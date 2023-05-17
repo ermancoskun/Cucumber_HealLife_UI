@@ -136,9 +136,9 @@ public class AdminStepdefinitions {
         boolean flag=false;
         if (actualWindowTitle.equals("Bill Details")||
                 Driver.getDriver().findElement(By.xpath("(//h4[@class='modal-title'])[1]")).getText().equals("Bill Details")){
-                flag=true;
+            flag=true;
         }
-          Assert.assertTrue("Unsuccessful redirection",flag);
+        Assert.assertTrue("Unsuccessful redirection",flag);
 
         WebElement billDetailsElement = Driver.getDriver().findElement(By.xpath("(//h4[text()='Bill Details'])[1]"));
         Assert.assertTrue(billDetailsElement.isDisplayed());
@@ -198,7 +198,7 @@ public class AdminStepdefinitions {
 
     @Then("Make or delete additional payments")
     public void makeOrDeleteAdditionalPayments() {
-       HealMethods.makePaymentOptionsTest();
+        HealMethods.makePaymentOptionsTest();
     }
     @Then("Make or delete additional payments for Bloods")
     public void makeOrDeleteAdditionalPaymentsForBloods() {
@@ -206,17 +206,17 @@ public class AdminStepdefinitions {
     }
     @Then("Edit and delete a Blood records")
     public void editAndDeleteABloodRecords() {
-    JSUtilities.clickWithJS(Driver.getDriver(),Driver.getDriver().findElement(By.xpath("//a[@class='edit_blood_issue']")));
-    HealMethods.createNewPatient();
-    JSUtilities.clickWithJS(Driver.getDriver(),Driver.getDriver().findElement(By.xpath("//input[@id='dates_of_issue']")));
-    JSUtilities.clickWithJS(Driver.getDriver(),Driver.getDriver().findElement(By.xpath("//button[@id='formaddbtn']")));
-    Assert.assertEquals("Edit not successful","Record Saved Successfully",adminPage.warningMessage.getText());
-    JSUtilities.clickWithJS(Driver.getDriver(),adminPage.xIconButton);
-    ReusableMethods.bekle(7);
-    JSUtilities.clickWithJS(Driver.getDriver(),Driver.getDriver().findElement(By.xpath("//a[@class='delete_blood_issue']")));
-    Driver.getDriver().switchTo().alert().accept();
-    ReusableMethods.bekle(2);
-    Assert.assertEquals("Delete not successful","Record Deleted Successfully",adminPage.warningMessage.getText());
+        JSUtilities.clickWithJS(Driver.getDriver(),Driver.getDriver().findElement(By.xpath("//a[@class='edit_blood_issue']")));
+        HealMethods.createNewPatient();
+        JSUtilities.clickWithJS(Driver.getDriver(),Driver.getDriver().findElement(By.xpath("//input[@id='dates_of_issue']")));
+        JSUtilities.clickWithJS(Driver.getDriver(),Driver.getDriver().findElement(By.xpath("//button[@id='formaddbtn']")));
+        Assert.assertEquals("Edit not successful","Record Saved Successfully",adminPage.warningMessage.getText());
+        JSUtilities.clickWithJS(Driver.getDriver(),adminPage.xIconButton);
+        ReusableMethods.bekle(7);
+        JSUtilities.clickWithJS(Driver.getDriver(),Driver.getDriver().findElement(By.xpath("//a[@class='delete_blood_issue']")));
+        Driver.getDriver().switchTo().alert().accept();
+        ReusableMethods.bekle(2);
+        Assert.assertEquals("Delete not successful","Record Deleted Successfully",adminPage.warningMessage.getText());
 
     }
     @Then("Create a New Bill with random datas")
@@ -482,6 +482,93 @@ public class AdminStepdefinitions {
         Assert.assertTrue(adminPage.notificationIcon.isDisplayed());
         Assert.assertTrue(adminPage.notificationIcon.isEnabled());
     }
+    @Given("Switch from the Pathology page to the Pathology Test page.")
+    public void switchFromThePathologyPageToThePathologyTestPage() {
+        HealMethods.clickIconWith3Line(1);
+    }
+
+    @Given("Parameters added expected areas")
+    public void parametersAddedExpectedAreas() {
+
+        Actions actions = new Actions(Driver.getDriver());
+        Faker faker1 = new Faker();
+        String testName=faker1.medical().diseaseName();
+        ReusableMethods.bekle(2);
+        actions.click(adminPage.testNamePathology).sendKeys(testName)
+                .sendKeys(Keys.TAB).sendKeys(faker1.medical().medicineName())
+                .sendKeys(Keys.TAB).sendKeys(faker1.medical().symptoms())
+                .sendKeys(Keys.TAB).sendKeys(Keys.ENTER).sendKeys("clinical" + Keys.ENTER).
+                sendKeys(Keys.TAB).
+                sendKeys(Keys.TAB)
+                .sendKeys(Keys.TAB).
+                sendKeys(Keys.TAB).
+                sendKeys(Keys.ENTER).sendKeys("Surgical" + Keys.ENTER)
+                .sendKeys(Keys.TAB).
+                sendKeys(Keys.ENTER).sendKeys("Surgical" + Keys.ARROW_DOWN).sendKeys(Keys.ENTER)
+                .sendKeys(Keys.TAB)
+                .sendKeys(Keys.TAB)
+                .sendKeys(Keys.TAB)
+                .sendKeys(Keys.TAB).sendKeys("RBC" + Keys.ENTER)
+                .sendKeys(Keys.TAB)
+                .sendKeys(Keys.TAB)
+                .sendKeys(Keys.TAB)
+                .sendKeys(Keys.TAB).sendKeys(Keys.ENTER).perform();
+        ReusableMethods.bekle(10);
+
+    }
+    @And("The pathology tests page should be listed with the headings")
+    public void thePathologyTestsPageShouldBeListedWithTheHeadings() {
+        HealMethods.makeFilterTest("Test Name", 1, 8);
+        HealMethods.makeFilterTest("Short Name", 2, 8);
+        HealMethods.makeFilterTest("Test Type", 3, 8);
+        HealMethods.makeFilterTest("Category", 4, 8);
+        HealMethods.makeFilterTest("Sub Category", 5, 8);
+        HealMethods.makeFilterTest("Method", 6, 8);
+        HealMethods.makeFilterTest("Report Days", 7, 8);
+
+    }
+    @And("Click the Add View Payment iconButton for additional payments for patient of {int}.")
+    public void clickTheAddViewPaymentIconButtonForAdditionalPaymentsForPatientOf(int sira) {
+        HealMethods.clickAddViewPaymentIcon(sira);
+    }
+
+    @And("The saved test should be displayed in the Pathology Test List")
+    public void theSavedTestShouldBeDisplayedInThePathologyTestList() {
+        String aa= Driver.getDriver().findElement(By.xpath("//*[@id=\"DataTables_Table_0\"]//tbody//tr[1]//td[1]")).getText();
+//        Assert.assertEquals(aa,testName);
+    }
+    @And("Create a bill on the relevant patient")
+    public void createABillOnTheRelevantPatient() throws IOException {
+        HealMethods.generateBillInfo();
+        ReusableMethods.bekle(2);
+
+
+    }
+
+    @Given("Confirm Bill No and Date information")
+    public void confirmBillNoAndDateInformation() {
+        String expectedBillNo = adminPage.getBillNo.getText();
+
+        System.out.println("adminPage.getBillNo.getText() = " + adminPage.getBillNo.getText());
+        String actualBillNo = adminPage.getBillNoConfirmation.getText();
+        System.out.println("adminPage.getBillNoConfirmation = " + adminPage.getBillNoConfirmation.getText());
+        Assert.assertEquals(actualBillNo, expectedBillNo);
+//
+//        adminPage.pathologyBillList.
+
+    }
+    @Given("More than one test parameter can be added")
+    public void moreThanOneTestParameterCanBeAdded() {
+        Assert.assertTrue(adminPage.addButtonPathology.isEnabled());
+        Assert.assertEquals(adminPage.testParamNameList.size(), 1);
+        adminPage.addButtonPathology.click();
+        Assert.assertEquals(adminPage.testParamNameList.size(), 2);
+    }
+    @And("click on add Pathology Test button")
+    public void clickOnAddPathologyTestButton() {
+        adminPage.addPathologyTestButton.click();
+    }
+
 
     @Given("Click on the notification icon.")
     public void click_on_the_notification_icon() {

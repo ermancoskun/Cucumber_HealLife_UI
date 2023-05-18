@@ -14,6 +14,7 @@ import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.FindBy;
 import pages.AdminPage;
 import pages.PatientPage;
 import utilities.ConfigReader;
@@ -1041,17 +1042,37 @@ public class PatientStepdefinitions {
     }
 
 
+    @Then("Click the pay buttonnn.")
+    public void clickThePayButtonnn() {
+        patientPage.radiologyPayButton.click();
+
+    }
+
+    @Then("the amount paid is entereddd.")
+    public void theAmountPaidIsEntereddd() {
+
+        patientPage.radiologyPaymentAmount.click();
+        patientPage.radiologyPaymentAmount.clear();
+        patientPage.radiologyPaymentAmount.sendKeys("10");
+        patientPage.radiologyPaymentAmount.click();
+    }
+
+    @Then("close the screennnnnn")
+    public void closeTheScreennnnnn() {
+        patientPage.radiologyShowClose.click();
+    }
 
 
-
-
-
-
-
-
-
-
+        @Then("close the screennnnn")
+        public void closeTheScreennnnn() {
+            patientPage.radiologyClose.click();
+    }
 }
+
+
+
+
+
 
 
 

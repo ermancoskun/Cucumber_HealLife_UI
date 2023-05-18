@@ -839,6 +839,11 @@ public class AdminStepdefinitions {
 
 
     }
+    @And("click on sign in button")
+    public void clickOnSignInButton() {
+        adminPage.adminSignInButton.click();
+    }
+
 
     @And("Admin Login sayfasında gecerli username  ve password girer")
     public void adminLoginSayfasındaGecerliUsernameVePasswordGirer() {

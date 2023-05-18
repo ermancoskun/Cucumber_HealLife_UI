@@ -77,15 +77,15 @@ public class HomepageStepdefinitions {//
     }
 
     @And("Close browser")
-
-    public void closeBrowser() {
-        Driver.closeDriver();
-
+    public void closeBrowser() {/* browser is closed by the hooks class */
+        //Driver.closeDriver();
     }
+
 
     @And("Click on the complainIcon")
     public void clickOnTheComplainIcon() {
         homepage.complainButton.click();
+        ReusableMethods.bekle(1);
     }
 
     @And("Verify that it redirects to the {string} page.")

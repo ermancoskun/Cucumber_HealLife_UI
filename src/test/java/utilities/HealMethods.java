@@ -466,6 +466,212 @@ public class HealMethods {
 
     }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public static WebElement getTextButton(String butonIsmi){ // parametre yollarken buton isminin
+        //onunde bosluk olup olmadigina dikkat edip, featurea oyle yazalım
+        WebElement button=Driver.getDriver().findElement(By.xpath("//*[text()='"+butonIsmi+"']"));
+        return button;
+    }
+    public static void lookFromListForPositiveSenarioAssert (String locaterOfList,String lookForName,String message){
+
+        List<WebElement> eventList = Driver.getDriver().findElements(By.xpath(locaterOfList));
+        int count = 0;
+        for (int i = 0; i < eventList.size(); i++) {
+            if (eventList.get(i).getText().equals(ConfigReader.getProperty(lookForName))) {
+                count++;
+                break;
+            }
+        }
+        if (count > 0) {
+            Assert.assertTrue(true);
+        } else {
+            Assert.assertTrue(message, false);
+        }
+
+    }
+    public static void lookFromListForNegativeSenarioAssert (String locaterOfList,String lookForName,String message){
+
+        List<WebElement> eventList = Driver.getDriver().findElements(By.xpath(locaterOfList));
+        int count = 0;
+        for (int i = 0; i < eventList.size(); i++) {
+            if (eventList.get(i).getText().equals(ConfigReader.getProperty(lookForName))) {
+                count++;
+                break;
+            }
+        }
+        if (count > 0) {
+            Assert.assertTrue(true);
+        } else {
+            Assert.assertTrue(message, false);
+        }
+
+    }
+
+
     public static void makeFilterTestPatientOPD(String filterName,int filtreKacinciSirada, int toplamSutunSayisi){
 
         // Filter elementini bul ve tıklama işlemini gerçekleştir
@@ -499,6 +705,7 @@ public class HealMethods {
                 .thenComparing(Comparator.naturalOrder()));
         Assert.assertEquals("Filter non functional", expectedList, sortedList);
     }
+
 }
 
 

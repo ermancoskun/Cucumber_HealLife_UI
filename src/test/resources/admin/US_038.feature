@@ -7,6 +7,8 @@ Feature: US_038 As an admin I would like to have a page in the dashboard sidebar
 
 
 
+
+  @US038
   Scenario: TC_01 Clicking on the Billing link on the Dashboard sidebar should lead to the relevant page.
         Then Verified redirected to Billing page
 
@@ -37,6 +39,7 @@ Feature: US_038 As an admin I would like to have a page in the dashboard sidebar
         And Click on the OPD button
         Then Click 1. iconButton under the last column for display first patient profile
         Then Verified redirected to Patent Profile page
+
 
   Scenario: TC_08 When the names under Name in the OPD Billing List are clicked,
                   the information of the relevant patient (detail profile) should be displayed.

@@ -3,17 +3,11 @@ package pages;
 
 
 import com.github.javafaker.Faker;
-import org.checkerframework.checker.calledmethods.qual.EnsuresCalledMethodsIf;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 
-import io.cucumber.java.zh_cn.假如;
-import org.checkerframework.checker.calledmethods.qual.EnsuresCalledMethodsIf;
-import org.openqa.selenium.By;
-
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 
@@ -28,31 +22,24 @@ import utilities.JSUtilities;
 import utilities.ReusableMethods;
 
 
-import utilities.ConfigReader;
-import utilities.Driver;
-
-import utilities.HealMethods;
-import utilities.ReusableMethods;
-
-
 import java.util.ArrayList;
 import java.util.Arrays;
 
 import java.util.List;
 
-public class AdminPage extends Base{
+public class AdminPage extends Base {
 
 
     //Admin > Billing
-    @FindBy (xpath = "(//h3[@class='box-title titlefix'])[1]")
+    @FindBy(xpath = "(//h3[@class='box-title titlefix'])[1]")
     public WebElement singleModuleWindow;
 
     //Admin > Billing
-    @FindBy (xpath = "(//h3[@class='box-title titlefix'])[2]")
+    @FindBy(xpath = "(//h3[@class='box-title titlefix'])[2]")
     public WebElement opdIpdWindow;
 
     //Admin > Billing
-    @FindBy (xpath = "//p[.='OPD']")
+    @FindBy(xpath = "//p[.='OPD']")
     public WebElement opdButton;
 
     //Admin > Billing > OPD
@@ -95,11 +82,11 @@ public class AdminPage extends Base{
     public WebElement maritalStatusDropDown;
 
     //Admin > Billing
-    @FindBy (xpath = "//p[.='Pathology']")
+    @FindBy(xpath = "//p[.='Pathology']")
     public WebElement pathologyButton;
 
     //Admin > Billing
-    @FindBy (xpath = "//p[.='Radiology']")
+    @FindBy(xpath = "//p[.='Radiology']")
     public WebElement radiologyButton;
 
     //Admin > Billing
@@ -145,11 +132,11 @@ public class AdminPage extends Base{
     public WebElement dischargedPatientButton;
 
     //Admin > IPD > Discharged Patient Button > Discharged Confirmation Text
-    @FindBy (xpath = "//h3[@class=\"box-title titlefix\"]")
+    @FindBy(xpath = "//h3[@class=\"box-title titlefix\"]")
     public WebElement ipdDischargedConfirmationText;
 
     //Admin > IPD &  Discharge Patient  > Table headers
-    @FindBy (xpath = "//*[@id=\"DataTables_Table_0\"]//th")
+    @FindBy(xpath = "//*[@id=\"DataTables_Table_0\"]//th")
     public List<WebElement> ipdPatientAndDischargePatientTableHeaders;
 
     //Admin > Pathology > Generate Bill Button
@@ -184,6 +171,7 @@ public class AdminPage extends Base{
     @FindBy(xpath = "//input[@id='billno']")
     public WebElement getBillNo;
 
+
     // adminLoginPage
     @FindBy(xpath = "//input[@id='email']")
     public WebElement emailBox;
@@ -193,6 +181,7 @@ public class AdminPage extends Base{
     // adminLoginPage
     @FindBy(xpath = "//button[@type='submit']")
     public WebElement signInButton;
+
 
     // adminpage > Navbardaki Heallife Logosu
     @FindBy(xpath = "//span[@class='logo-lg']")
@@ -216,7 +205,7 @@ public class AdminPage extends Base{
 
     //Admin > IPD > Show (3 line) > Headers
     @FindBy(xpath = "//ul[@class=\"nav nav-tabs navlistscroll\"]//li")
-    public List<WebElement>ipdPersonalInformationHeaders;
+    public List<WebElement> ipdPersonalInformationHeaders;
 
     //Admin > IPD > Show (3 line) > Headers right button.
     @FindBy(xpath = "//div[@class=\"scrtabs-tab-scroll-arrow scrtabs-js-tab-scroll-arrow-right\"]")
@@ -375,8 +364,6 @@ public class AdminPage extends Base{
 
 
 
-
-
     ////////////////***********Humeyra******//////////
 
     //admin>Pharmacy>Bill No
@@ -418,7 +405,7 @@ public class AdminPage extends Base{
 
 
     ///////LOGIN METHODU///////
-    public void loginAsAdmin (String username,String password){
+    public void loginAsAdmin(String username, String password) {
         emailBox.sendKeys(ConfigReader.getProperty(username));
         passwordBox.sendKeys(ConfigReader.getProperty(password));
         signInButton.click();
@@ -461,6 +448,10 @@ public class AdminPage extends Base{
     @FindBy(xpath = "//span[@class='label label-warning']")
     public WebElement numberOfNotification;
 
+    // adminpage > Navbardaki mesaj simgesi uzerindeki sayi
+    @FindBy(xpath = "//a[@data-placement='bottom']/span[@class='label label-warning']")
+    public WebElement numberOfMessage;
+
     // admin/systemnotification > Bildirim sayfasindaki Type basligi
     @FindBy(xpath = "//div[text()='Type']")
     public WebElement TypeHeader;
@@ -476,16 +467,18 @@ public class AdminPage extends Base{
     // admin/systemnotification > Bildirim sayfasindaki Okunmamis birinci siradaki bildirim
     @FindBy(xpath = "(//div[@class='notifymiddle noteDM10'])[1]")
     public WebElement aNotificationOnNotificationPage;
-    public WebElement getNotificationOnNotificationPage(int notificationIndex){
-        WebElement notification = Driver.getDriver().findElement(By.xpath("(//div[@class='notifymiddle noteDM10'])["+notificationIndex+"]"));
+
+    public WebElement getNotificationOnNotificationPage(int notificationIndex) {
+        WebElement notification = Driver.getDriver().findElement(By.xpath("(//div[@class='notifymiddle noteDM10'])[" + notificationIndex + "]"));
         return notification;
     }
 
     // admin/systemnotification > Bildirim sayfasindaki bildirim detayi
     @FindBy(xpath = "(//div[@class='note-content'])[1]")
     public WebElement notificationDetailOnNotificationPage;
-    public WebElement getNotificationDetailOnNotificationPage(int notificationDetailIndex){
-        WebElement notificationDetail = Driver.getDriver().findElement(By.xpath("(//div[@class='note-content'])["+notificationDetailIndex+"]"));
+
+    public WebElement getNotificationDetailOnNotificationPage(int notificationDetailIndex) {
+        WebElement notificationDetail = Driver.getDriver().findElement(By.xpath("(//div[@class='note-content'])[" + notificationDetailIndex + "]"));
         return notificationDetail;
     }
 
@@ -505,9 +498,13 @@ public class AdminPage extends Base{
     @FindBy(xpath = "//div[@id='frame']")
     public WebElement chatSystemWindow;
 
-    // admin/chat >> Chat sayfasındaki iletişim kurulan kisiler listesi
+    // admin/chat >> Chat sayfasındaki iletişim kurulan kisilerden ilki
     @FindBy(xpath = "(//p[@class='name'])[1]")
     public WebElement contactedFirstPersonOnChatPage;
+
+    // admin/chat >> Chat sayfasındaki iletişim kurulan Doctor Duygu Gunaydın
+    @FindBy(xpath = "//li[@data-chat-connection-id='104']")
+    public WebElement contactDuyguGunaydin;
 
     // admin/chat >> Chat sayfasındaki kisi ekleme butonu (+)
     @FindBy(xpath = "//button[@id='addcontact']")
@@ -685,6 +682,536 @@ public class AdminPage extends Base{
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // admin/chat >> Chat sayfasındaki mesaj goruntuleme cercevesi
+    @FindBy(xpath = "//div[@class='messages']")
+    public WebElement messagesFrame;
+
+    // admin/chat >> Chat sayfasındaki mesaj yazma kutusu "Write Your Message"
+    @FindBy(xpath = "(//input[@type='text'])[3]")
+    public WebElement writeYourMessageLabel;
+
+    // admin/chat >> Chat sayfasındaki mesaj gonderme simgesi
+    @FindBy(xpath = "//button[@class='submit input_submit']")
+    public WebElement messageSubmitButton;
+
+    // adminpage > Navbardaki takvim simgesi
+    @FindBy(xpath = "(//li[@class='cal15'])[3]")
+    public WebElement calendarIcon;
+
+    // admin/calendar/events >>> Calendar sayfasındaki takvim cercevesi(tamami)
+    @FindBy(xpath = "//div[@id='calendar']")
+    public WebElement calendarFrame;
+
+    // admin/calendar/events >>> Calendar sayfasındaki To Do List cercevesi
+    @FindBy(xpath = "(//div[@class='box box-primary'])[2]")
+    public WebElement toDoListFrame;
+
+    // admin/calendar/events >>> Calendar sayfasındaki Add New Event penceresindeki Event Title boxi
+    @FindBy(xpath = "//input[@id='input-field']")
+    public WebElement eventTitleLabel;
+
+    //admin/calendar/events >>> Calendar sayfasındaki month butonu
+    @FindBy(xpath = "(//button[@type='button'])[5]")
+    public WebElement monthButton;
+
+    //admin/calendar/events >>> Calendar sayfasındaki week butonu
+    @FindBy(xpath = "(//button[@type='button'])[6]")
+    public WebElement weekButton;
+
+    //admin/calendar/events >>> Calendar sayfasındaki day butonu
+    @FindBy(xpath = "(//button[@type='button'])[7]")
+    public WebElement dayButton;
+
+    //admin/calendar/events >>> Calendar sayfasındaki sol ok butonu
+    @FindBy(xpath = "(//button[@type='button'])[2]")
+    public WebElement leftArrowButton;
+
+    //admin/calendar/events >>> Calendar sayfasındaki sag ok butonu
+    @FindBy(xpath = "(//button[@type='button'])[3]")
+    public WebElement rightArrowButton;
+
+    //admin/calendar/events >>> Calendar sayfasındaki today butonu
+    @FindBy(xpath = "(//button[@type='button'])[4]")
+    public WebElement todayButton;
+
+    // admin/calendar/events >>> Calendar sayfasındaki task ekleme (+) butonu
+    @FindBy(xpath = "//button[@onclick='add_task()']")
+    public WebElement addTaskButton;
+
+    // admin/calendar/events >>> Calendar sayfasındaki task ekle penceresindeki title box'i
+    @FindBy(xpath = "//input[@id='task-title']")
+    public WebElement titleLabelOnAddTaskWindow;
+
+    // admin/calendar/events >>> Calendar sayfasındaki task ekle penceresindeki save butonu
+    @FindBy(xpath = "//input[@type='submit']")
+    public WebElement saveButtonOnAddTaskWindow;
+
+    // admin/calendar/events >>> Calendar sayfasındaki task duzenleme butonu
+    @FindBy(xpath = "(//i[@class='fa fa-pencil'])[1]")
+    public WebElement taskEditButton;
+
+    // admin/calendar/events >>> Calendar sayfasındaki task silme butonu
+    @FindBy(xpath = "(//i[@class='fa fa-remove'])[1]")
+    public WebElement taskRemoveButton;
+
+    // admin/calendar/events >>> Calendar sayfasındaki task listesindeki ilk task
+    @FindBy(xpath = "(//p[@class='tododesc'])[1]")
+    public WebElement firstTaskFromList;
+
+    // adminpage > Navbardaki gorev simgesi
+    @FindBy(xpath = "//a[@title='Task']")
+    public WebElement taskIcon;
+
+    // adminpage > Navbardaki bed status simgesi
+    @FindBy(xpath = "//a[@id='beddata']")
+    public WebElement bedStatusIcon;
+
+    // adminpage# > Navbardaki bed status simgesine tıklayınca gelen bılgı penceresi
+    @FindBy(xpath = "//div[@id='ajaxbedstatus']")
+    public WebElement bedStatusInformationWindow;
+
+    // adminpage > Navbardaki profil simgesi
+    @FindBy(xpath = "//a[@class='dropdown-toggle']")
+    public WebElement profileIcon;
+
+    // adminpage > Navbardaki profil simgesine tıklayınca acılan penceredeki profil butonu
+    @FindBy(xpath = "(//*[text()='Profile'])[1]")
+    public WebElement profileButton;
+
+    // adminpage > Navbardaki profil simgesine tıklayınca acılan penceredeki password butonu
+    @FindBy(xpath = "(//*[text()='Password'])[1]")
+    public WebElement passwordButton;
+
+    // adminpage > Navbardaki profil simgesine tıklayınca acılan penceredeki logout butonu
+    @FindBy(xpath = "//*[text()='Logout']")
+    public WebElement logoutButon;
+
+    // adminpage > Navbardaki profil simgesine tıklayınca acılan penceredeki profil resmi simgesi
+    @FindBy(xpath = "(//img[@alt='User Image'])[2]")
+    public WebElement profileImageIcon;
+
+    // admin/staff/profile/675 >> sagdaki admin bilgileri gosteren pencere
+    @FindBy(xpath = "//div[@class='box-body box-profile']")
+    public WebElement adminInformationWindowRight;
+
+    // admin/staff/profile/675 >> soldaki admin bilgileri gosteren pencere
+    @FindBy(xpath = "//div[@class='tab-content']")
+    public WebElement adminInformationWindowLeft;
+
+    // admin/staff/profile/675 >> edit butonu
+    @FindBy(xpath = "//i[@class='fa fa-pencil']")
+    public WebElement editButton;
+
+    // admin/changepass >> current password kutusu
+    @FindBy(xpath = "//input[@name='current_pass']")
+    public WebElement currentPasswordLabel;
+
+    // admin/staff/edit/675 >> father name kutusu
+    @FindBy(xpath = "//input[@id='father_name']")
+    public WebElement fatherNameLabel;
+
+    // admin/staff/edit/675 >> father name kutusu
+    @FindBy(xpath = "//input[@id='mother_name']")
+    public WebElement motherNameLabel;
+
+    // admin/staff/edit/675 >> kayıt basarılı elementi
+    @FindBy(xpath = "//div[@class='alert alert-success']")
+    public WebElement recordUpdatedSuccessfullyText;
+
+    // admin/changepass >> sifre degıstırme sayfasından sonra cıkan 500 hata kodu
+    @FindBy(xpath = "//div[@class='error-code']")
+    public WebElement errorCode;
 
 
 

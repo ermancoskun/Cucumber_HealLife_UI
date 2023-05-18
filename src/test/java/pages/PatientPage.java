@@ -1191,6 +1191,165 @@ public class PatientPage extends Base {
     @FindBy (xpath = "//div[@id='DataTables_Table_6_wrapper']")
     public WebElement BedHistorySummary;
 
+    @FindBy(xpath = "//input[@name='username']")
+    public WebElement homepage_login_username;
+    //Homepage --> Login --> password
+    @FindBy(xpath = "//input[@name='password']")
+    public WebElement homepage_login_password;
+    //Homepage --> Login --> signInButton
+    @FindBy(xpath = "//button[@type='submit']")
+    public WebElement homepage_login_signinButton;
+    //DASHBOARD da aranan başlığın var olup olmadığını verir.
+    public boolean dashboard_header_list_bu_basligi_iceriyormu(String baslikismi) {
+        boolean sonuc = false;
+        List<WebElement> headers = Driver
+                .getDriver()
+                .findElements(By.xpath("//li[@class='treeview ']"));
+        List<String> dashboard_headerlist = new ArrayList<>();
+        for (WebElement each:headers
+        ) {
+            dashboard_headerlist.add(each.getText());
+        }
+        System.out.println(dashboard_headerlist);
+        for (WebElement each : headers
+        ) {
+            if (each.getText().equals(baslikismi))
+                sonuc = true;
+        }
+        return sonuc;
+    }
+    //Patientpage --> Dashboard --> BloodBank
+    @FindBy(xpath = "//li[@class='treeview '][8]")
+    public WebElement patient_bloodbank_header;
+    //Patientpage --> Dashboard --> BloodBank --> Blood Issue Header
+    @FindBy(xpath = "//a[@href='#bloodissue']")
+    public WebElement patient_blood_issue_header;
+    //Patientpage --> Dashboard --> BloodBank --> Blood Issue Part
+    @FindBy(xpath = "//div[@id='bloodissue']")
+    public WebElement patient_blood_issue_part;
+    //Patientpage --> Dashboard --> BloodBank --> Component Issue Header
+    @FindBy(xpath = "//a[@href='#activity']")
+    public WebElement patient_component_issue_header;
+    //Patientpage --> Dashboard --> BloodBank --> Component Issue Part
+    @FindBy(xpath = "//div[@id='activity']")
+    public WebElement patient_component_issue_part;
+    public static boolean profilInfoList(String data){
+        List<WebElement> actualList = Driver.getDriver().findElements(By.xpath("//li[@class='list-group-item listnoback']"));
+        List<String> baslikListesiActual = new ArrayList<>();
+        for (WebElement each : actualList
+        ) {
+            baslikListesiActual.add(each.getText());
+        }
+        String[] liste = data.split(", ");
+        int count = 0;
+        for (int i = 0; i < liste.length; i++) {
+            for (int j = 0; j < baslikListesiActual.size(); j++) {
+                if (baslikListesiActual.get(j).contains(liste[i])) {
+                    count++;
+                }
+            }
+        }
+        /*System.out.println(count);
+        System.out.println(liste.length);
+        System.out.println(baslikListesiActual);
+        System.out.println(Arrays.toString(liste));
+         */
+        if (count == liste.length) {
+            return true;
+        }
+        return false;
+    }
+    //sayfalarda istenen başlıkların varlığını doğrulayan method.Birçok sayfa için bu xpath çalışıyor,
+    // çalışmazsa method ismini değiştirip xpathi de değştirerek istenilen sayfada kullanılabilir
+    public static boolean verifiesHeadersAreVisibleMethod(String data) {
+        List<WebElement> actualList = Driver.getDriver().findElements(By.xpath("//th[@rowspan='1']"));
+        //th[@rowspan='1']
+        //*[@id=\"DataTables_Table_0\"]/thead/tr[1]//th"
+        List<String> baslikListesiActual = new ArrayList<>();
+        for (WebElement each : actualList
+        ) {
+            baslikListesiActual.add(each.getText());
+        }
+        String[] liste = data.split(", ");
+        int count = 0;
+        for (int i = 0; i < liste.length; i++) {
+            for (int j = 0; j < baslikListesiActual.size(); j++) {
+                if (baslikListesiActual.get(j).equals(liste[i])) {
+                    count++;
+                }
+            }
+        }
+        System.out.println(count);
+        System.out.println(liste.length);
+        System.out.println(baslikListesiActual);
+        System.out.println(Arrays.toString(liste));
+        if (count == liste.length) {
+            return true;
+        }
+        return false;
+    }
+    public static boolean StringListSortTest(int sutunNo) {
+        Select select = new Select(Driver.getDriver().findElement(By.xpath("//select[@name='DataTables_Table_0_length']")));
+        ReusableMethods.bekle(3);
+        select.selectByVisibleText("All");
+        ReusableMethods.bekle(3);
+        WebElement baslik = Driver.getDriver().findElement(By.xpath("//*[@id=\"DataTables_Table_0\"]/thead/tr[1]//th[" + sutunNo + "]"));
+        baslik.click();
+        ReusableMethods.bekle(3);
+        List<WebElement> ActualList = Driver.getDriver().findElements(By.xpath("//*[@id=\"DataTables_Table_0\"]/tbody/tr/td[" + sutunNo + "]"));
+        List<String> ActualStringList = new ArrayList<>();
+        for (WebElement each : ActualList
+        ) {
+            ActualStringList.add(each.getText().toLowerCase().replaceAll("\\d", "").replace(".", " "));
+        }
+        List<String> ExpectedList = new ArrayList<>(ActualStringList);
+        Collections.sort(ExpectedList);
+        System.out.println(ActualStringList);
+        System.out.println(ExpectedList);
+        if (ActualStringList.equals(ExpectedList)) {
+            return true;
+        }
+        return false;
+    }
+
+
+    //==============13 Mayıs ==============================
+    //Patientpage --> Dashboard --> BloodBank --> Blood Issue Part --> Searchbox
+    @FindBy(xpath="(//input[@type='search'])[1]")
+    public WebElement bloodIssueSearchBox;
+    //Patientpage --> Dashboard --> BloodBank --> Component Issue Part --> Searchbox
+    @FindBy(xpath="(//input[@type='search'])[2]")
+    public WebElement componentIssueSearchBox;
+    //Patientpage --> Dashboard --> BloodBank --> Blood Issue Part --> Actions/View Payment
+    @FindBy(xpath = "(//a[@data-record-id='54'])[1]")
+    public WebElement bloodIssueViewPayment;
+    //Patientpage --> Dashboard --> BloodBank --> Blood Issue Part --> Actions/Show
+    @FindBy(xpath = "(//a[@data-record-id='54'])[2]")
+    public WebElement bloodIssueShow;
+    //Patientpage --> Dashboard --> BloodBank --> Blood Issue Part --> View Payment -->Payment Header
+    @FindBy(xpath = "(//h4[@class='modal-title'])[2]")
+    public WebElement paymentHeader;
+    //Patientpage --> Dashboard --> BloodBank --> Blood Issue Part --> View Payment -->close button
+    @FindBy(xpath = "(//button[@class='close'])[2]")
+    public WebElement closeViewPaymentPage;
+    //Patientpage --> Dashboard --> BloodBank --> Blood Issue Part --> Actions/pay
+    @FindBy(xpath = "(//a[@class='btn btn-primary btn-xs'])[2]")
+    public WebElement bloodIsuuePayButton;
+    //Patientpage --> Dashboard --> BloodBank --> Blood Issue Part --> pay -->amount box
+    @FindBy(xpath = "//div[@class='col-sm-7']")
+    public WebElement amountBox;
+    //Patientpage --> Dashboard --> BloodBank --> Blood Issue Part --> pay -->add button
+    @FindBy(xpath = "//button[@id='pay_button']")
+    public WebElement addButton;
+    //Patientpage --> Dashboard --> BloodBank --> Blood Issue Part --> pay -->add--> pay with card button
+    @FindBy(xpath = "//button[@class='stripe-button-el']")
+    public WebElement payWithCardButton;
+    //Patientpage --> Dashboard --> BloodBank --> Blood Issue Part --> pay -->add--> pay with card -->emailBox
+    @FindBy(xpath = "//input[@id='email']")
+    public WebElement emailBoxPayment;
+    @FindBy(xpath = "//i[@class='fa fa-check']")
+    public WebElement successPaymentLogo;
+
 
 }
 

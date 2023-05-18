@@ -32,6 +32,7 @@ import utilities.ReusableMethods;
 
 import javax.swing.*;
 
+import java.text.ParseException;
 import java.util.Date;
 import java.util.Random;
 
@@ -1362,6 +1363,164 @@ public class PatientStepdefinitions {
         @Then("close the screennnnn")
         public void closeTheScreennnnn() {
             patientPage.radiologyClose.click();
+    }
+
+
+    @Given("user goes to patient login page")
+    public void go_patient_login_page(){
+        Driver.getDriver().get("https://qa.heallifehospital.com/site/userlogin");
+    }
+    @Then("The patient logs in with {string} and {string}.")
+    public void the_patient_logs_in_with_valid_username_and_password(String username, String password) {
+        patientPage.homepage_login_username.sendKeys(username);
+        ReusableMethods.bekle(1);
+        patientPage.homepage_login_password.sendKeys(password);
+        ReusableMethods.bekle(2);
+        patientPage.homepage_login_signinButton.click();
+    }
+    @Then("Verifies that there is a {string} heading in the dashboard sidebar on the user page.")
+    public void verify_dashboard_contains_header(String str) {
+        Assert.assertTrue(patientPage.dashboard_header_list_bu_basligi_iceriyormu(str));
+        System.out.println(str);
+    }
+    @Then("Blood Bank heading is clicked.")
+    public void blood_bank_heading_is_clicked() {
+        patientPage.patient_bloodbank_header.click();
+    }
+    @Then("the Blood Bank page has been reached is verified")
+    public void the_blood_bank_page_has_been_reached_is_verified() {
+        Assert.assertTrue(patientPage.patient_blood_issue_part.isDisplayed());
+    }
+    @Then("Closes the page")
+    public void page_is_closed() {
+        //Driver.quitDriver();
+    }
+    @Then("Verifies that {string} is displayed.")
+    public void verifiesThatIsDisplayed(String data) {
+        Assert.assertTrue(patientPage.profilInfoList(data));
+    }
+    @Then("verifies that Blood Issue heading is visible.")
+    public void verifiesThatBloodIssueHeadingIsVisible() {
+        Assert.assertTrue(patientPage.patient_blood_issue_header.isDisplayed());
+    }
+    @Then("verifies that Component Issue heading is visible.")
+    public void verifiesThatComponentIssueHeadingIsVisible() {
+        Assert.assertTrue(patientPage.patient_component_issue_header.isDisplayed());
+    }
+    @Then("clicks to Component Issue header.")
+    public void clicksToComponentIssueHeader() {
+        patientPage.patient_component_issue_header.click();
+    }
+    @Then("verifies that Component Issue part is displayed.")
+    public void verifiesThatComponentIssuePartIsDisplayed() {
+        Assert.assertTrue(patientPage.patient_component_issue_part.isDisplayed());
+    }
+    @Then("clicks to Blood Issue header.")
+    public void clicksToBloodIssueHeader() {
+        patientPage.patient_blood_issue_header.click();
+    }
+    @Then("verifies that Blood Issue part is displayed.")
+    public void verifiesThatBloodIssuePartIsDisplayed() {
+        Assert.assertTrue(patientPage.patient_blood_issue_part.isDisplayed());
+    }
+    @Then("Verifies {string} headers are visible.")
+    public void verifiesHeadersAreVisible(String data) {
+        Assert.assertTrue(patientPage.verifiesHeadersAreVisibleMethod(data));
+    }
+    //
+    @Then("Verifies sorting could be done for headers")
+    public void verifiesSortingCouldBeDoneForHeaders() throws ParseException {
+        Assert.assertTrue(patientPage.StringListSortTest(1));//BillNo
+        Assert.assertTrue(patientPage.TarihListSiralamaTesti(2));//Issue Date
+        Assert.assertTrue(patientPage.StringListSortTest(6));//Donor Name
+        Assert.assertTrue(patientPage.intListSortTest(8));//Amount
+        ReusableMethods.bekle(2);
+        //Assert.assertTrue(PatientPage.intListSortTest(9));//Paid Amount
+        ReusableMethods.bekle(2);
+        //Assert.assertTrue(PatientPage.intListSortTest(10));//Balance Amount
+    }
+    //============BURASI 13 Mayıs================
+    @Then("Verifies that searchbox is visible.")
+    public void verifiesThatSearchboxIsVisible() {
+        Assert.assertTrue(patientPage.bloodIssueSearchBox.isDisplayed());
+    }
+    @And("Verifies that on this page Dropdown options are {string} and {string}.")
+    public void verifiesThatOnTheBloodIssuePageDropdownOptionsAreAnd(String string, String string2) {
+        String Locate = "//select[@name='DataTables_Table_0_length']";
+        String ddm = Driver.getDriver().findElement(By.xpath(Locate)).getText();
+        System.out.println(ddm);
+        Assert.assertTrue(ddm.contains(string));
+        Assert.assertTrue(ddm.contains(string2));
+    }
+    @And("On Blood Issue page, verifies that view payments is usable under the Actions heading.")
+    public void verifiesThatViewPaymentsIsUsableUnderTheActionsHeading() {
+        patientPage.bloodIssueViewPayment.click();
+        ReusableMethods.bekle(2);
+        Assert.assertTrue(patientPage.paymentHeader.isDisplayed());
+        patientPage.closeViewPaymentPage.click();
+    }
+    @And("On Blood Issue page, verifies that Show button is usable under the Actions heading.")
+    public void onBloodIssuePageVerifiesThatShowButtonIsUsableUnderTheActionsHeading() {
+        System.out.println("yapamadım:(");
+    }
+    @And("On Blood Issue page, verifies that Pay button is usable under the Actions heading.")
+    public void onBloodIssuePageVerifiesThatPayButtonIsUsableUnderTheActionsHeading() {
+        patientPage.bloodIsuuePayButton.click();
+        ReusableMethods.bekle(2);
+        Actions actions = new Actions(Driver.getDriver());
+        actions.doubleClick(patientPage.amountBox)
+                .sendKeys(Keys.DELETE).perform();
+        ReusableMethods.bekle(2);
+        actions.sendKeys(patientPage.amountBox,"1.00").perform();
+        ReusableMethods.bekle(2);
+        patientPage.addButton.click();
+        patientPage.payWithCardButton.click();
+        ReusableMethods.bekle(2);
+        actions.sendKeys(patientPage.emailBoxPayment,"asdf@gmail.com")
+                .sendKeys(Keys.TAB)
+                .sendKeys("4242424242424242")
+                .sendKeys(Keys.TAB)
+                .sendKeys("1028")
+                .sendKeys(Keys.TAB)
+                .sendKeys("123")
+                .sendKeys(Keys.TAB)
+                .sendKeys("12345")
+                .sendKeys(Keys.TAB).click().perform();
+        ReusableMethods.bekle(3);
+        Assert.assertTrue(patientPage.successPaymentLogo.isDisplayed());
+    }
+    @And("Verifies that on the Component Issue page Dropdown options are {string} and {string}.")
+    public void verifiesThatOnTheComponentIssuePageDropdownOptionsAreAnd(String arg0, String arg1) {
+        String Locate = "//select[@name='DataTables_Table_0_length']";
+        String ddm = Driver.getDriver().findElement(By.xpath(Locate)).getText();
+        System.out.println(ddm);
+        Assert.assertTrue(ddm.contains(arg0));
+        Assert.assertTrue(ddm.contains(arg1));
+    }
+    @And("On Component Issue page, verifies that view payments is usable under the Actions heading.")
+    public void onComonentIssuePageVerifiesThatViewPaymentsIsUsableUnderTheActionsHeading() {
+        patientPage.bloodIssueViewPayment.click();
+        ReusableMethods.bekle(2);
+        Assert.assertTrue(patientPage.paymentHeader.isDisplayed());
+        patientPage.closeViewPaymentPage.click();
+    }
+    @Then("Verifies that on the component issue page,sorting could be done for headers")
+    public void verifiesThatOnTheComponentIssuePageSortingCouldBeDoneForHeaders() throws ParseException {
+        Assert.assertTrue(patientPage.intListSortTest(1));
+        Assert.assertTrue(patientPage.TarihListSiralamaTesti(2));
+        Assert.assertTrue(patientPage.StringListSortTest(5));
+        Assert.assertTrue(patientPage.intListSortTest(8));
+        Assert.assertTrue(patientPage.intListSortTest(9));
+        Assert.assertTrue(patientPage.intListSortTest(10));
+        Assert.assertTrue(patientPage.intListSortTest(11));
+    }
+    @And("On Component Issue page, verifies that Show button is usable under the Actions heading.")
+    public void onComponentIssuePageVerifiesThatShowButtonIsUsableUnderTheActionsHeading() {
+        System.out.println("print penceresini kapatamıyorum");
+    }
+    @And("On Component Issue page, verifies that Pay button is usable under the Actions heading.")
+    public void onComponentIssuePageVerifiesThatPayButtonIsUsableUnderTheActionsHeading() {
+        System.out.println("önce bi blood issue part ı halledelim");
     }
 }
 

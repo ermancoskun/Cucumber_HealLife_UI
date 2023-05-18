@@ -709,8 +709,12 @@ public class PatientStepdefinitions {
 
 
         patientPage.RightArrowKey.click();
-      Assert.assertTrue(patientPage.BedHistory.isEnabled());
-      patientPage.BedHistory.click();
+        patientPage.RightArrowKey.click();
+        ReusableMethods.bekle(2);
+        patientPage.BedHistory.click();
+        patientPage.BedHistory.isEnabled();
+
+
 
     }
 
@@ -1200,6 +1204,156 @@ public class PatientStepdefinitions {
     public void closeTheScreennnnnn() {
         patientPage.radiologyShowClose.click();
     }
+
+    @Then("The list can be sorted over the titles in the Lab Investigation List.")
+    public void the_list_can_be_sorted_over_the_titles_in_the_lab_investigation_list() {
+
+
+        patientPage.TitleAssertion("Lab Investigation");
+
+    }
+
+
+
+    @Then("Results should be visible under the Titles in the Lab Investigation List.")
+    public void results_should_be_visible_under_the_titles_in_the_lab_investigation_list() {
+      Assert.assertTrue(patientPage.LabInvestigationResultText.isDisplayed());
+    }
+
+
+
+    @Then("Click on the Operation Page")
+    public void click_on_the_operation_page() {
+
+        patientPage.OperationTab.click();
+    }
+    @Then("The operation details of the patient should be displayed on the Operation page.")
+    public void the_operation_details_of_the_patient_should_be_displayed_on_the_operation_page() {
+
+        patientPage.OperationShow.click();
+        ReusableMethods.bekle(3);
+        Assert.assertTrue(patientPage.OperationDetails.isDisplayed());
+    }
+
+    @Then("Click on Charges tab")
+    public void click_on_charges_tab() {
+        patientPage.ChargesTab.click();
+    }
+    @Then("The patient should be able to view the expense details on the Charges page.")
+    public void the_patient_should_be_able_to_view_the_expense_details_on_the_charges_page() {
+
+        patientPage.TitleAssertion("Charges");
+
+
+
+
+
+    }
+    @Then("Click on the payment tab")
+    public void click_on_the_payment_tab() {
+       patientPage.PaymentTab.click();
+    }
+    @Then("From the Payment page, the patient should be able to see the payment details they have made.")
+    public void from_the_payment_page_the_patient_should_be_able_to_see_the_payment_details_they_have_made() {
+        Assert.assertTrue(patientPage.PaymentDetails.isDisplayed());
+    }
+
+
+
+    @Then("Click on the Nurse Notes tab")
+    public void click_on_the_nurse_notes_tab() {
+
+        patientPage.NurseNotesTab.click();
+    }
+    @Then("The note written by the nurse and the date and time of writing the note should be displayed on the Nurse Notes page.")
+    public void the_note_written_by_the_nurse_and_the_date_and_time_of_writing_the_note_should_be_displayed_on_the_nurse_notes_page() {
+
+        Assert.assertTrue(patientPage.NurseNotesDetails.isDisplayed());
+
+    }
+
+
+
+    @Then("Click on Timeline tab")
+    public void click_on_timeline_tab() {
+
+        patientPage.RightArrowKey.click();
+        patientPage.Timeline.click();
+    }
+    @Then("The Timeline page should display the patient's planned future actions \\(with explanations)")
+    public void the_timeline_page_should_display_the_patient_s_planned_future_actions_with_explanations() {
+        Assert.assertTrue(patientPage.TimelineSummary.isDisplayed());
+
+    }
+
+
+
+    @Then("Click on the Treatment History tab")
+    public void click_on_the_treatment_history_tab() {
+
+        patientPage.RightArrowKey.click();
+        patientPage.treatmentHistory.click();
+        ReusableMethods.bekle(2);
+
+    }
+    @Then("The Treatment History List on the Treatment History page should have titles \\(IPD No, Symptoms, Consultant, Bed).")
+    public void the_treatment_history_list_on_the_treatment_history_page_should_have_titles_ipd_no_symptoms_consultant_bed() {
+
+        patientPage.TitleAssertion("Treatment History");
+
+    }
+
+
+    @Then("To be able to search the Treatment History list, there must be a searhTextBox and it must search correctly.")
+    public void to_be_able_to_search_the_treatment_history_list_there_must_be_a_searh_text_box_and_it_must_search_correctly() {
+
+        patientPage.TreatmentHistorySearchBox.click();
+        patientPage.TreatmentHistorySearchBox.sendKeys("azat.ozay");
+        ReusableMethods.bekle(3);
+        Assert.assertTrue(patientPage.TreatmentHistorySearchResult.isDisplayed());
+    }
+
+
+
+    @Then("In the Treatment History list, the list can be sorted through the titles.")
+    public void in_the_treatment_history_list_the_list_can_be_sorted_through_the_titles() {
+
+        patientPage.TreatmentHistoryIpdNo.click();
+        Assert.assertTrue(patientPage.TreatmentHistoryIpdNo.isEnabled());
+    }
+
+
+    @Then("Titles must be visible in the Bed History List on the Bed History page")
+    public void titles_must_be_visible_in_the_bed_history_list_on_the_bed_history_page() {
+
+        patientPage.RightArrowKey.click();
+        patientPage.TitleAssertion("Bed History");
+    }
+
+
+    @Then("In order to search the Bed History list, there must be a searhTextBox and it must search correctly.")
+    public void in_order_to_search_the_bed_history_list_there_must_be_a_searh_text_box_and_it_must_search_correctly() {
+
+
+        patientPage.BedHistorySearchBox.click();
+        patientPage.BedHistorySearchBox.sendKeys("23.05.2023 01:24 PM");
+        ReusableMethods.bekle(5);
+        Assert.assertTrue(patientPage.BedHistorySearchResult.isDisplayed());
+    }
+
+
+    @Then("It is possible to sort the list over the titles in the Bed History list.")
+    public void it_is_possible_to_sort_the_list_over_the_titles_in_the_bed_history_list() {
+        patientPage.BedGroup.click();
+        ReusableMethods.bekle(2);
+        Assert.assertTrue(patientPage.BedHistorySummary.isDisplayed());
+    }
+
+
+
+
+
+
 
 
         @Then("close the screennnnn")

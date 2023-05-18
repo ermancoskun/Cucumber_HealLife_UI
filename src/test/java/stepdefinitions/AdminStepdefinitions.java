@@ -1,4 +1,8 @@
 package stepdefinitions;
+
+
+import com.beust.ah.A;
+
 import com.github.javafaker.Faker;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -11,22 +15,31 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import pages.AdminPage;
 import utilities.*;
+
 import utilities.Driver;
 import utilities.HealMethods;
 import utilities.JSUtilities;
 import utilities.ReusableMethods;
 import java.io.IOException;
+
 import java.util.List;
 
 public class AdminStepdefinitions {
     AdminPage adminPage=new AdminPage();
     Faker faker=new Faker();
+
+    AdminPage adminpage=new AdminPage();
+
+
+
     Actions actions=new Actions(Driver.getDriver());
     static String numberOfNotification1;
     static String numberOfNotification2;
+
     Select select;
     static String firstValue;
     static String secondValue;
+
 
     @Given("Goes to Admin login page")
     public void goes_to_admin_login_page() {
@@ -349,12 +362,98 @@ public class AdminStepdefinitions {
     @And("It should be possible to sort through the titles")
     public void itShouldBePossibleToSortThroughTheTitles () {
         HealMethods.makeFilterTest("Phone", 5, 11);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////DGdown
 
 
+    //============================================ Nesibe [US_040] OPD MENU ============================================
+
+    @Then("Verify  the {string} page is visiable")
+    public void verifyTheIsAdminDashboardVisiable(String arg0) {
+        Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains("admin/dashboard"));
+    }
+
+    @Then("Verify the OPD menu title on admin page is visible and enable")
+    public void verifyTheOPDMenuTitleOnAdminPageIsVisibleAndEnable() {
+        Assert.assertTrue(adminpage.opdSide.isDisplayed());
+        Assert.assertTrue(adminpage.opdSide.isEnabled());
+    }
+
+    @Then("Verify the OPD Patient on admin page is redirected")
+    public void verifyTheOPDMenuTitle() {
+        Assert.assertTrue(adminpage.opdSide.isDisplayed());
+        adminpage.opdSide.click();
+        Assert.assertTrue(adminpage.opdPatientTitle.isDisplayed());
+    }
+
+    @Then("Click the OPD in the menu")
+    public void clickTheOPDInTheMenu() {
+        adminpage.opdSide.click();
+    }
+
+    @And("Verify the titles (Name, Patient Id, Guardian Name, Gender, Phone, Consultant, Last Visit, Total Recheckup) are displayed")
+    public void verifyTheTitlesNamePatientIdGuardianNameGenderPhoneConsultantLastVisitTotalRecheckupAreDisplayed() {
+        Assert.assertTrue(adminpage.opdNameFilter.isDisplayed());
+        Assert.assertTrue(adminpage.opdPatientIdFilter.isDisplayed());
+        Assert.assertTrue(adminpage.opdGuardianFilter.isDisplayed());
+        Assert.assertTrue(adminpage.opdGender.isDisplayed());
+        Assert.assertTrue(adminpage.opdPhoneFilter.isDisplayed());
+        Assert.assertTrue(adminpage.opdConsultantFilter.isDisplayed());
+        Assert.assertTrue(adminpage.opdLastVisitFilter.isDisplayed());
+        Assert.assertTrue(adminpage.opdTotalRecheckUpFilter.isDisplayed());
+    }
+
+    @And("Verify the titles (Name, Patient Id, Guardian Name, Gender, Phone, Consultant, Last Visit, Total Recheckup) are able to sort through the titles")
+    public void verifyTheTitlesNamePatientIdGuardianNameGenderPhoneConsultantLastVisitTotalRecheckupAreAbleToSortThroughTheTitles() {
 
 
+        ReusableMethods.bekle(1);
+        HealMethods.makeFilterTest("Name" , 3,7);
+        ReusableMethods.bekle(1);
+        HealMethods.makeFilterTest("Patient Id" , 2,7);
+        ReusableMethods.bekle(1);
+        HealMethods.makeFilterTest("Guardian Name" , 3,7);
+        ReusableMethods.bekle(1);
+        HealMethods.makeFilterTest("Gender" , 4,7);
+        ReusableMethods.bekle(1);
+        HealMethods.makeFilterTest("Consultant" , 5,7);
+        ReusableMethods.bekle(1);
+        HealMethods.makeFilterTest("Last Visit" , 6,7);
+        ReusableMethods.bekle(1);
+        HealMethods.makeFilterTest("Total Recheckup" , 7,7);
 
     }
+
+    @And("Verify the seacrhTextBox  in the OPD page page is displayed and to be able to search correctly")
+    public void verifyTheSeacrhTextBoxInTheOPDPagePageIsDisplayedAndToBeAbleToSearchCorrectly() {
+        HealMethods.makeSearchBoxTest();
+    }
+
+    @And("Verify that to select the list item number \\(as all or {int}) to be displayed in the OPD Patient List on the OPD page")
+    public void verifyThatToSelectTheListItemNumberAsAllOrToBeDisplayedInTheOPDPatientListOnTheOPDPage(int arg0) {
+        HealMethods.makeAll100Test();
+    }
+
+    @And("Verify that Add Patient button is displayed and enabled")
+    public void verifyThatAddPatientButtonIsDisplayedAndEnabled() {
+        Assert.assertTrue(adminpage.opdAddPatientButton.isDisplayed());
+        Assert.assertTrue(adminpage.opdAddPatientButton.isEnabled());
+    }
+
+    @Then("Click the Add Patient")
+    public void clickTheAddPatient() {
+        adminpage.opdAddPatientButton.click();
+    }
+
+    @And("Verify that new patient  from the OPD page can be added and saved on the page that opens")
+    public void verifyThatNewPatientFromTheOPDPageCanBeAddedAndSavedOnThePageThatOpens() {
+        adminpage.addNewPatientOPD();
+    }
+
+
+    //========================================= Nesibe [US_040] OPD MENU SONU ============================================
+
 
     @Given("It should be displayed in the IPD Patient List")
     public void itShouldBeDisplayedInTheIPDPatientList (List < String > ipdTableHeads) {
@@ -736,6 +835,9 @@ public class AdminStepdefinitions {
 
 
 
+
+
+
     //===========================================================US35==========================================
     @Given("User goes to the admin page.")
     public void userGoesToTheAdminPage() {
@@ -1068,6 +1170,7 @@ public class AdminStepdefinitions {
         Assert.assertTrue(ReusableMethods.dashboardTitleListingMethod(list));
     }
 }
+
 
 
 

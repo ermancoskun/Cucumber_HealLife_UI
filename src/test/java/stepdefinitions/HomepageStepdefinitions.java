@@ -482,40 +482,6 @@ public class HomepageStepdefinitions {//
         String actualBoard = homepage.feautureServicesBoard.getText();
         Assert.assertTrue(actualBoard.contains(expectedBoard));
         ReusableMethods.bekle(5);
-
-    }
-
-
-    @Then("Verify the Medical Treatment board  is displayed")
-    public void verifyTheMedicalTreatmentBoardIsDisplayed() {
-        String expectedText = "Medical Treatment";
-        String actualText = homepage.nurseResidentBoard.getText();
-        Assert.assertTrue(actualText.contains(expectedText));
-        ReusableMethods.bekle(5);
-    }
-
-    @Then("Verify the Emergency Help board  is displayed")
-    public void verifyTheEmergencyHelpBoardIsDisplayed() {
-        String expectedText = "Emergency Help";
-        String actualText = homepage.emergencyHelpBoard.getText();
-        Assert.assertTrue(actualText.contains(expectedText));
-        ReusableMethods.bekle(5);
-    }
-
-    @Then("Verify the Qualified Doctors  board  is displayed")
-    public void verifyTheQualifiedDoctorsBoardIsDisplayed() {
-        String expectedText = "Qualified Doctors";
-        String actualText = homepage.emergencyHelpBoard.getText();
-        Assert.assertTrue(actualText.contains(expectedText));
-        ReusableMethods.bekle(5);
-    }
-
-    @Then("Verify the Medical professionals board  is displayed")
-    public void verifyTheMedicalProfessionalsBoardIsDisplayed() {
-        String expectedText = "Medical professionals";
-        String actualText = homepage.onsiteMedicalStaffBoard.getText();
-        Assert.assertTrue(actualText.contains(expectedText));
-        ReusableMethods.bekle(5);
     }
 
     @And("Close the page")
@@ -523,8 +489,6 @@ public class HomepageStepdefinitions {//
         Driver.closeDriver();
     }
 
-
-    // ============= Nesibe [US_005] SON =========
 
     @Then("Sayfayi kaydir")
     public void sayfayiKaydir() {
@@ -536,6 +500,14 @@ public class HomepageStepdefinitions {//
         ReusableMethods.bekle(1);
     }
 
+    @Then("Verify the Emergency Help board  is visible")
+    public void verifyTheEmergencyHelpBoardIsVisible() {
+        String expectedText = "Emergency Help";
+        String actualText = homepage.emergencyHelpBoard.getText();
+        Assert.assertTrue(actualText.contains(expectedText));
+        Assert.assertTrue("Emergency Help board is not visible",homepage.emergencyHelpBoard.isDisplayed());
+    }
+
     @Then("Verify the Medical Treatment board  is visible")
     public void verifyTheMedicalTreatmentBoardIsVisible() {
         String expectedText = "Medical Treatment";
@@ -543,10 +515,7 @@ public class HomepageStepdefinitions {//
         Assert.assertTrue("Medical Treatment board is not visible", actualText.contains(expectedText));
     }
 
-    @Then("Verify the Emergency Help board  is visible")
-    public void verifyTheEmergencyHelpBoardIsVisible() {
-        Assert.assertTrue("Emergency Help board is not visible",homepage.emergencyHelpBoard.isDisplayed());
-    }
+
 
     @Then("Verify the Qualified Doctors  board  is visible")
     public void verifyTheQualifiedDoctorsBoardIsVisible() {

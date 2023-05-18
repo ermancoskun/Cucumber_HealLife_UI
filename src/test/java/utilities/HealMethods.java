@@ -465,6 +465,40 @@ public class HealMethods {
         Assert.assertEquals("Record unsuccessful","Record Saved Successfully",actual);
 
     }
+
+    public static void makeFilterTestPatientOPD(String filterName,int filtreKacinciSirada, int toplamSutunSayisi){
+
+        // Filter elementini bul ve tıklama işlemini gerçekleştir
+        WebElement filter = Driver.getDriver().findElement(By.xpath("(//th[text()='" + filterName + "'])[2]"));
+        ReusableMethods.bekle(2);
+        Assert.assertTrue(filter.isDisplayed());
+        filter.click();
+        ReusableMethods.bekle(3);
+        WebElement alttakiMetin=Driver.getDriver().findElement(By.xpath("//div[@class='dataTables_info']"));
+        String text=alttakiMetin.getText();
+        int start = text.indexOf(" to ") + 4; // " to " ifadesinin sonrasındaki değerin başlangıç indeksini buluyoruz
+        int end = text.indexOf(" ", start); // Başlangıçtan sonraki ilk boşluğa kadar olan kısmı alıyoruz
+        String numberString1 = text.substring(start, end); // Başlangıçtan sonraki kısmı alıyoruz
+        int number1 = Integer.parseInt(numberString1);
+
+
+
+        // Filtrelenmiş liste oluşturma
+        List<String> filtreList = new ArrayList<>();
+        for (int i = filtreKacinciSirada; i < toplamSutunSayisi * number1; i = (i + toplamSutunSayisi)) {
+            WebElement hucreElement = Driver.getDriver().findElement(By.xpath("(//td)[" + i + "]"));
+            filtreList.add(hucreElement.getText());
+        }
+
+        // Beklenen ve sıralanmış listeleri oluşturma
+        List<String> expectedList = new ArrayList<>(filtreList);
+        List<String> sortedList = customSort(filtreList);
+
+        // Listeleri sırala ve karşılaştır
+        Collections.sort(expectedList, Comparator.comparing(HealMethods::getDateValue, Comparator.nullsLast(Comparator.reverseOrder()))
+                .thenComparing(Comparator.naturalOrder()));
+        Assert.assertEquals("Filter non functional", expectedList, sortedList);
+    }
 }
 
 

@@ -12,7 +12,7 @@ Feature: US_038 As an admin I would like to have a page in the dashboard sidebar
 
   Scenario: TC_02 The Billing page should have "Single Module Billing" and "OPD/IPD Billing Through Case Id" windows.
         Then Sees Single Module Billing and OPD_IPD Billing Through Case Id windows
-
+  @US038
   Scenario: TC_03 OPD Billing List should be displayed on the page that opens when the OPD board
                   in the Single Module Billing window is clicked.
         And Click on the OPD button
@@ -81,7 +81,7 @@ Feature: US_038 As an admin I would like to have a page in the dashboard sidebar
           And Click the Pathology button on Billing page
           And Click first name for display patient profile under the Patient Name
           Then Verified redirected to Patent Profile page
-  @US038
+
     Scenario: TC_16 Radiology Billing Lists headings on the page that opens when you click on the Radiology board
           And Click the Radiology button on Billing page
           Then Sees the name of Radiology Billing List and their contents

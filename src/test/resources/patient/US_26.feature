@@ -11,14 +11,14 @@ Feature: US_026 The Dashboard sidebar should have the Pathology menu title and w
 
   Scenario: TC_01 The Dashboard sidebar should have the Pathology menu title and when clicked it should redirect to the "pathology" page
     And Verified redirected to Pathology page
-    And  Quit the page
+
 
 
 
 
   Scenario: TC_02 The Pathology page should have the headings (Bill No, Case ID,  DateReporting, Reference Doctor, Note, Amount($), Paid Amount($). Balance Amount($), Action) in the Pathology Test Reports List.
     And Verify that "Bill No, Case ID / Patient ID, Reporting Date, Reference Doctor, Note, Amount ($), Paid Amount ($), Balance Amount ($), Action" in the Pathology Bill List are displayed
-    And  Quit the page
+
 
 
 
@@ -26,13 +26,13 @@ Feature: US_026 The Dashboard sidebar should have the Pathology menu title and w
     Then Click the "search box"
     Then Enter the excistingg "Pathology Bill"
     And It is verified that filtering is done by entering the bill number in the Search Boxx.
-    And  Quit the page
+
 
 
 
   Scenario: TC_04 It should be possible to sort the list according to the titles in the Pathology Test Reports List
     Then It is verified that the headings are sorted by clickingg on them.
-    And  Quit the page
+
 
 
 
@@ -51,7 +51,7 @@ Feature: US_026 The Dashboard sidebar should have the Pathology menu title and w
     And Click the pay with cardd.
     Given e-mail, card number, date and cvc code are enteredd
     Then The visibility of the success text is verified
-    And  Quit the page
+
 
 
 

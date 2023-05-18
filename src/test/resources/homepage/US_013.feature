@@ -1,5 +1,5 @@
 
-@azat
+
 Feature:US_013  As a user, I would like a gallery page with pictures of the hospital to get a closer look and get to know the hospital better.
 
 Background: common steps
@@ -18,4 +18,4 @@ Background: common steps
     Scenario: TC_02 Gallery page (Health & Wellness,Hospitals and Directions,Specialties,Recreation Centre,Your Health,There should be pictures divided into surgery sections.
 
          And Gallery page displays reserved pictures about hospital and health
-      And The browser is closed
+         And The browser is closed

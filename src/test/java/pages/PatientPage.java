@@ -578,7 +578,6 @@ public class PatientPage extends Base {
         System.out.println(ActualStringList);
 
 
-
         List<String> ExpectedList = new ArrayList<>(ActualStringList);
         Collections.sort(ExpectedList);
         if (ActualStringList.equals(ExpectedList)) {
@@ -621,7 +620,6 @@ public class PatientPage extends Base {
     public WebElement dashboardAmbulanceText;
 
 
-
     @FindBy(xpath = "//canvas[@id='finding-bar-chart']")
     public WebElement dashboardTop10FindingsChart;
 
@@ -640,7 +638,6 @@ public class PatientPage extends Base {
     public WebElement radiologyClose;
 
 
-
     @FindBy(xpath = "(//button[@type='button'])[9]")
     public WebElement radiologyShowClose;
 
@@ -651,9 +648,8 @@ public class PatientPage extends Base {
     @FindBy(xpath = "(//input[@type='text'])[8]")
     public WebElement radiologyPaymentAmount;
 
-
-
-
+    @FindBy(xpath = "//*[@id=\"testreport\"]/thead/tr/th[3]")
+    public WebElement patalogyReportingDate;
 
 
 
@@ -681,40 +677,84 @@ public class PatientPage extends Base {
         }
         return false;
     }
+
     public static boolean TarihListSiralamaTesti(int sutunNo) {
-        Select select = new Select(Driver.getDriver().findElement(By.xpath("//select[@name='DataTables_Table_0_length']")));
-        ReusableMethods.bekle(3);
-        select.selectByVisibleText("All");
-        ReusableMethods.bekle(3);
-        WebElement baslik = Driver.getDriver().findElement(By.xpath("//*[@id=\"DataTables_Table_0\"]/thead/tr[1]//th[" + sutunNo + "]"));
+
+        WebElement baslik = Driver.getDriver().findElement(By.xpath("//*[@id=\"DataTables_Table_0\"]/thead/tr/th[3]"));
         baslik.click();
         ReusableMethods.bekle(3);
-        List<WebElement> ActualList = Driver.getDriver().findElements(By.xpath("//*[@id=\"DataTables_Table_0\"]/tbody/tr/td[" + sutunNo + "]"));
+        List<WebElement> ActualList = Driver.getDriver().findElements(By.xpath("//*[@id=\"DataTables_Table_0\"]/tbody/tr[1]/td[3]"));
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd.MM.yyyy hh:mm a", Locale.ENGLISH);
 
-        List<LocalDateTime> tarihler=new ArrayList<>();
-        for (WebElement each:ActualList
+        List<LocalDateTime> tarihler = new ArrayList<>();
+        for (WebElement each : ActualList
         ) {
-            String data=each.getText();
+            String data = each.getText();
             LocalDateTime dateTime = LocalDateTime.parse(data, formatter);
             tarihler.add(dateTime);
         }
-        int sayi=0;
-        for (int i = 0; i <tarihler.size()-1 ; i++) {
-            sayi=tarihler.get(i).compareTo(tarihler.get(i+1));
-            if (sayi>0){
+        int sayi = 0;
+        for (int i = 0; i < tarihler.size() - 1; i++) {
+            sayi = tarihler.get(i).compareTo(tarihler.get(i + 1));
+            if (sayi > 0) {
                 return false;
             }
         }
         return true;
     }
 
-
     public static boolean intListSortTest2 ( int sutunNo){
         WebElement baslik = Driver.getDriver().findElement(By.xpath("(//th[@class='sorting'])[" + sutunNo + "]"));
         baslik.click();
         ReusableMethods.bekle(3);
         List<WebElement> ActualList = Driver.getDriver().findElements(By.xpath("(//th[@class='sorting'])[\" + sutunNo + \"]"));
+
+        List<String> ActualStringList = new ArrayList<>();
+        for (WebElement each : ActualList
+        ) {
+            ActualStringList.add(each.getText().replaceAll("[^\\d]", ""));
+        }
+        System.out.println(ActualStringList);
+
+
+
+        List<String> ExpectedList = new ArrayList<>(ActualStringList);
+        Collections.sort(ExpectedList);
+        if (ActualStringList.equals(ExpectedList)) {
+            return true;
+        }
+        return false;
+
+    }
+
+    public static boolean intListSortTest3 ( int sutunNo){
+        WebElement baslik = Driver.getDriver().findElement(By.xpath("(//th[@class='sorting'])[" + sutunNo + "]"));
+        baslik.click();
+        ReusableMethods.bekle(3);
+        List<WebElement> ActualList = Driver.getDriver().findElements(By.xpath("//*[@id=\"testreport\"]/tbody/tr[1]/td[1]"));
+
+        List<String> ActualStringList = new ArrayList<>();
+        for (WebElement each : ActualList
+        ) {
+            ActualStringList.add(each.getText().replaceAll("[^\\d]", ""));
+        }
+        System.out.println(ActualStringList);
+
+
+
+        List<String> ExpectedList = new ArrayList<>(ActualStringList);
+        Collections.sort(ExpectedList);
+        if (ActualStringList.equals(ExpectedList)) {
+            return true;
+        }
+        return false;
+
+    }
+    public static boolean intListSortTest4 ( int sutunNo){
+        WebElement baslik = Driver.getDriver().findElement(By.xpath("//*[@id=\"DataTables_Table_0\"]/thead/tr/th[6]"));
+        baslik.click();
+        ReusableMethods.bekle(3);
+        List<WebElement> ActualList = Driver.getDriver().findElements(By.xpath("//*[@id=\"DataTables_Table_0\"]/tbody/tr[1]/td[6]"));
 
         List<String> ActualStringList = new ArrayList<>();
         for (WebElement each : ActualList

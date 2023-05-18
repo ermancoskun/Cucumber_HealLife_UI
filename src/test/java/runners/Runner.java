@@ -15,7 +15,11 @@ import org.junit.runner.RunWith;
         glue={"stepdefinitions","hooks"}, //stepdefinitions package icinde hooks yoksa ayrica belirtmeliyiz
 
 
-        tags= "@023" ,
+
+
+
+
+        tags= "@US023",
 
 
         dryRun =false

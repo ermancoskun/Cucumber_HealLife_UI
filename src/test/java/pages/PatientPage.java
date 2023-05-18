@@ -635,6 +635,22 @@ public class PatientPage extends Base {
     @FindBy(xpath = "//span[text()=' Dashboard']")
     public WebElement dashboardLinkk;
 
+    // =========================US_27===============================================
+    @FindBy(xpath = "(//button[@class='close'])[6]")
+    public WebElement radiologyClose;
+
+
+
+    @FindBy(xpath = "(//button[@type='button'])[9]")
+    public WebElement radiologyShowClose;
+
+
+    @FindBy(xpath = "(//button[@type='button'])[2]")
+    public WebElement radiologyPayButton;
+
+    @FindBy(xpath = "(//input[@type='text'])[8]")
+    public WebElement radiologyPaymentAmount;
+
 
 
 

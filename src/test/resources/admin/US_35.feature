@@ -14,18 +14,20 @@ Feature: US_035 As an administrator (admin), I want to be able to log in to a pa
 
 
   Scenario Outline: TC_03 It should not be possible to login to the admin panel by entering the information (incorrect, missing or not registered in the system before) on the login page.
-       Given User goes to the admin page.
-       And enters "<username>" from examples as username
-       And enters "<password>" from examples as password
-       Then wait 3 seconds
-       And Verify that the panel cannot be accessed with an invalid password or password
+    Given User goes to the admin page.
+    And enters "<username>" from examples as username
+    And enters "<password>" from examples as password
+    And click on sign in button
+    Then wait 3 seconds
+    And Verify that the panel cannot be accessed with an invalid password or password
 
 
     Examples:
       |username|password|
-      |123team   |heallife123   |
+      |123teamhatice   |heallife123   |
       |ayse.busra.pehlivan.admin@heallifehospital.com |645363  |
-      |Eyup@gmail.com   |jskdbvk |
+      |Melih@gmail.com   |jskdbvk |
+      |?ismail@hotmail.com  | khlmn |
 
   Scenario: TC_04 It should be possible to login to the admin panel by entering the information (previously registered information in the system) on the login page
     Given User goes to the admin page.

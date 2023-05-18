@@ -22,6 +22,7 @@ public class HealMethods {
     static AdminPage adminPage=new AdminPage();
     static Faker faker=new Faker();
     static Actions actions=new Actions(Driver.getDriver());
+    static Random random=new Random();
 
 
     public static void loginAsAdmin(String username, String password){
@@ -222,14 +223,15 @@ public class HealMethods {
         }
         adminPage.birthDateBox.sendKeys(faker.date().birthday().toString().replaceAll("0",""));
         actions.sendKeys(Keys.TAB).perform();
-        int ageYear=faker.random().nextInt(1,100);//rastgele yas (yıl olarak) int tipinde
-        actions.sendKeys(String.valueOf(ageYear)).perform(); //rastgele yası toString olarak gonder
-        int ageMonth=faker.random().nextInt(1,12);//rastgele yas (ay olarak) int tipinde
-        actions.sendKeys(String.valueOf(ageMonth)).perform(); //rastgele yası toString olarak gonder
-        int ageDay=faker.random().nextInt(1,30);//rastgele yas (gun olarak) int tipinde
-        actions.sendKeys(String.valueOf(ageDay)).perform(); //rastgele yası toString olarak gonder
+
+        int ageYear=random.nextInt(100);//rastgele yas (yıl olarak) int tipinde
+        actions.sendKeys(String.valueOf(ageYear)).sendKeys(Keys.TAB).perform(); //rastgele yası toString olarak gonder
+        int ageMonth=random.nextInt(12);//rastgele yas (ay olarak) int tipinde
+        actions.sendKeys(String.valueOf(ageMonth)).sendKeys(Keys.TAB).perform(); //rastgele yası toString olarak gonder
+        int ageDay=random.nextInt(30);//rastgele yas (gun olarak) int tipinde
+        actions.sendKeys(String.valueOf(ageDay)).sendKeys(Keys.TAB).perform(); //rastgele yası toString olarak gonder
         actions.sendKeys(Keys.TAB).perform();
-        actions.sendKeys(faker.number().digits(5)).perform();
+
 
         try {
             select=new Select(adminPage.bloodGroupDropDown);

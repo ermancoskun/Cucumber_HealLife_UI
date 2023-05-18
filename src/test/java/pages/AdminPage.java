@@ -60,7 +60,6 @@ public class AdminPage extends Base{
     public WebElement warningMessage;
 
 
-
     //Admin > Billing > OPD > Add Patient > New Patient
     @FindBy(xpath = "//select[@name='marital_status']")
     public WebElement maritalStatusDropDown;
@@ -76,7 +75,6 @@ public class AdminPage extends Base{
     //Admin > Billing
     @FindBy (xpath = "//p[.='Blood Issue']")
     public WebElement bloodIssueButton;
-
 
     //Admin > IPD >
     @FindBy(id = "addp")
@@ -102,24 +100,29 @@ public class AdminPage extends Base{
     @FindBy(xpath = "(//button[@type=\"button\"])[10]")
     public WebElement xIconButton;
 
+    //Admin > Pathology > Bill No
     @FindBy(xpath = "(//*[@role=\"row\"]//td)[1]")
     public WebElement getBillNoConfirmation;
 
+    //Admin > Pathology > Pathology Test
     @FindBy(xpath = "//*[@class=\"btn btn-info addplus-xs btn-sm  add-record mb10\"]")
     public  WebElement addButtonPathology;
 
+    //Admin > Pathology > Pathology Test >Add Pathology Test > Add Test Details > Test Parameter Name
     @FindBy(xpath = "//table[@id=\"tableID\"]//tbody//tr")
     public List<WebElement> testParamNameList;
 
+    //Admin > Pathology > Pathology Test >Add Pathology Test
     @FindBy(xpath = "//*[@class=\"btn btn-primary btn-sm pathology addtest\"]")
     public WebElement addPathologyTestButton;
 
+    //Admin > Pathology > Pathology Test >Add Pathology Test > Add Test Details > Test Name
     @FindBy(xpath = "//*[@name=\"test_name\"]")
     public WebElement testNamePathology;
 
+    //Admin > Pathology > Genrate Bill > Bill No
     @FindBy(xpath = "//input[@id='billno']")
     public WebElement getBillNo;
-
 
     // adminLoginPage
     @FindBy(xpath = "//input[@id='email']")
@@ -130,8 +133,6 @@ public class AdminPage extends Base{
     // adminLoginPage
     @FindBy(xpath = "//button[@type='submit']")
     public WebElement signInButton;
-
-
 
     // adminpage > Navbardaki Heallife Logosu
     @FindBy(xpath = "//span[@class='logo-lg']")
@@ -153,9 +154,11 @@ public class AdminPage extends Base{
     @FindBy(xpath = "//span[@class='sidebar-session']")
     public WebElement healLifeHospitalResearchCenterText;
 
+    //Admin > IPD > Show (3 line) > Headers
     @FindBy(xpath = "//ul[@class=\"nav nav-tabs navlistscroll\"]//li")
     public List<WebElement>ipdPersonalInformationHeaders;
 
+    //Admin > IPD > Show (3 line) > Headers right button.
     @FindBy(xpath = "//div[@class=\"scrtabs-tab-scroll-arrow scrtabs-js-tab-scroll-arrow-right\"]")
     public WebElement scrollRightButton;
 
@@ -174,6 +177,37 @@ public class AdminPage extends Base{
     //Admin > Pathology > Add Patient
     @FindBy (xpath = "//select[@name='consultant_doctor']")
     public WebElement ddmDoctor;
+
+    //Admin > Pathology > Pathology Test >Add Pathology Test > Add Test Details > Charge Name
+    @FindBy(xpath = "//*[@id=\"select2-code-container\"]")
+    public WebElement chargeNAme;
+
+    //Admin >Pathology > Generate Bill > Date info
+    @FindBy(xpath = "//*[@id=\"txtDate10\"]")
+    public WebElement dateInfo;
+
+    //Admin > Pathology > Pathology Test >Add Pathology Test > Add Test Details
+    @FindBy (xpath = "(//*[@class=\"modal-title\"])[1]")
+    public WebElement testDetails;
+
+    //Admin > Pathology
+    @FindBy(xpath = "//tbody//tr[1]")
+    public WebElement firstAddedPatient;
+
+    //Admin > IPD > Add Patient > Admission Date
+     @FindBy(xpath = "//*[@id=\"admission_date\"]")
+    public WebElement admissionDate;
+
+    //Admin > IPD > Add Patient > Bed Group
+      @FindBy(xpath = "//*[@name=\"bed_group_id\"]")
+    public WebElement bedGroup;
+
+    //Admin > IPD > Add Patient > Bed Number
+     @FindBy(xpath = "//*[@id=\"bed_no\"]")
+    public WebElement bedNumber;
+
+
+
     //********************Duygu*************************************//
     //////////////////////////////////////////////////////////////////
 

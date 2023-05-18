@@ -106,5 +106,7 @@ Feature: As an administrator (admin), I want to have a page where the dataof the
     And click on add Pathology Test button
     Given Parameters added expected areas
 
+#    ddd
+
 
 

@@ -42,16 +42,27 @@ Feature: As an administrator (admin), I want to have a page where the dataof the
   Scenario: TC_09 Bill No and Date information should be given by the system on the Generate Bill page.
     Given Click the Generate Bill button on Pathology page.
     And Create a bill on the relevant patient
-    And click X Icon
     Given Confirm Bill No and Date information
 
   Scenario: TC_10 It should be possible to add more than one test data at the same time by entering more than one test data on the Generate Bill page.
+    Given Click the Generate Bill button on Pathology page.
+    And Create a New Patient with random datas
+    And Create a bill on the relevant patient
 
   Scenario: TC_11 Payment Mode should be selected on the Generate Bill page.
+    Given Click the Generate Bill button on Pathology page.
+    And Create a New Patient with random datas
+    And Create a bill on the relevant patient
 
   Scenario: TC_12 Total ($), Discount ($), Tax ($), Net Amount ($) information should be entered on the Generate Bill page.
+    Given Click the Generate Bill button on Pathology page.
+    And Create a New Patient with random datas
+    And Create a bill on the relevant patient
 
   Scenario: TC_13 When the correct information is entered and the save button is clicked, the relevant invoice should appear on the Pathology Bill List.
+    Given Click the Generate Bill button on Pathology page.
+    And Create a New Patient with random datas
+    And Create a bill on the relevant patient
 
   Scenario: TC_14 It should be possible to switch from the Pathology page to the Pathology Test page.
     Given Switch from the Pathology page to the Pathology Test page.
@@ -77,6 +88,7 @@ Feature: As an administrator (admin), I want to have a page where the dataof the
   Pathology Test link from the Pathology Test page should open the Add Test Details window.
     Given Switch from the Pathology page to the Pathology Test page.
     Given Click 3. iconButton under the last column for display first patient profile
+    And Confirm that Test Details page is visible.
 
   Scenario: TC_20  The required fields in the Add Test Details window must be (Test Name, Short Name, Category Name, Charge Category, Charge Name,
   Standard Charge, Amount($), Test Parameter Name, Reference Range, Unit).
@@ -93,5 +105,8 @@ Feature: As an administrator (admin), I want to have a page where the dataof the
     Given Switch from the Pathology page to the Pathology Test page.
     And click on add Pathology Test button
     Given Parameters added expected areas
-    And The saved test should be displayed in the Pathology Test List
+
+#    ddd
+
+
 

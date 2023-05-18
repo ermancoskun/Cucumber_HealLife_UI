@@ -396,7 +396,9 @@ public class PatientStepdefinitions {
 
     @Then("It is verified that the headings are sorted by clicking on them.")
     public void ıtIsVerifiedThatTheHeadingsAreSortedByClickingOnThem() {
-        Assert.assertTrue(PatientPage.intListSortTest(1));
+        Assert.assertTrue(PatientPage.intListSortTest3(1));
+        Assert.assertTrue(PatientPage.intListSortTest4(6));
+        Assert.assertTrue(PatientPage.TarihListSiralamaTesti(3));
     }
 
     @Then("Click the View payments.")
@@ -973,6 +975,7 @@ public class PatientStepdefinitions {
         @Then("It is verified that the headings are sorted by clickingg on them.")
         public void ıtIsVerifiedThatTheHeadingsAreSortedByClickinggOnThem () {
             Assert.assertTrue(PatientPage.intListSortTest2(1));
+            patientPage.patalogyReportingDate.click();
         }
 
         @Then("The visibility of the amount text is verifiedd")
@@ -1133,21 +1136,21 @@ public class PatientStepdefinitions {
             patientPage.dashboardPharmacyText.click();
             String expectedPharmacydUrl = "https://qa.heallifehospital.com/patient/dashboard/pharmacybill";
             String actualPharmacyUrl = Driver.getDriver().getCurrentUrl();
-            Assert.assertEquals(expectedPharmacydUrl, actualPharmacyUrl);
+            Assert.assertEquals("pharmacy  is not clikable", expectedPharmacydUrl, actualPharmacyUrl);
             Driver.getDriver().navigate().back();
             ReusableMethods.bekle(2);
 
             patientPage.dashboardPathologyText.click();
             String expectedPatalogydUrl = "https://qa.heallifehospital.com/patient/dashboard/pathology";
             String actualPatalogyUrl = Driver.getDriver().getCurrentUrl();
-            Assert.assertEquals(expectedPatalogydUrl, actualPatalogyUrl);
+            Assert.assertEquals("patalogy  is not clikable", expectedPatalogydUrl, actualPatalogyUrl);
             Driver.getDriver().navigate().back();
             ReusableMethods.bekle(2);
 
             patientPage.dashboardRadiologyText.click();
             String expectedRadiologydUrl = "https://qa.heallifehospital.com/patient/dashboard/radiology";
             String actualRadiologyUrl = Driver.getDriver().getCurrentUrl();
-            Assert.assertEquals(expectedRadiologydUrl, actualRadiologyUrl);
+            Assert.assertEquals("radiology  is not clikable", expectedRadiologydUrl, actualRadiologyUrl);
             Driver.getDriver().navigate().back();
             ReusableMethods.bekle(2);
 

@@ -635,6 +635,22 @@ public class PatientPage extends Base {
     @FindBy(xpath = "//span[text()=' Dashboard']")
     public WebElement dashboardLinkk;
 
+    // =========================US_27===============================================
+    @FindBy(xpath = "(//button[@class='close'])[6]")
+    public WebElement radiologyClose;
+
+
+
+    @FindBy(xpath = "(//button[@type='button'])[9]")
+    public WebElement radiologyShowClose;
+
+
+    @FindBy(xpath = "(//button[@type='button'])[2]")
+    public WebElement radiologyPayButton;
+
+    @FindBy(xpath = "(//input[@type='text'])[8]")
+    public WebElement radiologyPaymentAmount;
+
 
 
 
@@ -768,6 +784,25 @@ public class PatientPage extends Base {
     @FindBy(xpath = "(//*[text()='Consultant Doctor'])[1]")
     public WebElement consultantDoctor;
 
+
+    @FindBy(xpath = "(//*[text()='OPD No'])[2]")
+    public WebElement opdNoFilter ;
+
+    @FindBy(xpath = "(//*[text()='Case ID / Patient ID'])[3]")
+    public WebElement caseIdFilter ;
+
+    @FindBy(xpath = "(//*[text()='Appointment Date'])[2]")
+    public WebElement appointmentDateFilter ;
+
+    @FindBy(xpath = "(//*[text()='Consultant'])[2]")
+    public WebElement consultantFilter ;
+
+    @FindBy(xpath = "(//*[text()='Reference'])[2]")
+    public WebElement referanceFilter ;
+
+    @FindBy(xpath = "(//*[text()='Symptoms'])[2]")
+    public WebElement symptomFilter;
+
     @FindBy(xpath = "(//*[@class='sorting'])[1]")
     public WebElement opdNo;
 
@@ -783,11 +818,34 @@ public class PatientPage extends Base {
     @FindBy(xpath = "(//*[@class='sorting'])[5]")
     public WebElement referance;
 
+
     @FindBy(xpath = "(//input[@type='search'])[1]")
     public WebElement searchVisit;
 
+
+    @FindBy(xpath = "(//*[text()='Test Name'])[2]")
+    public WebElement testName ;
+
+    @FindBy(xpath = "(//*[text()='OPD No'])[3]")
+    public WebElement opdNoFilter2;
+
+    @FindBy(xpath = "(//*[text()='Case ID / Patient ID'])[4]")
+    public WebElement caseId2Filter ;
+
+    @FindBy(xpath = "(//*[text()='Lab'])[2]")
+    public WebElement labFilter ;
+
+    @FindBy(xpath = "(//*[text()='Sample Collected'])[2]")
+    public WebElement sampleCollectedFilter ;
+
+    @FindBy(xpath = "(//*[text()='Expected Date'])[2]")
+    public WebElement expectedDateFilter ;
+
+    @FindBy(xpath = "(//*[text()='Approved By'])[2]")
+    public WebElement approvedByFilter ;
+
     @FindBy(xpath = "//*[text()='Test Name']")
-    public WebElement testName;
+    public WebElement testName2;
 
     @FindBy(xpath = "(//*[text()='Case ID / Patient ID'])[3]")
     public WebElement caseId2;
@@ -804,11 +862,17 @@ public class PatientPage extends Base {
     @FindBy(xpath = "(//*[text()='Approved By'])")
     public WebElement approvedBy;
 
+
     @FindBy(xpath = "(//*[text()='Appointment Date'])[3]")
     public WebElement appointmentDate2;
 
+
+    @FindBy(xpath = "(//*[text()='Symptoms'])[3]")
+    public WebElement symptoms2 ;
+
     @FindBy(xpath = "(//*[text()='Symptoms'])")
     public WebElement symptoms;
+
 
     @FindBy(xpath = "(//input[@type='search'])[3]")
     public WebElement searchTreatment;
@@ -821,6 +885,41 @@ public class PatientPage extends Base {
 
     @FindBy(xpath = "(//*[text()='Action'])[3]")
     public WebElement actionTreatmentHistory;
+
+    @FindBy(xpath = "(//a[@href='javascript:void(0)'])[1]")
+    public WebElement testSonuc1 ;
+
+    @FindBy(xpath = "(//a[@href='javascript:void(0)'])[1]")
+    public WebElement testSonucEkran ;
+
+    @FindBy(xpath = "(//*[text()='OPD No'])[3]")
+    public WebElement opdNoTreatment ;
+
+    @FindBy(xpath = "(//*[text()='OPD No'])[3]")
+    public WebElement caseId3 ;
+
+    @FindBy(xpath = "(//*[text()='Consultant'])[3]")
+    public WebElement consultantFilter2 ;
+
+    @FindBy(xpath = "(//select[@name])[1]")
+    public WebElement makeAll ;
+
+    @FindBy(xpath = "(//*[text()='Timeline'])[2]")
+    public WebElement timeLineShow ;
+
+    @FindBy(xpath = "(//*[text()=' 15.05.2023'])[2]")
+    public WebElement timeLineDateShow ;
+
+    @FindBy(xpath = "(//*[text()=' kontrol '])[2]")
+    public WebElement timeLineNameShow ;
+
+    @FindBy(xpath = "(//*[text()=' 31.05.2023'])[2]")
+    public WebElement timeLineDateFuture ;
+
+    @FindBy(xpath = "(//select[@name='x'])[2]")
+    public WebElement prescriptionNot ;
+
+
 
     //============================================ Nesibe [US_023] OPD MENU SONU =======================================
 

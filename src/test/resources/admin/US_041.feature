@@ -15,10 +15,12 @@ Feature: As an administrator (admin), I would like to have a page in
   relevant page must be accessed.
     Given Click on the Add Patient button in IPD page
     And Create a New Patient with random datas
-#
-#    Scenario: TC_03 A new patient data should be added to the IPD Patient List when the required fields are filled in
-#               with the correct data (for the current or new patient) and saved on the page that opens.
-#      Given
+
+    Scenario: TC_03 A new patient data should be added to the IPD Patient List when the required fields are filled in
+               with the correct data (for the current or new patient) and saved on the page that opens.
+      Given Click on the Add Patient button in IPD page
+          And New patient data should be added to List
+
 
   Scenario: TC_04 There should be a transition from the IPD page to the IPD Discharged Patient page.
     Given Click on the Discarged Patient button

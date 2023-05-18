@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.function.Function;
@@ -138,5 +139,40 @@ public class ReusableMethods {
         }catch (InterruptedException e ) {
 
         }
+    }
+
+    public static boolean dashboardTitleListingMethod(List<String> liste){
+        List<WebElement> actualList=Driver.getDriver().findElements(By.xpath("//li[@class='treeview ']"));
+        System.out.println(actualList);
+        List<String> stringActualList=new ArrayList<>();
+        for (WebElement each:actualList) {
+            if (!each.getText().isBlank()) {
+                stringActualList.add(each.getText());
+            }
+        }
+        System.out.println(stringActualList);
+
+        int count=0;
+
+        for (int i = 0; i <liste.size() ; i++) {
+            for (int j = 0; j <stringActualList.size() ; j++) {
+                if (stringActualList.get(j).contains(liste.get(i))){
+                    count++;
+                }
+            }
+        }
+        if (count== liste.size()){
+            System.out.println("su an buradasınız");
+            return true;
+        }
+        System.out.println("method sonu");
+        return false;
+    }
+
+    public static void scrollToElement(WebElement element) {
+
+        JavascriptExecutor jse = (JavascriptExecutor) Driver.getDriver();
+        jse.executeScript("arguments[0].scrollIntoView();", element);
+
     }
 }

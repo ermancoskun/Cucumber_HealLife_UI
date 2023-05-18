@@ -22,6 +22,7 @@ public class HealMethods {
     static AdminPage adminPage=new AdminPage();
     static Faker faker=new Faker();
     static Actions actions=new Actions(Driver.getDriver());
+    static Random random=new Random();
 
 
     public static void loginAsAdmin(String username, String password){
@@ -142,10 +143,16 @@ public class HealMethods {
         Assert.assertTrue(filter.isDisplayed());
         filter.click();
         ReusableMethods.bekle(3);
+        WebElement alttakiMetin=Driver.getDriver().findElement(By.xpath("//div[@class='dataTables_info']"));
+        String text=alttakiMetin.getText();
+        int start = text.indexOf(" to ") + 4; // " to " ifadesinin sonrasındaki değerin başlangıç indeksini buluyoruz
+        int end = text.indexOf(" ", start); // Başlangıçtan sonraki ilk boşluğa kadar olan kısmı alıyoruz
+        String numberString1 = text.substring(start, end); // Başlangıçtan sonraki kısmı alıyoruz
+        int number1 = Integer.parseInt(numberString1);
 
         // Filtrelenmiş liste oluşturma
         List<String> filtreList = new ArrayList<>();
-        for (int i = filtreKacinciSirada; i < toplamSutunSayisi * 10; i = (i + toplamSutunSayisi)) {
+        for (int i = filtreKacinciSirada; i < toplamSutunSayisi * number1; i = (i + toplamSutunSayisi)) {
             WebElement hucreElement = Driver.getDriver().findElement(By.xpath("(//td)[" + i + "]"));
             filtreList.add(hucreElement.getText());
         }
@@ -216,14 +223,15 @@ public class HealMethods {
         }
         adminPage.birthDateBox.sendKeys(faker.date().birthday().toString().replaceAll("0",""));
         actions.sendKeys(Keys.TAB).perform();
-        int ageYear=faker.random().nextInt(1,100);//rastgele yas (yıl olarak) int tipinde
-        actions.sendKeys(String.valueOf(ageYear)).perform(); //rastgele yası toString olarak gonder
-        int ageMonth=faker.random().nextInt(1,12);//rastgele yas (ay olarak) int tipinde
-        actions.sendKeys(String.valueOf(ageMonth)).perform(); //rastgele yası toString olarak gonder
-        int ageDay=faker.random().nextInt(1,30);//rastgele yas (gun olarak) int tipinde
-        actions.sendKeys(String.valueOf(ageDay)).perform(); //rastgele yası toString olarak gonder
+
+        int ageYear=random.nextInt(100);//rastgele yas (yıl olarak) int tipinde
+        actions.sendKeys(String.valueOf(ageYear)).sendKeys(Keys.TAB).perform(); //rastgele yası toString olarak gonder
+        int ageMonth=random.nextInt(12);//rastgele yas (ay olarak) int tipinde
+        actions.sendKeys(String.valueOf(ageMonth)).sendKeys(Keys.TAB).perform(); //rastgele yası toString olarak gonder
+        int ageDay=random.nextInt(30);//rastgele yas (gun olarak) int tipinde
+        actions.sendKeys(String.valueOf(ageDay)).sendKeys(Keys.TAB).perform(); //rastgele yası toString olarak gonder
         actions.sendKeys(Keys.TAB).perform();
-        actions.sendKeys(faker.number().digits(5)).perform();
+
 
         try {
             select=new Select(adminPage.bloodGroupDropDown);
@@ -456,6 +464,40 @@ public class HealMethods {
         String actual=JSUtilities.getTextWithJS(Driver.getDriver(),message);
         Assert.assertEquals("Record unsuccessful","Record Saved Successfully",actual);
 
+    }
+
+    public static void makeFilterTestPatientOPD(String filterName,int filtreKacinciSirada, int toplamSutunSayisi){
+
+        // Filter elementini bul ve tıklama işlemini gerçekleştir
+        WebElement filter = Driver.getDriver().findElement(By.xpath("(//th[text()='" + filterName + "'])[2]"));
+        ReusableMethods.bekle(2);
+        Assert.assertTrue(filter.isDisplayed());
+        filter.click();
+        ReusableMethods.bekle(3);
+        WebElement alttakiMetin=Driver.getDriver().findElement(By.xpath("//div[@class='dataTables_info']"));
+        String text=alttakiMetin.getText();
+        int start = text.indexOf(" to ") + 4; // " to " ifadesinin sonrasındaki değerin başlangıç indeksini buluyoruz
+        int end = text.indexOf(" ", start); // Başlangıçtan sonraki ilk boşluğa kadar olan kısmı alıyoruz
+        String numberString1 = text.substring(start, end); // Başlangıçtan sonraki kısmı alıyoruz
+        int number1 = Integer.parseInt(numberString1);
+
+
+
+        // Filtrelenmiş liste oluşturma
+        List<String> filtreList = new ArrayList<>();
+        for (int i = filtreKacinciSirada; i < toplamSutunSayisi * number1; i = (i + toplamSutunSayisi)) {
+            WebElement hucreElement = Driver.getDriver().findElement(By.xpath("(//td)[" + i + "]"));
+            filtreList.add(hucreElement.getText());
+        }
+
+        // Beklenen ve sıralanmış listeleri oluşturma
+        List<String> expectedList = new ArrayList<>(filtreList);
+        List<String> sortedList = customSort(filtreList);
+
+        // Listeleri sırala ve karşılaştır
+        Collections.sort(expectedList, Comparator.comparing(HealMethods::getDateValue, Comparator.nullsLast(Comparator.reverseOrder()))
+                .thenComparing(Comparator.naturalOrder()));
+        Assert.assertEquals("Filter non functional", expectedList, sortedList);
     }
 }
 

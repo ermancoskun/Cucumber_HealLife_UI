@@ -12,7 +12,7 @@ Feature: US_038 As an admin I would like to have a page in the dashboard sidebar
 
   Scenario: TC_02 The Billing page should have "Single Module Billing" and "OPD/IPD Billing Through Case Id" windows.
         Then Sees Single Module Billing and OPD_IPD Billing Through Case Id windows
-
+  @US038
   Scenario: TC_03 OPD Billing List should be displayed on the page that opens when the OPD board
                   in the Single Module Billing window is clicked.
         And Click on the OPD button
@@ -156,7 +156,7 @@ Feature: US_038 As an admin I would like to have a page in the dashboard sidebar
           Then Click the trash icon for delete 1. Bill
           When Click 1. iconButton under the last column for display first patient profile
           Then Verified redirected to Blood Issue Details page
-  @US038
+
     Scenario: TC_29 Blood Component Issue board in the Single Module Billing window is clicked,
                     Blood Component Issue Billing List
           And Click the Blood Component Issue board on Billing Page

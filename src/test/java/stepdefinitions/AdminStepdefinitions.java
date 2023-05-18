@@ -1,5 +1,6 @@
 package stepdefinitions;
 
+
 import com.github.javafaker.Faker;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
@@ -12,20 +13,29 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.Select;
 import pages.AdminPage;
 import utilities.*;
+
 import utilities.Driver;
 import utilities.HealMethods;
 import utilities.JSUtilities;
 import utilities.ReusableMethods;
 
 import java.io.IOException;
+
 import java.util.List;
 
 public class AdminStepdefinitions {
+
     AdminPage adminPage = new AdminPage();
     Faker faker = new Faker();
     Actions actions = new Actions(Driver.getDriver());
     static String numberOfNotification1;
     static String numberOfNotification2;
+
+    Select select;
+    static String firstValue;
+    static String secondValue;
+
+
 
     @Given("Goes to Admin login page")
     public void goes_to_admin_login_page() {
@@ -83,17 +93,7 @@ public class AdminStepdefinitions {
         HealMethods.makeFilterTest("Paid Amount ($)", 7, 8);
     }
 
-    @And("Sees the name of Radiology Billing List and their contents")
-    public void seesTheNameOfRadiologyBillingListAndTheirContents() {
-        HealMethods.makeFilterTest("Bill No", 1, 9);
-        HealMethods.makeFilterTest("Case ID / Patient ID", 2, 9);
-        HealMethods.makeFilterTest("Reporting Date", 3, 9);
-        HealMethods.makeFilterTest("Patient Name", 4, 9);
-        HealMethods.makeFilterTest("Reference Doctor", 5, 9);
-        HealMethods.makeFilterTest("Note", 6, 9);
-        HealMethods.makeFilterTest("Amount ($)", 7, 9);
-        HealMethods.makeFilterTest("Paid Amount ($)", 8, 9);
-    }
+
 
     @Then("Sees the name of Blood Issue Billing List and their contents")
     public void seesTheNameOfBloodIssueBillingListAndTheirContents() {
@@ -105,6 +105,22 @@ public class AdminStepdefinitions {
         HealMethods.makeFilterTest("Gender", 6, 11);
         HealMethods.makeFilterTest("Donor Name", 7, 11);
         HealMethods.makeFilterTest("Bags", 8, 11);
+    }
+
+    @Then("Sees the name of Blood Component Issue Billing List and their contents")
+    public void seesTheNameOfBloodComponentIssueBillingListAndTheirContents() {
+        HealMethods.makeFilterTest("Bill No",1,12);
+        HealMethods.makeFilterTest("Case ID / Patient ID",2,12);
+        HealMethods.makeFilterTest("Issue Date",3,12);
+        HealMethods.makeFilterTest("Received To",4,12);
+        HealMethods.makeFilterTest("Blood Group",5,12);
+        HealMethods.makeFilterTest("Component",6,12);
+        HealMethods.makeFilterTest("Gender",7,12);
+        HealMethods.makeFilterTest("Donor Name",8,12);
+        HealMethods.makeFilterTest("Bags",9,12);
+        HealMethods.makeFilterTest("Amount ($)",10,12);
+        HealMethods.makeFilterTest("Paid Amount ($)",11,12);
+
     }
 
     @And("Click the Radiology button on Billing page")
@@ -135,7 +151,8 @@ public class AdminStepdefinitions {
 
     @Then("Verified redirected to Patent Profile page")
     public void verifiedRedirectedToPatentProfilePage() {
-        Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains("patient_profile"));
+        Assert.assertTrue("Not redirected the patient profile",
+                Driver.getDriver().getCurrentUrl().contains("patient_profile"));
     }
 
     @Then("Verified redirected to Bill Details page")
@@ -184,6 +201,10 @@ public class AdminStepdefinitions {
     public void clickTheBloodIssueButtonOnBillingPage() {
         adminPage.bloodIssueButton.click();
     }
+    @And("Click the Blood Component Issue board on Billing Page")
+    public void clickTheBloodComponentIssueBoardOnBillingPage() {
+        adminPage.bloodIssueComponentButton.click();
+    }
 
     @And("Click {int}. iconButton under the last column for display first patient profile")
     public void clickIconButtonUnderTheLastColumnForDisplayFirstPatientProfile(int sira) {
@@ -223,7 +244,15 @@ public class AdminStepdefinitions {
 
     @Then("Edit and delete a Blood records")
     public void editAndDeleteABloodRecords() {
+
         JSUtilities.clickWithJS(Driver.getDriver(), Driver.getDriver().findElement(By.xpath("//a[@class='edit_blood_issue']")));
+
+        try {
+            JSUtilities.clickWithJS(Driver.getDriver(),Driver.getDriver().findElement(By.xpath("//a[@class='edit_blood_issue']")));
+        } catch (Exception e) {
+            JSUtilities.clickWithJS(Driver.getDriver(),Driver.getDriver().findElement(By.xpath("//a[@class='edit_component_issue']")));
+        }
+
         HealMethods.createNewPatient();
         JSUtilities.clickWithJS(Driver.getDriver(), Driver.getDriver().findElement(By.xpath("//input[@id='dates_of_issue']")));
         JSUtilities.clickWithJS(Driver.getDriver(), Driver.getDriver().findElement(By.xpath("//button[@id='formaddbtn']")));
@@ -240,6 +269,10 @@ public class AdminStepdefinitions {
     @Then("Create a New Bill with random datas")
     public void createANewBillWithRandomDatas() throws IOException {
         HealMethods.generateBillInfo();
+    }
+    @Then("Create a New Blood Bill with random datas")
+    public void createANewBloodBillWithRandomDatas() throws IOException {
+        HealMethods.generateBillInfoForBloods();
     }
 
     @Given("Click on the Add Patient button in IPD page")
@@ -329,9 +362,101 @@ public class AdminStepdefinitions {
     @And("It should be possible to sort through the titles")
     public void itShouldBePossibleToSortThroughTheTitles() {
         HealMethods.makeFilterTest("Phone", 5, 11);
+    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////DGdown
+
+
+
+    //============================================ Nesibe [US_040] OPD MENU ============================================
+
+    @Then("Verify  the {string} page is visiable")
+    public void verifyTheIsAdminDashboardVisiable(String arg0) {
+        Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains("admin/dashboard"));
+    }
+     AdminPage AdminPage =new AdminPage();
+    @Then("Verify the OPD menu title on admin page is visible and enable")
+    public void verifyTheOPDMenuTitleOnAdminPageIsVisibleAndEnable() {
+
+        Assert.assertTrue(AdminPage.opdSide.isDisplayed());
+        Assert.assertTrue(AdminPage.opdSide.isEnabled());
+    }
+
+    @Then("Verify the OPD Patient on admin page is redirected")
+    public void verifyTheOPDMenuTitle() {
+        Assert.assertTrue(AdminPage.opdSide.isDisplayed());
+        AdminPage.opdSide.click();
+        Assert.assertTrue(AdminPage.opdPatientTitle.isDisplayed());
+    }
+
+    @Then("Click the OPD in the menu")
+    public void clickTheOPDInTheMenu() {
+        AdminPage.opdSide.click();
+    }
+
+    @And("Verify the titles (Name, Patient Id, Guardian Name, Gender, Phone, Consultant, Last Visit, Total Recheckup) are displayed")
+    public void verifyTheTitlesNamePatientIdGuardianNameGenderPhoneConsultantLastVisitTotalRecheckupAreDisplayed() {
+        Assert.assertTrue(AdminPage.opdNameFilter.isDisplayed());
+        Assert.assertTrue(AdminPage.opdPatientIdFilter.isDisplayed());
+        Assert.assertTrue(AdminPage.opdGuardianFilter.isDisplayed());
+        Assert.assertTrue(AdminPage.opdGender.isDisplayed());
+        Assert.assertTrue(AdminPage.opdPhoneFilter.isDisplayed());
+        Assert.assertTrue(AdminPage.opdConsultantFilter.isDisplayed());
+        Assert.assertTrue(AdminPage.opdLastVisitFilter.isDisplayed());
+        Assert.assertTrue(AdminPage.opdTotalRecheckUpFilter.isDisplayed());
+    }
+
+    @And("Verify the titles (Name, Patient Id, Guardian Name, Gender, Phone, Consultant, Last Visit, Total Recheckup) are able to sort through the titles")
+    public void verifyTheTitlesNamePatientIdGuardianNameGenderPhoneConsultantLastVisitTotalRecheckupAreAbleToSortThroughTheTitles() {
+
+
+        ReusableMethods.bekle(1);
+        HealMethods.makeFilterTest("Name" , 3,7);
+        ReusableMethods.bekle(1);
+        HealMethods.makeFilterTest("Patient Id" , 2,7);
+        ReusableMethods.bekle(1);
+        HealMethods.makeFilterTest("Guardian Name" , 3,7);
+        ReusableMethods.bekle(1);
+        HealMethods.makeFilterTest("Gender" , 4,7);
+        ReusableMethods.bekle(1);
+        HealMethods.makeFilterTest("Consultant" , 5,7);
+        ReusableMethods.bekle(1);
+        HealMethods.makeFilterTest("Last Visit" , 6,7);
+        ReusableMethods.bekle(1);
+        HealMethods.makeFilterTest("Total Recheckup" , 7,7);
 
 
     }
+
+    @And("Verify the seacrhTextBox  in the OPD page page is displayed and to be able to search correctly")
+    public void verifyTheSeacrhTextBoxInTheOPDPagePageIsDisplayedAndToBeAbleToSearchCorrectly() {
+        HealMethods.makeSearchBoxTest();
+    }
+
+    @And("Verify that to select the list item number \\(as all or {int}) to be displayed in the OPD Patient List on the OPD page")
+    public void verifyThatToSelectTheListItemNumberAsAllOrToBeDisplayedInTheOPDPatientListOnTheOPDPage(int arg0) {
+        HealMethods.makeAll100Test();
+    }
+
+    @And("Verify that Add Patient button is displayed and enabled")
+    public void verifyThatAddPatientButtonIsDisplayedAndEnabled() {
+        Assert.assertTrue(adminPage.opdAddPatientButton.isDisplayed());
+        Assert.assertTrue(adminPage.opdAddPatientButton.isEnabled());
+    }
+
+    @Then("Click the Add Patient")
+    public void clickTheAddPatient() {
+        adminPage.opdAddPatientButton.click();
+    }
+
+    @And("Verify that new patient  from the OPD page can be added and saved on the page that opens")
+    public void verifyThatNewPatientFromTheOPDPageCanBeAddedAndSavedOnThePageThatOpens() {
+        adminPage.addNewPatientOPD();
+    }
+
+
+    //========================================= Nesibe [US_040] OPD MENU SONU ============================================
+
 
     @Given("It should be displayed in the IPD Patient List")
     public void itShouldBeDisplayedInTheIPDPatientList(List<String> ipdTableHeads) {
@@ -792,4 +917,339 @@ public class AdminStepdefinitions {
         Assert.assertNotEquals(firstLine1, firstLine2);
 
     }
+
+
+
+    //===========================================================US35==========================================
+    @Given("User goes to the admin page.")
+    public void userGoesToTheAdminPage() {
+        Driver.getDriver().get(ConfigReader.getProperty("adminPageUrl"));
+    }
+
+    @Then("Verify that the URL of the website is correctt.")
+    public void verifyThatTheURLOfTheWebsiteIsCorrectt() {
+        String actualUrl = Driver.getDriver().getCurrentUrl();
+        String expectedUrl = ConfigReader.getProperty("adminPageUrl");
+        Assert.assertEquals("The Url of the home page is correct", expectedUrl, actualUrl);
+    }
+
+    @Then("Verify that the Latest New information is visible.")
+    public void verifyThatTheLatestNewInformationIsVisible() {
+        Driver.getDriver().get(ConfigReader.getProperty("adminPageUrl"));
+       Assert.assertTrue(adminPage.adminloginNews.isDisplayed());
+    }
+
+
+    @Then("Click on the Sign in button")
+    public void clickOnTheSignInButton() {
+        adminPage.adminSignInButton.click();
+    }
+
+    @Then("Login to adminn page  {string} {string}")
+    public void loginToAdminPage(String username, String password) {
+            HealMethods.loginAsAdmin(username,password);
+
+        }
+
+    @Then("It is verified that the admin page has been entered.")
+    public void ıtIsVerifiedThatTheAdminPageHasBeenEntered() {
+        String expectedAdmindUrl = "https://qa.heallifehospital.com/admin/admin/dashboard";
+        String actualAdminUrl = Driver.getDriver().getCurrentUrl();
+        Assert.assertEquals(expectedAdmindUrl, actualAdminUrl);
+        Driver.getDriver().navigate().back();
+        ReusableMethods.bekle(2);
+
+    }
+
+    @And("Verify that the panel cannot be accessed with an invalid password or password")
+    public void verifyThatThePanelCannotBeAccessedWithAnInvalidPasswordOrPassword() {
+        Assert.assertTrue(adminPage.signInButton.isEnabled());
+        Driver.getDriver().navigate().back();
+    }
+
+    @And("enters {string} from examples as username")
+    public void entersFromExamplesAsUsername(String username) {
+        adminPage.adminUsernameBox.sendKeys(username);
+    }
+
+    @And("enters {string} from examples as password")
+    public void entersFromExamplesAsPassword(String password) {
+        adminPage.adminPasswordBox.sendKeys(password);
+    }
+
+    @Then("There should be a forget password link on the login page")
+    public void thereShouldBeAForgetPasswordLinkOnTheLoginPage() {
+       Assert.assertTrue( adminPage.adminForgetPassword.isDisplayed());
+
+
+    }
+
+    @And("Verify that It should redirect to the {string} page.")
+    public void verifyThatItShouldRedirectToThePage(String arg0) {
+        adminPage.adminForgetPassword.click();
+        String expectedForgetPasswordUrl = "https://qa.heallifehospital.com/site/forgotpassword";
+        String actualAdminUrl = Driver.getDriver().getCurrentUrl();
+        Assert.assertEquals(expectedForgetPasswordUrl, actualAdminUrl);
+
+    }
+
+    @And("The user have enter an email in the email box.")
+    public void theUserHaveEnterAnEmailInTheEmailBox() {
+        adminPage.adminForgetPassword.click();
+        adminPage.adminUsernameBox.sendKeys("asd@gmail.com");
+        adminPage.adminSubmitButton.click();
+
+    }
+
+    @Then("Verify that the password has been sent to the e-mail")
+    public void verifyThatThePasswordHasBeenSentToTheEMail() {
+        adminPage.passwordSentYourEmail.isDisplayed();
+
+    }
+
+    @Then("There should be a admin login link on the login page")
+    public void thereShouldBeAAdminLoginLinkOnTheLoginPage() {
+        adminPage.adminForgetPassword.click();
+
+    }
+
+    @Then("Verify that it is returned to the login page")
+    public void verifyThatItIsReturnedToTheLoginPage() {
+        adminPage.adminLogoBox.click();
+        String Url = "https://qa.heallifehospital.com/site/login";
+        String actualAdminUrl = Driver.getDriver().getCurrentUrl();
+        ReusableMethods.bekle(2);
+        Assert.assertEquals(Url, actualAdminUrl);
+
+
+    }
+    @And("click on sign in button")
+    public void clickOnSignInButton() {
+        adminPage.adminSignInButton.click();
+    }
+
+
+    @And("Admin Login sayfasında gecerli username  ve password girer")
+    public void adminLoginSayfasındaGecerliUsernameVePasswordGirer() {
+        AdminPage.adminLogin("yusuf.kombe.admin@heallifehospital.com","heallife123");
+    }
+
+    @Given("Dashboardda Appointment sekmesine tiklanir")
+    public void dashboarddaAppointmentSekmesineTiklanir() {
+        adminPage.dashboardAppointmentButton.click();
+    }
+
+
+    @And("URl'in appointment icerdigi  dogrulanir.")
+    public void urlInAppointmentIcerdigiDogrulanir() {
+        String actualTitle= Driver.getDriver().getCurrentUrl();
+        Assert.assertTrue(actualTitle.contains("appointment"));
+    }
+
+    @And("Logout admin ile sayfa kapatilir")
+    public void logoutAdminIleSayfaKapatilir() {
+        adminPage.adminProfilButton.click();
+        adminPage.adminLogoutButton.click();
+        ReusableMethods.sleep(2);
+        //Driver.quitDriver();
+
+    }
+
+    @Then("Detailsde {string} oldugu dogrulanir")
+    public void detailsdeOlduguDogrulanir(String data) {
+        Assert.assertTrue(adminPage.baslikListelemeMethod(1,data));
+    }
+
+    @Then("Appointment No ya gore listelendigini kontrol eder")
+    public void appointmentNoYaGoreListelendiginiKontrolEder() {
+        Assert.assertTrue(adminPage.intListSortTest(2));
+    }
+
+
+    @And("arama sonuclarin dogru goruntulendigi test edilir.")
+    public void aramaSonuclarinDogruGoruntulendigiTestEdilir() {
+        Assert.assertTrue(adminPage.appointmentSearchResultNameColumn.getText().contains("yusuf"));
+    }
+
+    @Then("Appointment Details sayfasinda search box tiklanir ve {string} datasi gonderilir")
+    public void appointmentDetailsSayfasindaSearchBoxTiklanirVeDatasiGonderilir(String data) {
+        adminPage.appointmentSearchBoxButton.sendKeys(data);
+    }
+
+    @Then("Status sekmesi altinda show butonuna tiklanir")
+    public void statusSekmesiAltindaShowButonunaTiklanir() {
+
+        WebElement element = Driver.getDriver().findElement(By.xpath("//*[@id=\"DataTables_Table_0\"]/tbody/tr[3]/td[1]/div/a[1]/i"));
+
+        Actions actions = new Actions(Driver.getDriver());
+        actions.moveToElement(element).perform();
+
+        element.click();
+
+
+    }
+
+    @Then("Doctor Wise butonuna tiklanir")
+    public void doctorWiseButonunaTiklanir() {
+        adminPage.doctorWiseButton.click();
+
+    }
+
+
+    @Then("Doctor Wise butonuna tiklanir ve Doctor hanesinden {string} secillir")
+    public void doctorWiseButonunaTiklanirVeDoctorHanesindenSecillir(String data) {
+        adminPage.doctorWiseButton.click();
+        ReusableMethods.sleep(3);
+        select= new Select(adminPage.doctorWiseSelectDropDown);
+        select.selectByValue("39");
+
+    }
+
+    @And("Date hanesine {string} tarihi girilir")
+    public void dateHanesineTarihiGirilir(String data) {
+        adminPage.doctorWiseDateSelectLabel.sendKeys(data+Keys.TAB);
+    }
+
+    @And("Doctor Wise da Search butonuna tiklanir")
+    public void doctorWiseDaSearchButonunaTiklanir() {
+        adminPage.doctorWiseSearchButton.click();
+    }
+
+    @And("Sonuclarin goruntulendigi dogrulanir")
+    public void sonuclarinGoruntulendigiDogrulanir() {
+        Assert.assertTrue(adminPage.doctorWiseResultRow.isDisplayed());
+    }
+
+    @And("Acilan sayfanin urlinde {string} bulundugu dogrulanir")
+    public void acilanSayfaninUrlindeBulunduguDogrulanir(String data) {
+        Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains(data));
+    }
+
+    @Then("Appointment sayfasinda Queue sekmesine tiklanir")
+    public void appointmentSayfasindaQueueSekmesineTiklanir() {
+        adminPage.doctorWiseQueueButton.click();
+    }
+
+    @And("Sayfa URLinin {string} icerdigi dogrulanir")
+    public void sayfaURLininIcerdigiDogrulanir(String arg0) {
+        Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains(arg0));
+    }
+
+    @And("Patient Queue sayfasinda doktor hanesine {string} girilir")
+    public void patientQueueSayfasindaDoktorHanesineGirilir(String data) {
+        select= new Select(adminPage.doctorWiseSelectDropDown);
+        select.selectByValue("39");
+    }
+
+    @And("Patient Queue sayfasinda shift hanesine {string} girilir")
+    public void patientQueueSayfasindaShiftHanesineGirilir(String data) {
+        select=new Select(adminPage.queueShiftSelectLabel);
+        select.selectByVisibleText(data);
+        actions.sendKeys(Keys.TAB).perform();
+    }
+
+    @And("Patient Queue sayfasinda date hanesine {string} tarihi girilir")
+    public void patientQueueSayfasindaDateHanesineTarihiGirilir(String data) {
+        adminPage.doctorWiseDateSelectLabel.sendKeys(data+Keys.TAB);
+
+    }
+
+
+
+    @Then("Patient Queue sayfasinda search butonuna basilir")
+    public void patientQueueSayfasindaSearchButonunaBasilir() {
+        adminPage.doctorWiseSearchButton.click();
+    }
+
+
+    @And("Patient Queue sayfasinda slota giris yapilir")
+    public void patientQueueSayfasindaSlotaGirisYapilir() {
+        select=new Select(adminPage.queueSlotLabel);
+        select.selectByIndex(1);
+
+
+    }
+
+    @Then("Gerekli url 'yi girer")
+    public void gerekli_url_yi_girer() {
+        Driver.getDriver().get(ConfigReader.getProperty("adminUrl"));
+        ReusableMethods.sleep(2);
+
+    }
+
+    @And("{int} saniye beklenir")
+    public void saniyeBeklenir(int saniye) {
+
+        ReusableMethods.sleep(saniye);
+    }
+
+    @And("Acilan sayfanin appointment detaylarini icerdigi dogrulanir")
+    public void acilanSayfaninAppointmentDetaylariniIcerdigiDogrulanir() {
+
+        WebElement element = Driver.getDriver().findElement(By.xpath("//*[@id=\"viewModal\"]/div/div/div[2]/div/div"));
+
+        Assert.assertTrue(element.isDisplayed());
+
+        Driver.getDriver().findElement(By.xpath("//*[@id=\"viewModal\"]/div/div/div[1]/button")).click();
+    }
+
+    @Given("Open browser and go to {string}")
+    public void openBrowserAndGoTo(String url) {
+
+        Driver.getDriver().get(ConfigReader.getProperty(url));
+    }
+
+
+    @Then("Click on Sign In")
+    public void click_on_sign_in() {
+        adminPage.signinButton.click();
+
+    }
+    @Then("Enter {string} into Search Box")
+    public void enter_into_search_box(String data) {
+
+        adminPage.searchBox.sendKeys(data);
+    }
+    @Then("Click on Dashboard")
+    public void click_on_dashboard() {
+        firstValue= adminPage.searchBox.getAttribute("autocomplete");
+        adminPage.dashboardButton.click();
+        secondValue=adminPage.searchBox.getAttribute("autocomplete");
+
+    }
+    @Then("Click on User Image")
+    public void click_on_user_image() {
+        ReusableMethods.bekle(1);
+        adminPage.profilImageButton.click();
+
+    }
+    @Then("Click on Logout")
+    public void click_on_logout() {
+        ReusableMethods.bekle(1);
+        adminPage.logoutButton.click();
+
+
+    }
+
+
+    @Given("It is verified that there are page links in the Dashboard sidebar {string}")
+    public void ıtIsVerifiedThatThereArePageLinksInTheDashboardSidebar(String data) {
+
+
+    }
+
+    @Then("it is verify that {string} is not written in the searchbox")
+    public void itIsVerifyThatIsNotWrittenInTheSearchbox(String data) {
+
+        Assert.assertFalse(firstValue.equals(secondValue));
+    }
+
+    @Given("It is verified that there are page links in the Dashboard sidebar")
+    public void ıtIsVerifiedThatThereArePageLinksInTheDashboardSidebar(List<String> list) {
+        System.out.println(list);
+        Assert.assertTrue(ReusableMethods.dashboardTitleListingMethod(list));
+    }
 }
+
+
+

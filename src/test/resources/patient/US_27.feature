@@ -13,7 +13,7 @@ Feature: US_27 As a user (patient) I would like to have the Radiology page on my
 
   Scenario: TC_02 On the Radiology page, the Radiology Test Reports List should have the headings (Bill No, Case ID, Reporting Date, Reference Doctor, Note, Amount($), Paid Amount($), Balance Amount($), Action).
     And  Verify that "Bill No, Case ID, Date, Doctor Name, Note, Amount($), Paid Amount($), Balance Amount($), Action)" in the Pharmacy Bill List are displayed
-    And  Quit the page
+
 
 
   Scenario: TC_03 In order to search the Radiology Test Reports List, it must have a searchTextBox and it should search correctly.
@@ -21,30 +21,33 @@ Feature: US_27 As a user (patient) I would like to have the Radiology page on my
     Then Click the "search box"
     Then Enter the excisting Radiology Bill
     And It is verified that filttering is done by entering the bill number in the Search Box.
-    And  Quit the page
+
 
 
   Scenario: TC_04 It should be possible to sort the list according to the titles in the Radiology Test Reports List
     Then It is verified that the headings are sorted by clicking on them.
-    And  Quit the page
 
 
   Scenario: TC_05 Under the Action title in the Radiology Test Reports List (View Payments, View Reports and Pay), operations should be possible
 
     Then Click the View payments.
+    Then wait 3 seconds
     Then The visibility of the amount text is verified
-    Then close the screen
+    Then wait 3 seconds
+    Then close the screennnnn
+    Then wait 3 seconds
     Then Click the show button.
     Then Name text (ayse.busra.pehlıvan) should visible
     Then wait 5 seconds
-    Then close the screenn
+    Then close the screennnnnn
     Then wait 3 seconds
-    Then Click the pay button.
-    Then the amount paid is entered.
+    Then Click the pay buttonnn.
+    Then the amount paid is entereddd.
     And Click the add button.
     Then wait 3 seconds
     And Click the pay with card.
     Given e-mail, card number, date and cvc code are entered
     Then The visibility of the success text is verified
-    And  Close the page
+
+
 

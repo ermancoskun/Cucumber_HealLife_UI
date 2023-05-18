@@ -7,14 +7,16 @@ import org.junit.runner.RunWith;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        plugin={"html:target/cucumber-reports1.html",
+        plugin={"pretty","html:target/cucumber-reports1.html",
                 "json:target/json-reports/cucumber1.json",
                 "junit:target/xml-report/cucumber1.xml"
         },
         features = "src/test/resources",
         glue={"stepdefinitions","hooks"}, //stepdefinitions package icinde hooks yoksa ayrica belirtmeliyiz
-        tags= "@US038",
-        dryRun =false
+
+        tags= "@US011",
+
+        dryRun =true
 )
 public class Runner {
 }

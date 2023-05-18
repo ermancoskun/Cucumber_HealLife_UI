@@ -5,8 +5,8 @@ Feature: US_038 As an admin I would like to have a page in the dashboard sidebar
     And Login with "ahmet.yazicioglu.admin@heallifehospital.com" and "heallife123" datas
     Then Click on the " Billing" link
 
-  @US038
 
+  @US038
   Scenario: TC_01 Clicking on the Billing link on the Dashboard sidebar should lead to the relevant page.
         Then Verified redirected to Billing page
 
@@ -37,17 +37,17 @@ Feature: US_038 As an admin I would like to have a page in the dashboard sidebar
         Then Click 1. iconButton under the last column for display first patient profile
         Then Verified redirected to Patent Profile page
 
-<<<<<<< HEAD
+
     And Click on the OPD button
     And Click 1. iconButton under the Total Recheckup for display first patient profile
 
-=======
+
   Scenario: TC_08 When the names under Name in the OPD Billing List are clicked,
                   the information of the relevant patient (detail profile) should be displayed.
         And Click on the OPD button
         And Click first name for display patient profile
         Then Verified redirected to Patent Profile page
->>>>>>> main
+
 
   Scenario: TC_09 When Pathology board in the Single Module Billing window is clicked,(all)Amounts)
                   should be displayed.

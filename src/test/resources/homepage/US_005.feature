@@ -11,9 +11,9 @@ Feature: US_005 As a user, I would like to have the "Featured Services" section 
 
     Given Go to "url"
     Then  Sayfayi kaydir
-    Then  Verify the Medical Treatment board  is visible
-    And   1 saniye bekle
     Then  Verify the Emergency Help board  is visible
+    And   1 saniye bekle
+    Then  Verify the Medical Treatment board  is visible
     And   1 saniye bekle
     Then  Verify the Qualified Doctors  board  is visible
     And   1 saniye bekle

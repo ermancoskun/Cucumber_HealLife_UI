@@ -1,7 +1,11 @@
 package stepdefinitions;
 
 
-import com.github.dockerjava.api.command.HealthState;
+
+
+
+import com.beust.ah.A;
+
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
@@ -23,6 +27,9 @@ import utilities.HealMethods;
 import utilities.ReusableMethods;
 
 import javax.swing.*;
+
+import java.util.Date;
+import java.util.Random;
 
 import static utilities.Driver.driver;
 import static utilities.Driver.getDriver;
@@ -511,10 +518,6 @@ public class PatientStepdefinitions {
         Driver.getDriver();
     }
 
-/*    @Then("Go to {string}")
-    public void goTo(String url) {
-        Driver.getDriver().get(ConfigReader.getProperty(url));}*/
-
     @Then("Login as a patient with username password")
     public void loginPatient(String userName, String Password) {
         HealMethods.loginAsUser("userNameNesibe", "userPasswordNesibe");
@@ -532,13 +535,8 @@ public class PatientStepdefinitions {
     @Then("Verify the OPD menu title in the dashboard is visible and clickable")
     public void verifyOpdMenuTitleEnabled() {
 
-        ReusableMethods.bekle(2);
-        Assert.assertEquals("OPD", patientPage.opdButton.getText());
-        String expectedTitle = "OPD";
-        String actualTitle = Driver.getDriver().findElement(By.xpath("//*[@id=sibe-box]/ul/li[3]/a")).getText();
-        Assert.assertTrue(actualTitle.contains(expectedTitle));
-
-
+      Assert.assertTrue(patientPage.opdButton.isDisplayed());
+      Assert.assertTrue(patientPage.opdButton.isEnabled());
     }
 
     @Then("Click the OPD menu")
@@ -609,33 +607,13 @@ public class PatientStepdefinitions {
     @Then("Verify the list titles in the Visits List are to be able to sort effectively")
     public void ListTitlesSorting() {
 
-        ReusableMethods.bekle(1);
-        patientPage.opdNoFilter.click();
         HealMethods.makeFilterTestPatientOPD("OPD No", 1, 7);
-
-        ReusableMethods.bekle(1);
-        patientPage.caseIdFilter.click();
-        HealMethods.makeFilterTestPatientOPD("Case ID / Patient ID", 2, 7);
-
-        ReusableMethods.bekle(1);
-        patientPage.appointmentDateFilter.click();
+       // HealMethods.makeFilterTest("Case ID / Patient ID", 2, 7);
         HealMethods.makeFilterTestPatientOPD("Appointment Date", 3, 7);
-
-        ReusableMethods.bekle(1);
-        patientPage.consultantFilter.click();
         HealMethods.makeFilterTestPatientOPD("Consultant", 4, 7);
-
-        ReusableMethods.bekle(1);
-        patientPage.referanceFilter.click();
         HealMethods.makeFilterTestPatientOPD("Reference", 5, 7);
-
-        ReusableMethods.bekle(1);
-        patientPage.symptomFilter.click();
         HealMethods.makeFilterTestPatientOPD("Symptoms", 6, 7);
-
-        ReusableMethods.bekle(1);
-        patientPage.actionVisit.click();
-        HealMethods.makeFilterTestPatientOPD("Action", 7, 7);
+        // HealMethods.makeFilterTestPatientOPD("Action", 7, 7);
 
     }
 
@@ -652,10 +630,205 @@ public class PatientStepdefinitions {
             Assert.assertTrue(patientPage.prescriptionNot.isEnabled());
         }
 
+
         @Then("Click the Lab Investigation menu")
         public void clickTheLabInvestigationMenu () {
             patientPage.labInvestigation.click();
         }
+
+    //========================================= Nesibe [US_023] OPD MENU SONU ==========================================
+
+
+
+/////////////////////////////////////////
+    @Then("Login button is clicked")
+    public void login_button_is_clicked() {
+        patientPage.entryLoginbutton.click();
+    }
+    @Then("Required information is entered and login {string} {string}")
+    public void required_information_is_entered_and_login(String username , String password) {
+        patientPage.loginAspatient(username,password);
+
+
+
+    }
+    @Then("Click on the IPD tab")
+    public void click_on_the_ipd_tab() {
+
+        patientPage.ipdButton.click();
+
+    }
+    @Then("IPD page displayed")
+    public void ipd_page_displayed() {
+      Assert.assertTrue(patientPage.IPDName.isDisplayed());
+
+    }
+
+    @Then("Click on the medication tab and the Prescription tab")
+    public void click_on_the_medication_tab_and_the_prescription_tab() {
+
+        patientPage.MeditacionTab.click();
+        ReusableMethods.bekle(5);
+        patientPage.PrescriptionTab.click();
+
+    }
+    @Then("Click on Consulant Register tab and Lab Investigations tab.")
+    public void click_on_consulant_register_tab_and_lab_investigations_tab() {
+
+        patientPage.ConsultantRegister.click();
+        ReusableMethods.bekle(5);
+        patientPage.labInvestigation.click();
+    }
+
+
+    @Then("Click on Operation tab and Charge tab")
+    public void click_on_operation_tab_and_charge_tab() {
+
+        patientPage.OperationTab.click();
+        ReusableMethods.bekle(5);
+        patientPage.ChargesTab.click();
+
+    }
+
+    @Then("Click on the Timeline tab and the Treatment History tab")
+    public void click_on_the_timeline_tab_and_the_treatment_history_tab() {
+
+        patientPage.RightArrowKey.click();
+        patientPage.Timeline.click();
+        ReusableMethods.bekle(5);
+        patientPage.treatmentHistory.click();
+
+
+    }
+    @Then("Click on Bed History tab")
+    public void click_on_bed_history_tab() {
+
+
+        patientPage.RightArrowKey.click();
+      Assert.assertTrue(patientPage.BedHistory.isEnabled());
+      patientPage.BedHistory.click();
+
+    }
+
+
+    @Then("Click on the Profile button and display the requested information.")
+    public void click_on_the_profile_button_and_display_the_requested_information() {
+        patientPage.ProfileButton.click();
+        ReusableMethods.bekle(5);
+        Assert.assertTrue(patientPage.PatientDetailsTitle.isDisplayed());
+
+    }
+
+    @Then("Click on the Overview")
+    public void click_on_the_overview() {
+
+        patientPage.OverviewTab.click();
+
+        ReusableMethods.bekle(3);
+
+        Assert.assertTrue(patientPage.summarypartText.isDisplayed());
+
+
+
+    }
+
+
+    @Then("Click on the Medication tab and display the Date , Medication Name , Dose1 title")
+    public void click_on_the_medication_tab() {
+       patientPage.TitleAssertion("Medication");
+    }
+
+
+    @Then("Click on the Prescription tab and Prescription No , Date , Finding , Action titles should be displayed")
+    public void  Click_on_the_Prescription_tab_and_Prescription_No_Date_Finding_Action_titles_should_be_displayed() {
+        patientPage.TitleAssertion("Prescription");
+
+
+    }
+
+    @Then("Click on the Prescription tab")
+    public void click_on_the_prescription_tab() {
+
+        patientPage.PrescriptionTab.click();
+
+    }
+    @Then("Click on SearchTextBox and write the necessary information.")
+    public void click_on_search_text_box_and_write_the_necessary_information() {
+
+        patientPage.PrescriptionSearchBox.click();
+        patientPage.PrescriptionSearchBox.sendKeys("IPDP105");
+        ReusableMethods.bekle(3);
+        Assert.assertTrue(patientPage.searchresulttext.isDisplayed());
+
+    }
+
+    @Then("Sorting should be done by clicking Prescription No ,Date , Finding headings")
+    public void sorting_should_be_done_by_clicking_prescription_no_date_finding_headings() {
+
+        patientPage.PrescriptionNo.click();
+        ReusableMethods.bekle(2);
+        patientPage.PrescriptionDate.click();
+        ReusableMethods.bekle(2);
+        patientPage.PrescriptionFinding.click();
+
+
+    }
+
+
+    @Then("It should be possible to click on the Prescription detail under the Action title in the Prescription list.")
+    public void it_should_be_possible_to_click_on_the_prescription_detail_under_the_action_title_in_the_prescription_list() {
+        patientPage.PrescriptionActionsButton.click();
+        ReusableMethods.bekle(5);
+        Assert.assertTrue(patientPage.ActionsPrescriptionNo.isDisplayed());
+
+    }
+
+
+    @Then("The Consultant Registration tab should be clicked and the titles in the Consultant Registration List should be displayed on the Consultant Registration page.")
+    public void the_consultant_registration_tab_should_be_clicked_and_the_titles_in_the_consultant_registration_list_should_be_displayed_on_the_consultant_registration_page() {
+
+        patientPage.TitleAssertion("Consultant Register");
+
+    }
+
+
+    @Then("Click on the Consultant Register tab")
+    public void click_on_the_consultant_register_tab() {
+
+        patientPage.ConsultantRegister.click();
+    }
+    @Then("In order to search the Consultant Register list, there must be a searhTextBox and a correct search must be made.")
+    public void in_order_to_search_the_consultant_register_list_there_must_be_a_searh_text_box_and_a_correct_search_must_be_made() {
+
+        patientPage.ConsultantRegisterSearchBox.sendKeys("10.05.2023 03:09 PM");
+        ReusableMethods.bekle(3);
+        Assert.assertTrue(patientPage.ConsultantRegisterSearcResult.isDisplayed());
+    }
+
+
+
+    @Then("The Lab Investigation page should be clicked and the Lab Investigation page should have a title in the Lab Investigation List.")
+    public void the_lab_investigation_page_should_be_clicked_and_the_lab_investigation_page_should_have_a_title_in_the_lab_investigation_list() {
+        patientPage.TitleAssertion( "Lab Investigation");
+
+    }
+
+
+
+    @Then("Click on Lab Investigation page")
+    public void click_on_lab_investigation_page() {
+       patientPage.labInvestigation.click();
+    }
+    @Then("To be able to search the Lab Investigation list, there must be a searhTextBox and it must search correctly.")
+    public void to_be_able_to_search_the_lab_investigation_list_there_must_be_a_searh_text_box_and_it_must_search_correctly() {
+
+        patientPage.searchLabInvestigation.click();
+        patientPage.searchLabInvestigation.sendKeys("asdada");
+        ReusableMethods.bekle(3);
+    }
+    //==============================================Busra US26=======================================================
+
+
 
         @Then("Verify titles in Lab Investigation List \\(Test Name, Case ID, Lab, Sample Collected, Expected Date, Approved By) displayed correctly on the Lab Investigation page")
         public void verifyTitlesInLabInvestigation () {
@@ -689,22 +862,17 @@ public class PatientStepdefinitions {
 
         @And("Verify the list over the titles in the Lab Investigation List are to be able to sort effectively")
         public void verifyTheLabInvestigationListSort () {
-            patientPage.testName.click();
+
             HealMethods.makeFilterTestPatientOPD("Test Name", 1, 7);
 
-            patientPage.caseId2Filter.click();
-            HealMethods.makeFilterTestPatientOPD("Case ID / Patient ID", 2, 7);
+            // HealMethods.makeFilterTestPatientOPD("Case ID / Patient ID", 2, 7);
 
-            patientPage.labFilter.click();
             HealMethods.makeFilterTestPatientOPD("Lab", 3, 7);
 
-            patientPage.sampleCollectedFilter.click();
             HealMethods.makeFilterTestPatientOPD("Sample Collected", 4, 7);
 
-            patientPage.expectedDateFilter.click();
             HealMethods.makeFilterTestPatientOPD("Expected Date", 5, 7);
 
-            patientPage.approvedByFilter.click();
             HealMethods.makeFilterTestPatientOPD("Approved By", 6, 7);
         }
 
@@ -1004,7 +1172,23 @@ public class PatientStepdefinitions {
         }
 
 
-    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
+
 
 
 

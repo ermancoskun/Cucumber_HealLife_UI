@@ -1,5 +1,14 @@
 package pages;
 
+
+
+
+
+
+
+import org.bouncycastle.jcajce.provider.asymmetric.X509;
+
+
 import org.junit.Assert;
 
 import org.openqa.selenium.By;
@@ -522,7 +531,6 @@ public class PatientPage extends Base {
     @FindBy(xpath = "//td[text()='RADIOB73']")
     public WebElement radioBillNoText;
 
-
     public static boolean baslikListelemeMethod(String data) {
         List<WebElement> actualList = Driver.getDriver().findElements(By.xpath("//*[@id=\"DataTables_Table_0\"]/thead/tr[1]//th"));
         List<String> baslikListesiActual = new ArrayList<>();
@@ -554,7 +562,10 @@ public class PatientPage extends Base {
     }
 
     public static boolean intListSortTest(int sutunNo) {
+
+
         WebElement baslik = Driver.getDriver().findElement(By.xpath("//*[@id=\"DataTables_Table_0\"]/thead/tr/th[" + sutunNo + "]"));
+
         baslik.click();
         ReusableMethods.bekle(3);
         List<WebElement> ActualList = Driver.getDriver().findElements(By.xpath("//*[@id=\"DataTables_Table_0\"]/tbody/tr/td[" + sutunNo + "]"));
@@ -565,6 +576,7 @@ public class PatientPage extends Base {
             ActualStringList.add(each.getText().replaceAll("[^\\d]", ""));
         }
         System.out.println(ActualStringList);
+
 
 
         List<String> ExpectedList = new ArrayList<>(ActualStringList);
@@ -696,6 +708,7 @@ public class PatientPage extends Base {
         System.out.println(ActualStringList);
 
 
+
         List<String> ExpectedList = new ArrayList<>(ActualStringList);
         Collections.sort(ExpectedList);
         if (ActualStringList.equals(ExpectedList)) {
@@ -708,52 +721,53 @@ public class PatientPage extends Base {
     //============================================ Nesibe [US_023] OPD MENU ============================================
 
     @FindBy(xpath = "//*[@id=sibe-box]/ul/li[3]/a")
-    public WebElement opdMenu ;
+    public WebElement opdMenu;
 
     @FindBy(xpath = "//*[text()=' Overview']")
-    public WebElement overview ;
+    public WebElement overview;
 
     @FindBy(xpath = "//*[text()=' Visits']")
-    public WebElement visits ;
+    public WebElement visits;
 
     @FindBy(xpath = "//*[text()=' Lab Investigation']")
-    public WebElement labInvestigation ;
+    public WebElement labInvestigation;
 
     @FindBy(xpath = "//*[text()=' Treatment History']")
-    public WebElement treatmentHistory ;
+    public WebElement treatmentHistory;
 
     @FindBy(xpath = "//*[text()=' Timeline']")
-    public WebElement timeline ;
+    public WebElement timeline;
 
     @FindBy(xpath = "//*[text()='Gender']")
-    public WebElement gender ;
+    public WebElement gender;
 
     @FindBy(xpath = "//*[text()='Age']")
-    public WebElement age ;
+    public WebElement age;
 
     @FindBy(xpath = "//*[text()='Guardian Name']")
-    public WebElement guardianName ;
+    public WebElement guardianName;
 
     @FindBy(xpath = "//*[text()='Phone']")
-    public WebElement phone ;
+    public WebElement phone;
 
     @FindBy(xpath = "//*[text()='Visit Details']")
-    public WebElement sumVisitDetails ;
+    public WebElement sumVisitDetails;
 
     @FindBy(xpath = "(//*[text()='Lab Investigation'])[1]")
-    public WebElement sumlabInvestigation ;
+    public WebElement sumlabInvestigation;
 
     @FindBy(xpath = "(//input[@type='search'])[2]")
-    public WebElement searchLabInvestigation ;
+    public WebElement searchLabInvestigation;
 
     @FindBy(xpath = "(//*[text()='Treatment History'])[1]")
-    public WebElement sumTreatmentHistory ;
+    public WebElement sumTreatmentHistory;
 
     @FindBy(xpath = "(//*[text()='Timeline'])[1]")
-    public WebElement sumTimeline ;
+    public WebElement sumTimeline;
 
     @FindBy(xpath = "(//*[text()='Consultant Doctor'])[1]")
-    public WebElement consultantDoctor ;
+    public WebElement consultantDoctor;
+
 
     @FindBy(xpath = "(//*[text()='OPD No'])[2]")
     public WebElement opdNoFilter ;
@@ -773,8 +787,25 @@ public class PatientPage extends Base {
     @FindBy(xpath = "(//*[text()='Symptoms'])[2]")
     public WebElement symptomFilter;
 
+    @FindBy(xpath = "(//*[@class='sorting'])[1]")
+    public WebElement opdNo;
+
+    @FindBy(xpath = "(//*[@class='sorting'])[2]")
+    public WebElement caseId;
+
+    @FindBy(xpath = "(//*[@class='sorting'])[3]")
+    public WebElement appointmentDate;
+
+    @FindBy(xpath = "(//*[@class='sorting'])[4]")
+    public WebElement consultant;
+
+    @FindBy(xpath = "(//*[@class='sorting'])[5]")
+    public WebElement referance;
+
+
     @FindBy(xpath = "(//input[@type='search'])[1]")
-    public WebElement searchVisit ;
+    public WebElement searchVisit;
+
 
     @FindBy(xpath = "(//*[text()='Test Name'])[2]")
     public WebElement testName ;
@@ -797,23 +828,47 @@ public class PatientPage extends Base {
     @FindBy(xpath = "(//*[text()='Approved By'])[2]")
     public WebElement approvedByFilter ;
 
+    @FindBy(xpath = "//*[text()='Test Name']")
+    public WebElement testName2;
+
+    @FindBy(xpath = "(//*[text()='Case ID / Patient ID'])[3]")
+    public WebElement caseId2;
+
+    @FindBy(xpath = "//*[text()='Lab']")
+    public WebElement lab;
+
+    @FindBy(xpath = "//*[text()='Sample Collected']")
+    public WebElement sampleCollected;
+
+    @FindBy(xpath = "//*[text()='Expected Date']")
+    public WebElement expectedData;
+
+    @FindBy(xpath = "(//*[text()='Approved By'])")
+    public WebElement approvedBy;
+
+
     @FindBy(xpath = "(//*[text()='Appointment Date'])[3]")
-    public WebElement appointmentDate2 ;
+    public WebElement appointmentDate2;
+
 
     @FindBy(xpath = "(//*[text()='Symptoms'])[3]")
     public WebElement symptoms2 ;
 
+    @FindBy(xpath = "(//*[text()='Symptoms'])")
+    public WebElement symptoms;
+
+
     @FindBy(xpath = "(//input[@type='search'])[3]")
-    public WebElement searchTreatment ;
+    public WebElement searchTreatment;
 
     @FindBy(xpath = "(//*[text()='Action'])[1]")
-    public WebElement actionVisit ;
+    public WebElement actionVisit;
 
     @FindBy(xpath = "((//*[text()='Action'])[2]")
-    public WebElement actionLabInvestigation ;
+    public WebElement actionLabInvestigation;
 
     @FindBy(xpath = "(//*[text()='Action'])[3]")
-    public WebElement actionTreatmentHistory ;
+    public WebElement actionTreatmentHistory;
 
     @FindBy(xpath = "(//a[@href='javascript:void(0)'])[1]")
     public WebElement testSonuc1 ;
@@ -851,7 +906,177 @@ public class PatientPage extends Base {
 
 
     //============================================ Nesibe [US_023] OPD MENU SONU =======================================
+
+    @FindBy(xpath = "//input[@id='password']")
+    public WebElement PasswordBox;
+    @FindBy (xpath = "//button[@type='submit']")
+    public WebElement SigninButton;
+
+    @FindBy (xpath = "(//h3[@class='text-uppercase bolds mt0 ptt10 pull-left font14'])[1]")
+    public WebElement IPDName;
+
+
+    public void loginAspatient(String username, String password) {
+        entryEmailText.sendKeys(ConfigReader.getProperty(username));
+        PasswordBox.sendKeys(ConfigReader.getProperty(password));
+        SigninButton.click();
+
+
+
+
+
+
+    }
+
+   // IPD
+    @FindBy(xpath = "//i[@class='fa fa-th']")
+    public WebElement OverviewTab;
+
+    // IPD -> Overview
+    @FindBy(xpath = "(//i[@class='fa fa-reorder'])[1]")
+    public WebElement ProfileButton;
+
+    //IPD ->Overview->ProfileButton
+    @FindBy (xpath = "(//h4[@class='modal-title'])[2]")
+    public WebElement PatientDetailsTitle;
+
+
+    // IPD
+    @FindBy(xpath ="(//i[@class='far fa-calendar-check'])[1]")
+    public WebElement MeditacionTab;
+
+    // IPD
+    @FindBy (xpath = "(//i[@class='far fa-calendar-check'])[2]")
+    public WebElement PrescriptionTab;
+
+    //IPD
+    @FindBy (xpath = "//i[@class='fas fa-cut']")
+    public WebElement OperationTab;
+
+    //IPD
+    @FindBy(xpath = "//i[@class='fas fa-donate']")
+    public WebElement ChargesTab;
+
+    //IPD
+    @FindBy(xpath = "(//i[@class='fas fa-hand-holding-usd'])[1]")
+    public WebElement PaymentTab;
+
+    //IPD
+    @FindBy (xpath = "(//i[@class='fa fa-video-camera'])[2]")
+    public WebElement LiveConsulationTab;
+
+    //IPD
+    @FindBy (xpath = "//i[@class='fas fa-sticky-note']")
+    public WebElement NurseNotesTab;
+
+    //IPD
+    @FindBy (xpath ="//span[@class='fa fa-chevron-right']" )
+    public WebElement RightArrowKey;
+
+    //IPD
+    @FindBy (xpath = "(//i[@class='far fa-calendar-check'])[3]")
+    public WebElement Timeline;
+
+
+    //IPD
+    @FindBy(xpath = "(//i[@class='fas fa-hand-holding-usd'])[2]")
+    public WebElement TreatmentHistory;
+
+
+    //IPD
+    @FindBy (xpath = "(//i[@class='fas fa-procedures'])[2]")
+    public WebElement BedHistory;
+
+
+    //IPD
+    @FindBy(xpath = "(//i[@class='fas fa-file-prescription'])[1]")
+    public WebElement ConsultantRegister;
+
+    //IPD->Overivew
+    @FindBy (xpath = "(//td[@class='bolds'])[1]")
+    public WebElement GenderText;
+
+    //IPD->Overivew
+    @FindBy (xpath = "(//td[@class='bolds'])[2]")
+    public WebElement AgeText;
+
+    //IPD->Overivew
+    @FindBy (xpath = "//td[@class='bolds'])[3]")
+    public WebElement GuardianNameText;
+
+    //IPD->Overivew
+    @FindBy (xpath = "//td[@class='bolds'])[3]")
+    public WebElement PhoneText;
+
+    //IPD->Overivew
+    @FindBy(xpath = "//div[@class='col-lg-9 col-md-8 col-sm-12']")
+    public WebElement summarypartText;
+
+    //IPD->Meditacion
+    @FindBy (xpath = "//th[@class='hard_left']")
+    public WebElement MeditacionDateText;
+
+    //IPD->Meditacion
+    @FindBy (xpath = "//th[@class='next_left']")
+    public WebElement 	MedicineNameText;
+
+    //IPD->Meditacion
+    @FindBy (xpath = "//th[@class='sticky-col']")
+    public WebElement Dose1Text;
+
+    //IPD->Meditacion
+    @FindBy (xpath = "//div[@class='table_inner']")
+    public WebElement TitleText;
+
+  // IPD->Prescription
+    @FindBy (xpath = "(//th[@class='sorting'])[9]")
+    public WebElement PrescriptionNo;
+
+// IPD -> Prescription
+    @FindBy (xpath = "(//th[@class='sorting'])[10]")
+    public WebElement PrescriptionDate;
+
+    @FindBy (xpath = "//th[@class='sorting_desc']")
+    public WebElement PrescriptionFinding;
+
+    @FindBy (xpath = "//*[@class='tab-content']")
+    public WebElement IPDTitle;
+
+    public void TitleAssertion(String elementText){
+
+        WebElement webElement =Driver.getDriver().findElement(By.xpath("//a[text()=' "+elementText+"']"));
+        webElement.click();
+        ReusableMethods.bekle(3);
+        Assert.assertTrue(IPDTitle.isDisplayed());
+
+
+    }
+
+    //IPD->Prescription
+    @FindBy (xpath = "(//input[@type='search'])[3]")
+    public WebElement PrescriptionSearchBox;
+
+    @FindBy(xpath = "(//div[@class='dataTables_info'])[3]")
+    public WebElement searchresulttext;
+
+    @FindBy(xpath = "(//i[@class='fas fa-file-prescription'])[2]")
+    public WebElement PrescriptionActionsButton;
+
+    @FindBy (xpath = "(//table[@class='printablea4'])[1]")
+    public WebElement ActionsPrescriptionNo;
+
+
+
+    //IPD->ConsultantRegister
+    @FindBy (xpath = "(//input[@type='search'])[1]")
+    public WebElement  ConsultantRegisterSearchBox;
+
+    @FindBy  (xpath = "(//div[@class='dataTables_info'])[1]")
+    public WebElement ConsultantRegisterSearcResult;
+
 }
+
+
 
 
 

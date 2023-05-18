@@ -21,12 +21,16 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.ui.Select;
 import utilities.ConfigReader;
 import utilities.Driver;
+
 import utilities.JSUtilities;
 import utilities.ReusableMethods;
 
 
 import utilities.ConfigReader;
 import utilities.Driver;
+
+import utilities.HealMethods;
+
 
 import java.util.List;
 
@@ -76,8 +80,8 @@ public class AdminPage extends Base{
     @FindBy(xpath = "(//select[@name='blood_group'])")
     public WebElement bloodGroupDropDown2;
 
-     @FindBy(xpath = "(//div[@class='toast-message'])[1]")
-     public WebElement warningMessage;
+    @FindBy(xpath = "(//div[@class='toast-message'])[1]")
+    public WebElement warningMessage;
 
 
 
@@ -96,6 +100,34 @@ public class AdminPage extends Base{
     //Admin > Billing
     @FindBy (xpath = "//p[.='Blood Issue']")
     public WebElement bloodIssueButton;
+
+    //Admin > Billing
+    @FindBy (xpath = "//p[.='Blood Component Issue']")
+    public WebElement bloodIssueComponentButton;
+
+    //Admin > Bill >Issueblood / Issuecomponent
+    @FindBy (xpath = "//span[@id='select2-consultant_doctor-container']")
+    public WebElement hospitalDoctorDDM;
+
+    //Admin > Bill >Issueblood / Issuecomponent
+    @FindBy (xpath = "//span[@id='select2-component_blood_group-container']")
+    public WebElement bloodGroupDDM;
+
+    //Admin > Bill >Issueblood / Issuecomponent
+    @FindBy (xpath = "//span[@id='select2-blood_component-container']")
+    public WebElement componentDDM;
+
+    //Admin > Bill >Issueblood / Issuecomponent
+    @FindBy (xpath = "//span[@id='select2-bag_no-xj-container']")
+    public WebElement bagDDM;
+
+    //Admin > Bill >Issueblood / Issuecomponent
+    @FindBy (xpath = "//span[@id='select2-charge_category-container']")
+    public WebElement chargeCathegoryDDM;
+
+    //Admin > Bill >Issueblood / Issuecomponent
+    @FindBy (xpath = "//span[@id='select2-charge_category-container']")
+    public WebElement chargeNameDDM;
 
 
     //Admin > IPD >
@@ -122,6 +154,23 @@ public class AdminPage extends Base{
     @FindBy(xpath = "(//button[@type=\"button\"])[10]")
     public WebElement xIconButton;
 
+    @FindBy(xpath = "(//*[@role=\"row\"]//td)[1]")
+    public WebElement getBillNoConfirmation;
+
+    @FindBy(xpath = "//*[@class=\"btn btn-info addplus-xs btn-sm  add-record mb10\"]")
+    public  WebElement addButtonPathology;
+
+    @FindBy(xpath = "//table[@id=\"tableID\"]//tbody//tr")
+    public List<WebElement> testParamNameList;
+
+    @FindBy(xpath = "//*[@class=\"btn btn-primary btn-sm pathology addtest\"]")
+    public WebElement addPathologyTestButton;
+
+    @FindBy(xpath = "//*[@name=\"test_name\"]")
+    public WebElement testNamePathology;
+
+    @FindBy(xpath = "//input[@id='billno']")
+    public WebElement getBillNo;
 
 
     // adminLoginPage
@@ -433,6 +482,40 @@ public class AdminPage extends Base{
     // admin/chat >> Chat sayfasındaki Add Contact frame icerisindeki +Add butonu
     @FindBy(xpath = "(//button[@type='submit'])[3]")
     public WebElement addContactSubmitButton;
+
+    //===========================================================================================
+
+    @FindBy(xpath = "//h3[text()='What\"s new in Heal Life Hospital & Research Center']")
+    public WebElement adminloginNews;
+
+    @FindBy(xpath = "//button[@type='submit']")
+    public WebElement adminSignInButton;
+
+    @FindBy(xpath = "//input[@type='text']")
+    public WebElement adminUsernameBox;
+
+    @FindBy(xpath = "//input[@type='password']")
+    public WebElement adminPasswordBox;
+
+    @FindBy(xpath = "//a[@class='forgot']")
+    public WebElement adminForgetPassword;
+
+    @FindBy(xpath = "//button[@type='submit']")
+    public WebElement adminSubmitButton;
+
+
+    @FindBy(xpath = "//div[text()='Your password has been sent to your e-mail address.']")
+    public WebElement passwordSentYourEmail;
+
+    @FindBy(xpath = "(//i[@class='fa fa-key'])[2]")
+    public WebElement adminLogoBox;
+
+
+
+
+
+
+
 
 
 

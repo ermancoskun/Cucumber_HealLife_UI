@@ -1,4 +1,4 @@
-@023
+
 Feature: As a patient I want to have an OPD menu on my Dashboard so I can check my OPD information.
 
 
@@ -12,6 +12,7 @@ Feature: As a patient I want to have an OPD menu on my Dashboard so I can check 
 
 
   Scenario: TC-02 Access to Overview, Visits, Lab Investigation, Treatment History, Timeline pages should be available from the OPD menu
+
     Given Goes to user login page
     Then Login to user page as "nesibe.unal" "heallife123"
     Then Click the OPD menu
@@ -26,6 +27,7 @@ Feature: As a patient I want to have an OPD menu on my Dashboard so I can check 
 
 
   Scenario: TC-04 Summaries of information on other pages (Visits, Lab Investigation, Treatment History, Timeline) should be displayed
+
     Given Goes to user login page
     Then Login to user page as "nesibe.unal" "heallife123"
     Then Click the OPD menu
@@ -33,6 +35,7 @@ Feature: As a patient I want to have an OPD menu on my Dashboard so I can check 
 
 
   Scenario: TC-05 Consultant doctors should be displayed under the title of consultant doctor on the Overview page
+
     Given Goes to user login page
     Then Login to user page as "nesibe.unal" "heallife123"
     Then Click the OPD menu
@@ -48,12 +51,14 @@ Feature: As a patient I want to have an OPD menu on my Dashboard so I can check 
 
 
   Scenario: TC-07 To be able to search the Visits list, there must be a searhTextBox and search correctly.
+
     Given Goes to user login page
     Then Login to user page as "nesibe.unal" "heallife123"
     Then Click the OPD menu
     Then Click the Visits menu
     Then Verify the seacrhTextBox  in Visit page is displayed and to be able to search correctly
 
+  @023
   Scenario: TC-08 It should be possible to sort the list over the list titles in the Visits List
     Given Goes to user login page
     Then Login to user page as "nesibe.unal" "heallife123"
@@ -63,12 +68,12 @@ Feature: As a patient I want to have an OPD menu on my Dashboard so I can check 
 
 
   Scenario: TC-09 You must have access to the details of the visit and the prescription information under the Actions heading in the Visits
+
     Given Goes to user login page
     Then Login to user page as "nesibe.unal" "heallife123"
     Then Click the OPD menu
     Then Click the Visits menu
     Then Verify the accessiblity to the details of the visit and the prescription information under the Actions heading in the Visits
-
 
   Scenario: TC-10 Visit details and prescription information must be recorded on the correct patient name
     Given Goes to user login page
@@ -146,3 +151,5 @@ Feature: As a patient I want to have an OPD menu on my Dashboard so I can check 
     Then Click the OPD menu
     Then Click the Timeline menu
     And Verify  that the Line on the Timeline page contains all the necessary informations
+
+

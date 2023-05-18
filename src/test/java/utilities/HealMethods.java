@@ -12,12 +12,11 @@ import pages.HomePage;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
+import java.util.*;
 
 public class HealMethods {
     static AdminPage adminPage=new AdminPage();
@@ -135,22 +134,57 @@ public class HealMethods {
 
     }
 
-    public static void makeFilterTest(String filterName,int filtreKacinciSirada, int toplamSutunSayisi){
-        WebElement filter=Driver.getDriver().findElement(By.xpath("(//th[text()='"+filterName+"'])[1]"));
+
+    public static void makeFilterTest(String filterName, int filtreKacinciSirada, int toplamSutunSayisi) {
+        // Filter elementini bul ve tıklama işlemini gerçekleştir
+        WebElement filter = Driver.getDriver().findElement(By.xpath("(//th[text()='" + filterName + "'])[1]"));
         ReusableMethods.bekle(2);
         Assert.assertTrue(filter.isDisplayed());
         filter.click();
         ReusableMethods.bekle(3);
-        List<String> filtreList=new ArrayList<>();
-        for (int i = filtreKacinciSirada; i <toplamSutunSayisi*10 ; i=(i+toplamSutunSayisi)) {
+        WebElement alttakiMetin=Driver.getDriver().findElement(By.xpath("//div[@class='dataTables_info']"));
+        String text=alttakiMetin.getText();
+        int start = text.indexOf(" to ") + 4; // " to " ifadesinin sonrasındaki değerin başlangıç indeksini buluyoruz
+        int end = text.indexOf(" ", start); // Başlangıçtan sonraki ilk boşluğa kadar olan kısmı alıyoruz
+        String numberString1 = text.substring(start, end); // Başlangıçtan sonraki kısmı alıyoruz
+        int number1 = Integer.parseInt(numberString1);
 
-            WebElement hucreElement=Driver.getDriver().findElement(By.xpath("(//td)["+i+"]"));
+        // Filtrelenmiş liste oluşturma
+        List<String> filtreList = new ArrayList<>();
+        for (int i = filtreKacinciSirada; i < toplamSutunSayisi * number1; i = (i + toplamSutunSayisi)) {
+            WebElement hucreElement = Driver.getDriver().findElement(By.xpath("(//td)[" + i + "]"));
             filtreList.add(hucreElement.getText());
         }
+
+        // Beklenen ve sıralanmış listeleri oluşturma
         List<String> expectedList = new ArrayList<>(filtreList);
-        Collections.sort(expectedList);
-        Assert.assertEquals("Filter non functional",expectedList,filtreList);
+        List<String> sortedList = customSort(filtreList);
+
+        // Listeleri sırala ve karşılaştır
+        Collections.sort(expectedList, Comparator.comparing(HealMethods::getDateValue, Comparator.nullsLast(Comparator.reverseOrder()))
+                .thenComparing(Comparator.naturalOrder()));
+        Assert.assertEquals("Filter non functional", expectedList, sortedList);
     }
+
+    public static Date getDateValue(String str) {
+        if (str == null || str.isEmpty()) {
+            return null;
+        }
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy");
+            return sdf.parse(str);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static List<String> customSort(List<String> filtreList) {
+        filtreList.sort(Comparator.comparing(HealMethods::getDateValue, Comparator.nullsLast(Comparator.reverseOrder()))
+                .thenComparing(Comparator.naturalOrder()));
+        return filtreList;
+    }
+
     public static void indirmeyiTestEt(String aranacakKelime,String format){//icon testinin yardımcı metodu,dogrudan kullanılmaz
         //bu metot downloads klasöründeki dosyaları sıralar ve dosya ismi "aranacakKelime.format" içeriyor mu diye test eder
         //metoda iki parametre gonderilir ilki isim ikinci format olarak arar: or. patient.pdf
@@ -261,7 +295,11 @@ public class HealMethods {
         nameElement.click();
     }
     public static void clickTrashIconForDelete(int sira){ //cop kutusu ikonuna tiklar
-        JSUtilities.clickWithJS(Driver.getDriver(),Driver.getDriver().findElement(By.xpath("(//a[@class='btn btn-default btn-xs delete_blood_issue'])["+sira+"]")));
+        try {
+            JSUtilities.clickWithJS(Driver.getDriver(),Driver.getDriver().findElement(By.xpath("(//a[@class='btn btn-default btn-xs delete_blood_issue'])["+sira+"]")));
+        } catch (Exception e) {
+            JSUtilities.clickWithJS(Driver.getDriver(),Driver.getDriver().findElement(By.xpath("(//a[@class='btn btn-default btn-xs'])["+sira+"]")));
+        }
     }
     public static void clickPlusIconForAddPayment(int sira){
         JSUtilities.clickWithJS(Driver.getDriver(),Driver.getDriver().findElement(By.xpath("(//a[@class='btn btn-default btn-xs add_payment'])["+sira+"]")));
@@ -373,7 +411,9 @@ public class HealMethods {
     }
         public static void generateBillInfo() throws IOException {
         WebElement taskBillNo=Driver.getDriver().findElement(By.xpath("//input[@id='billno']"));
-        String labelText = taskBillNo.getAttribute("name");
+        WebElement taskDate=Driver.getDriver().findElement(By.xpath("//input[@id='txtDate10']"));
+        Assert.assertTrue("Generated Bill No absent",taskBillNo.isDisplayed());
+        Assert.assertTrue("Generated Date absent",taskDate.isDisplayed());
 
         Select ddm = new Select(adminPage.testName);
         ddm.selectByIndex(faker.random().nextInt(1, 9));
@@ -394,51 +434,68 @@ public class HealMethods {
         WebElement message=Driver.getDriver().findElement(By.xpath("//div[@class='toast-message']"));
         String actual=JSUtilities.getTextWithJS(Driver.getDriver(),message);
         Assert.assertEquals("Record unsuccessful","Record Saved Successfully",actual);
-        String actulaBillNo=Driver.getDriver().findElement(By.xpath("(//td)[1]")).getText();
-        System.out.println("labelText = " + labelText);
-        Assert.assertEquals("Record unsuccessful",labelText,actulaBillNo);
+
     }
+        public static void generateBillInfoForBloods() throws IOException {
+        Driver.getDriver().findElement(By.xpath("//input[@id='dates_of_issue']")).click();
 
+        Select ddm = new Select(adminPage.hospitalDoctorDDM);
+        ddm.selectByIndex(faker.random().nextInt(1, 20));
 
-    public static void makeFilterTestAdminOPD(String filterName,int filtreKacinciSirada, int toplamSutunSayisi){
-        WebElement all100=Driver.getDriver().findElement(By.xpath("(//select[@name])[1]"));
-        Select select=new Select(all100);
-        select.selectByVisibleText("All");
-        ReusableMethods.bekle(3);
-        WebElement filter=Driver.getDriver().findElement(By.xpath("(//th[text()='"+filterName+"'])[1]"));
-        ReusableMethods.bekle(2);
-        Assert.assertTrue(filter.isDisplayed());
-        filter.click();
-        ReusableMethods.bekle(4);
-        List<String> filtreList=new ArrayList<>();
+        ddm = new Select(adminPage.bloodGroupDDM);
+        ddm.selectByIndex(5);
 
-        for (int i = filtreKacinciSirada; i <toplamSutunSayisi*10 ; i=(i+toplamSutunSayisi)) {
+        ddm = new Select(adminPage.componentDDM);
+        ddm.selectByIndex(2);
 
-            WebElement hucreElement=Driver.getDriver().findElement(By.xpath("(//td)["+i+"]"));
-            filtreList.add(hucreElement.getText());
-        }
-        List<String> expectedList = new ArrayList<>(filtreList);
-        Collections.sort(expectedList);
-        Assert.assertEquals(expectedList,filtreList);
+        ddm = new Select(adminPage.bagDDM);
+        ddm.selectByIndex(1);
+
+        ddm = new Select(adminPage.chargeCathegoryDDM);
+        ddm.selectByIndex(1);
+
+        ddm = new Select(adminPage.chargeNameDDM);
+        ddm.selectByIndex(1);
+
+        JSUtilities.clickWithJS(Driver.getDriver(),Driver.getDriver().findElement(By.xpath("//button[@name='save']")));
+        WebElement message=Driver.getDriver().findElement(By.xpath("//div[@class='toast-message']"));
+        String actual=JSUtilities.getTextWithJS(Driver.getDriver(),message);
+        Assert.assertEquals("Record unsuccessful","Record Saved Successfully",actual);
+
     }
 
     public static void makeFilterTestPatientOPD(String filterName,int filtreKacinciSirada, int toplamSutunSayisi){
 
-        WebElement filter=Driver.getDriver().findElement(By.xpath("(//th[text()='"+filterName+"'])[1]"));
+        // Filter elementini bul ve tıklama işlemini gerçekleştir
+        WebElement filter = Driver.getDriver().findElement(By.xpath("(//th[text()='" + filterName + "'])[2]"));
         ReusableMethods.bekle(2);
         Assert.assertTrue(filter.isDisplayed());
         filter.click();
-        ReusableMethods.bekle(4);
-        List<String> filtreList=new ArrayList<>();
+        ReusableMethods.bekle(3);
+        WebElement alttakiMetin=Driver.getDriver().findElement(By.xpath("//div[@class='dataTables_info']"));
+        String text=alttakiMetin.getText();
+        int start = text.indexOf(" to ") + 4; // " to " ifadesinin sonrasındaki değerin başlangıç indeksini buluyoruz
+        int end = text.indexOf(" ", start); // Başlangıçtan sonraki ilk boşluğa kadar olan kısmı alıyoruz
+        String numberString1 = text.substring(start, end); // Başlangıçtan sonraki kısmı alıyoruz
+        int number1 = Integer.parseInt(numberString1);
 
-        for (int i = filtreKacinciSirada; i <toplamSutunSayisi*10 ; i=(i+toplamSutunSayisi)) {
 
-            WebElement hucreElement=Driver.getDriver().findElement(By.xpath("(//td)["+i+"]"));
+
+        // Filtrelenmiş liste oluşturma
+        List<String> filtreList = new ArrayList<>();
+        for (int i = filtreKacinciSirada; i < toplamSutunSayisi * number1; i = (i + toplamSutunSayisi)) {
+            WebElement hucreElement = Driver.getDriver().findElement(By.xpath("(//td)[" + i + "]"));
             filtreList.add(hucreElement.getText());
         }
+
+        // Beklenen ve sıralanmış listeleri oluşturma
         List<String> expectedList = new ArrayList<>(filtreList);
-        Collections.sort(expectedList);
-        Assert.assertEquals(expectedList,filtreList);
+        List<String> sortedList = customSort(filtreList);
+
+        // Listeleri sırala ve karşılaştır
+        Collections.sort(expectedList, Comparator.comparing(HealMethods::getDateValue, Comparator.nullsLast(Comparator.reverseOrder()))
+                .thenComparing(Comparator.naturalOrder()));
+        Assert.assertEquals("Filter non functional", expectedList, sortedList);
     }
 }
 

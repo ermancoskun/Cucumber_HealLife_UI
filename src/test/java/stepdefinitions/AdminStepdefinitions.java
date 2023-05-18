@@ -112,6 +112,21 @@ public class AdminStepdefinitions {
         HealMethods.makeFilterTest("Donor Name",7,11);
         HealMethods.makeFilterTest("Bags",8,11);
     }
+    @Then("Sees the name of Blood Component Issue Billing List and their contents")
+    public void seesTheNameOfBloodComponentIssueBillingListAndTheirContents() {
+        HealMethods.makeFilterTest("Bill No",1,12);
+        HealMethods.makeFilterTest("Case ID / Patient ID",2,12);
+        HealMethods.makeFilterTest("Issue Date",3,12);
+        HealMethods.makeFilterTest("Received To",4,12);
+        HealMethods.makeFilterTest("Blood Group",5,12);
+        HealMethods.makeFilterTest("Component",6,12);
+        HealMethods.makeFilterTest("Gender",7,12);
+        HealMethods.makeFilterTest("Donor Name",8,12);
+        HealMethods.makeFilterTest("Bags",9,12);
+        HealMethods.makeFilterTest("Amount ($)",10,12);
+        HealMethods.makeFilterTest("Paid Amount ($)",11,12);
+
+    }
     @And("Click the Radiology button on Billing page")
     public void clickTheRadiologyButtonOnBillingPage () {
         adminPage.radiologyButton.click();
@@ -138,7 +153,8 @@ public class AdminStepdefinitions {
     }
     @Then("Verified redirected to Patent Profile page")
     public void verifiedRedirectedToPatentProfilePage() {
-        Assert.assertTrue(Driver.getDriver().getCurrentUrl().contains("patient_profile"));
+        Assert.assertTrue("Not redirected the patient profile",
+                Driver.getDriver().getCurrentUrl().contains("patient_profile"));
     }
 
     @Then("Verified redirected to Bill Details page")
@@ -148,9 +164,9 @@ public class AdminStepdefinitions {
         boolean flag=false;
         if (actualWindowTitle.equals("Bill Details")||
                 Driver.getDriver().findElement(By.xpath("(//h4[@class='modal-title'])[1]")).getText().equals("Bill Details")){
-                flag=true;
+            flag=true;
         }
-          Assert.assertTrue("Unsuccessful redirection",flag);
+        Assert.assertTrue("Unsuccessful redirection",flag);
 
         WebElement billDetailsElement = Driver.getDriver().findElement(By.xpath("(//h4[text()='Bill Details'])[1]"));
         Assert.assertTrue(billDetailsElement.isDisplayed());
@@ -183,6 +199,10 @@ public class AdminStepdefinitions {
     public void clickTheBloodIssueButtonOnBillingPage() {
         adminPage.bloodIssueButton.click();
     }
+    @And("Click the Blood Component Issue board on Billing Page")
+    public void clickTheBloodComponentIssueBoardOnBillingPage() {
+        adminPage.bloodIssueComponentButton.click();
+    }
 
     @And("Click {int}. iconButton under the last column for display first patient profile")
     public void clickIconButtonUnderTheLastColumnForDisplayFirstPatientProfile ( int sira){
@@ -210,7 +230,7 @@ public class AdminStepdefinitions {
 
     @Then("Make or delete additional payments")
     public void makeOrDeleteAdditionalPayments() {
-       HealMethods.makePaymentOptionsTest();
+        HealMethods.makePaymentOptionsTest();
     }
     @Then("Make or delete additional payments for Bloods")
     public void makeOrDeleteAdditionalPaymentsForBloods() {
@@ -218,22 +238,30 @@ public class AdminStepdefinitions {
     }
     @Then("Edit and delete a Blood records")
     public void editAndDeleteABloodRecords() {
-    JSUtilities.clickWithJS(Driver.getDriver(),Driver.getDriver().findElement(By.xpath("//a[@class='edit_blood_issue']")));
-    HealMethods.createNewPatient();
-    JSUtilities.clickWithJS(Driver.getDriver(),Driver.getDriver().findElement(By.xpath("//input[@id='dates_of_issue']")));
-    JSUtilities.clickWithJS(Driver.getDriver(),Driver.getDriver().findElement(By.xpath("//button[@id='formaddbtn']")));
-    Assert.assertEquals("Edit not successful","Record Saved Successfully",adminPage.warningMessage.getText());
-    JSUtilities.clickWithJS(Driver.getDriver(),adminPage.xIconButton);
-    ReusableMethods.bekle(7);
-    JSUtilities.clickWithJS(Driver.getDriver(),Driver.getDriver().findElement(By.xpath("//a[@class='delete_blood_issue']")));
-    Driver.getDriver().switchTo().alert().accept();
-    ReusableMethods.bekle(2);
-    Assert.assertEquals("Delete not successful","Record Deleted Successfully",adminPage.warningMessage.getText());
+        try {
+            JSUtilities.clickWithJS(Driver.getDriver(),Driver.getDriver().findElement(By.xpath("//a[@class='edit_blood_issue']")));
+        } catch (Exception e) {
+            JSUtilities.clickWithJS(Driver.getDriver(),Driver.getDriver().findElement(By.xpath("//a[@class='edit_component_issue']")));
+        }
+        HealMethods.createNewPatient();
+        JSUtilities.clickWithJS(Driver.getDriver(),Driver.getDriver().findElement(By.xpath("//input[@id='dates_of_issue']")));
+        JSUtilities.clickWithJS(Driver.getDriver(),Driver.getDriver().findElement(By.xpath("//button[@id='formaddbtn']")));
+        Assert.assertEquals("Edit not successful","Record Saved Successfully",adminPage.warningMessage.getText());
+        JSUtilities.clickWithJS(Driver.getDriver(),adminPage.xIconButton);
+        ReusableMethods.bekle(7);
+        JSUtilities.clickWithJS(Driver.getDriver(),Driver.getDriver().findElement(By.xpath("//a[@class='delete_blood_issue']")));
+        Driver.getDriver().switchTo().alert().accept();
+        ReusableMethods.bekle(2);
+        Assert.assertEquals("Delete not successful","Record Deleted Successfully",adminPage.warningMessage.getText());
 
     }
     @Then("Create a New Bill with random datas")
     public void createANewBillWithRandomDatas() throws IOException {
         HealMethods.generateBillInfo();
+    }
+    @Then("Create a New Blood Bill with random datas")
+    public void createANewBloodBillWithRandomDatas() throws IOException {
+        HealMethods.generateBillInfoForBloods();
     }
 
     @Given("Click on the Add Patient button in IPD page")
@@ -375,19 +403,19 @@ public class AdminStepdefinitions {
 
 
         ReusableMethods.bekle(1);
-        HealMethods.makeFilterTestAdminOPD("Name" , 3,7);
+        HealMethods.makeFilterTest("Name" , 3,7);
         ReusableMethods.bekle(1);
-        HealMethods.makeFilterTestAdminOPD("Patient Id" , 2,7);
+        HealMethods.makeFilterTest("Patient Id" , 2,7);
         ReusableMethods.bekle(1);
-        HealMethods.makeFilterTestAdminOPD("Guardian Name" , 3,7);
+        HealMethods.makeFilterTest("Guardian Name" , 3,7);
         ReusableMethods.bekle(1);
-        HealMethods.makeFilterTestAdminOPD("Gender" , 4,7);
+        HealMethods.makeFilterTest("Gender" , 4,7);
         ReusableMethods.bekle(1);
-        HealMethods.makeFilterTestAdminOPD("Consultant" , 5,7);
+        HealMethods.makeFilterTest("Consultant" , 5,7);
         ReusableMethods.bekle(1);
-        HealMethods.makeFilterTestAdminOPD("Last Visit" , 6,7);
+        HealMethods.makeFilterTest("Last Visit" , 6,7);
         ReusableMethods.bekle(1);
-        HealMethods.makeFilterTestAdminOPD("Total Recheckup" , 7,7);
+        HealMethods.makeFilterTest("Total Recheckup" , 7,7);
 
     }
 
@@ -580,6 +608,93 @@ public class AdminStepdefinitions {
         Assert.assertTrue(adminPage.notificationIcon.isDisplayed());
         Assert.assertTrue(adminPage.notificationIcon.isEnabled());
     }
+    @Given("Switch from the Pathology page to the Pathology Test page.")
+    public void switchFromThePathologyPageToThePathologyTestPage() {
+        HealMethods.clickIconWith3Line(1);
+    }
+
+    @Given("Parameters added expected areas")
+    public void parametersAddedExpectedAreas() {
+
+        Actions actions = new Actions(Driver.getDriver());
+        Faker faker1 = new Faker();
+        String testName=faker1.medical().diseaseName();
+        ReusableMethods.bekle(2);
+        actions.click(adminPage.testNamePathology).sendKeys(testName)
+                .sendKeys(Keys.TAB).sendKeys(faker1.medical().medicineName())
+                .sendKeys(Keys.TAB).sendKeys(faker1.medical().symptoms())
+                .sendKeys(Keys.TAB).sendKeys(Keys.ENTER).sendKeys("clinical" + Keys.ENTER).
+                sendKeys(Keys.TAB).
+                sendKeys(Keys.TAB)
+                .sendKeys(Keys.TAB).
+                sendKeys(Keys.TAB).
+                sendKeys(Keys.ENTER).sendKeys("Surgical" + Keys.ENTER)
+                .sendKeys(Keys.TAB).
+                sendKeys(Keys.ENTER).sendKeys("Surgical" + Keys.ARROW_DOWN).sendKeys(Keys.ENTER)
+                .sendKeys(Keys.TAB)
+                .sendKeys(Keys.TAB)
+                .sendKeys(Keys.TAB)
+                .sendKeys(Keys.TAB).sendKeys("RBC" + Keys.ENTER)
+                .sendKeys(Keys.TAB)
+                .sendKeys(Keys.TAB)
+                .sendKeys(Keys.TAB)
+                .sendKeys(Keys.TAB).sendKeys(Keys.ENTER).perform();
+        ReusableMethods.bekle(10);
+
+    }
+    @And("The pathology tests page should be listed with the headings")
+    public void thePathologyTestsPageShouldBeListedWithTheHeadings() {
+        HealMethods.makeFilterTest("Test Name", 1, 8);
+        HealMethods.makeFilterTest("Short Name", 2, 8);
+        HealMethods.makeFilterTest("Test Type", 3, 8);
+        HealMethods.makeFilterTest("Category", 4, 8);
+        HealMethods.makeFilterTest("Sub Category", 5, 8);
+        HealMethods.makeFilterTest("Method", 6, 8);
+        HealMethods.makeFilterTest("Report Days", 7, 8);
+
+    }
+    @And("Click the Add View Payment iconButton for additional payments for patient of {int}.")
+    public void clickTheAddViewPaymentIconButtonForAdditionalPaymentsForPatientOf(int sira) {
+        HealMethods.clickAddViewPaymentIcon(sira);
+    }
+
+    @And("The saved test should be displayed in the Pathology Test List")
+    public void theSavedTestShouldBeDisplayedInThePathologyTestList() {
+        String aa= Driver.getDriver().findElement(By.xpath("//*[@id=\"DataTables_Table_0\"]//tbody//tr[1]//td[1]")).getText();
+//        Assert.assertEquals(aa,testName);
+    }
+    @And("Create a bill on the relevant patient")
+    public void createABillOnTheRelevantPatient() throws IOException {
+        HealMethods.generateBillInfo();
+        ReusableMethods.bekle(2);
+
+
+    }
+
+    @Given("Confirm Bill No and Date information")
+    public void confirmBillNoAndDateInformation() {
+        String expectedBillNo = adminPage.getBillNo.getText();
+
+        System.out.println("adminPage.getBillNo.getText() = " + adminPage.getBillNo.getText());
+        String actualBillNo = adminPage.getBillNoConfirmation.getText();
+        System.out.println("adminPage.getBillNoConfirmation = " + adminPage.getBillNoConfirmation.getText());
+        Assert.assertEquals(actualBillNo, expectedBillNo);
+//
+//        adminPage.pathologyBillList.
+
+    }
+    @Given("More than one test parameter can be added")
+    public void moreThanOneTestParameterCanBeAdded() {
+        Assert.assertTrue(adminPage.addButtonPathology.isEnabled());
+        Assert.assertEquals(adminPage.testParamNameList.size(), 1);
+        adminPage.addButtonPathology.click();
+        Assert.assertEquals(adminPage.testParamNameList.size(), 2);
+    }
+    @And("click on add Pathology Test button")
+    public void clickOnAddPathologyTestButton() {
+        adminPage.addPathologyTestButton.click();
+    }
+
 
     @Given("Click on the notification icon.")
     public void click_on_the_notification_icon() {
@@ -712,5 +827,116 @@ public class AdminStepdefinitions {
         Assert.assertTrue("Added person is not visible",actualContact.contains(expectedContact));
     }
 
+
+
+
+
+
+    //===========================================================US35==========================================
+    @Given("User goes to the admin page.")
+    public void userGoesToTheAdminPage() {
+        Driver.getDriver().get(ConfigReader.getProperty("adminPageUrl"));
+    }
+
+    @Then("Verify that the URL of the website is correctt.")
+    public void verifyThatTheURLOfTheWebsiteIsCorrectt() {
+        String actualUrl = Driver.getDriver().getCurrentUrl();
+        String expectedUrl = ConfigReader.getProperty("adminPageUrl");
+        Assert.assertEquals("The Url of the home page is correct", expectedUrl, actualUrl);
+    }
+
+    @Then("Verify that the Latest New information is visible.")
+    public void verifyThatTheLatestNewInformationIsVisible() {
+        Driver.getDriver().get(ConfigReader.getProperty("adminPageUrl"));
+       Assert.assertTrue(adminPage.adminloginNews.isDisplayed());
+    }
+
+
+    @Then("Click on the Sign in button")
+    public void clickOnTheSignInButton() {
+        adminPage.adminSignInButton.click();
+    }
+
+    @Then("Login to adminn page  {string} {string}")
+    public void loginToAdminPage(String username, String password) {
+            HealMethods.loginAsAdmin(username,password);
+
+        }
+
+    @Then("It is verified that the admin page has been entered.")
+    public void ıtIsVerifiedThatTheAdminPageHasBeenEntered() {
+        String expectedAdmindUrl = "https://qa.heallifehospital.com/admin/admin/dashboard";
+        String actualAdminUrl = Driver.getDriver().getCurrentUrl();
+        Assert.assertEquals(expectedAdmindUrl, actualAdminUrl);
+        Driver.getDriver().navigate().back();
+        ReusableMethods.bekle(2);
+
+    }
+
+    @And("Verify that the panel cannot be accessed with an invalid password or password")
+    public void verifyThatThePanelCannotBeAccessedWithAnInvalidPasswordOrPassword() {
+        Assert.assertTrue(adminPage.signInButton.isEnabled());
+        Driver.getDriver().navigate().back();
+    }
+
+    @And("enters {string} from examples as username")
+    public void entersFromExamplesAsUsername(String username) {
+        adminPage.adminUsernameBox.sendKeys(username);
+    }
+
+    @And("enters {string} from examples as password")
+    public void entersFromExamplesAsPassword(String password) {
+        adminPage.adminPasswordBox.sendKeys(password);
+    }
+
+    @Then("There should be a forget password link on the login page")
+    public void thereShouldBeAForgetPasswordLinkOnTheLoginPage() {
+       Assert.assertTrue( adminPage.adminForgetPassword.isDisplayed());
+
+
+    }
+
+    @And("Verify that It should redirect to the {string} page.")
+    public void verifyThatItShouldRedirectToThePage(String arg0) {
+        adminPage.adminForgetPassword.click();
+        String expectedForgetPasswordUrl = "https://qa.heallifehospital.com/site/forgotpassword";
+        String actualAdminUrl = Driver.getDriver().getCurrentUrl();
+        Assert.assertEquals(expectedForgetPasswordUrl, actualAdminUrl);
+
+    }
+
+    @And("The user have enter an email in the email box.")
+    public void theUserHaveEnterAnEmailInTheEmailBox() {
+        adminPage.adminForgetPassword.click();
+        adminPage.adminUsernameBox.sendKeys("asd@gmail.com");
+        adminPage.adminSubmitButton.click();
+
+    }
+
+    @Then("Verify that the password has been sent to the e-mail")
+    public void verifyThatThePasswordHasBeenSentToTheEMail() {
+        adminPage.passwordSentYourEmail.isDisplayed();
+
+    }
+
+    @Then("There should be a admin login link on the login page")
+    public void thereShouldBeAAdminLoginLinkOnTheLoginPage() {
+        adminPage.adminForgetPassword.click();
+
+    }
+
+    @Then("Verify that it is returned to the login page")
+    public void verifyThatItIsReturnedToTheLoginPage() {
+        adminPage.adminLogoBox.click();
+        String Url = "https://qa.heallifehospital.com/site/login";
+        String actualAdminUrl = Driver.getDriver().getCurrentUrl();
+        ReusableMethods.bekle(2);
+        Assert.assertEquals(Url, actualAdminUrl);
+
+
+    }
 }
+
+
+
 

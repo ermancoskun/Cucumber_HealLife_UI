@@ -991,6 +991,68 @@ public class PatientPage extends Base {
     @FindBy  (xpath = "(//div[@class='dataTables_info'])[1]")
     public WebElement ConsultantRegisterSearcResult;
 
+
+
+    @FindBy(xpath = "(//td[@class='dataTables_empty'])[1]")
+    public WebElement LabInvestigationResultText;
+
+
+
+    //IPD->Operation
+    @FindBy(xpath = "(//th[text()='Reference No'])[2]")
+    public WebElement OperationReferenceNo;
+
+    @FindBy (xpath = "(//i[@class='fa fa-reorder'])[2]")
+    public WebElement OperationShow;
+
+    @FindBy(xpath = "(//h4[@class='modal-title'])[8]")
+    public WebElement OperationDetails;
+
+
+    //IPD->Payment
+
+    @FindBy(xpath = "(//div[@class='dataTables_wrapper no-footer'])[7]")
+    public WebElement PaymentDetails;
+
+    //IPD->Nurse Notes
+
+    @FindBy(xpath = "(//ul[@class='timeline timeline-inverse'])[3]")
+    public WebElement NurseNotesDetails;
+
+
+
+    @FindBy(xpath = "(//ul[@class='timeline timeline-inverse'])[4]")
+    public WebElement TimelineSummary;
+
+
+    @FindBy(xpath = "//a[text()='azat.ozay']")
+    public WebElement IPDUserClick;
+
+    @FindBy(xpath = "(//input[@type='search'])[8]")
+    public WebElement TreatmentHistorySearchBox;
+
+    @FindBy(xpath = "//div[@id='DataTables_Table_0_info']")
+    public WebElement TreatmentHistorySearchResult;
+
+
+    @FindBy (xpath = "(//th[text()='IPD No'])[2]")
+    public WebElement TreatmentHistoryIpdNo;
+
+
+    @FindBy (xpath = "(//input[@type='search'])[6]")
+    public WebElement BedHistorySearchBox;
+
+    @FindBy(xpath = "(//div[@class='dataTables_info'])[6]")
+    public WebElement BedHistorySearchResult;
+
+
+    @FindBy (xpath = "(//th[text()='Bed Group'])[2]")
+    public WebElement BedGroup;
+
+    @FindBy (xpath = "//div[@id='DataTables_Table_6_wrapper']")
+    public WebElement BedHistorySummary;
+
+
 }
 
 
